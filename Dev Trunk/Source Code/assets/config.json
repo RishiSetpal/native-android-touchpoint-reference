@@ -1,0 +1,14 @@
+{
+  "logging":{
+    "logInfo":true,
+    "logWarnings":true,
+    "logErrors":true
+  },
+  "cortexApi":{
+    "path":"integrator",
+    "scope":"telcooperative",
+    "endpoint":  "http://54.200.118.70:13080/integrator/",
+     "role": "PUBLIC"
+  }
+  
+}

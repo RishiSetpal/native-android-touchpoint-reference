@@ -1,0 +1,106 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="EPAppTheme" parent="AppBaseTheme">
+
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:actionBarStyle">@style/EPActionBar</item>
+        <item name="android:windowActionBarOverlay">false</item>
+        <item name="android:windowBackground">@color/bg_application_window</item>
+        <item name="android:colorBackground">@color/bg_application_window</item>
+    </style>
+
+    <!-- ActionBar styles -->
+    <style name="EPActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/bg_top_header</item>
+        <item name="android:textColor">@color/tc_top_header</item>
+    </style>
+
+    <!-- Authentication Page Styles -->
+    <style name="LayoutAuthentication">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="EditTextUsername">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">textEmailAddress</item>
+        <item name="android:ems">10</item>
+        <item name="android:hint">@string/hintUsername</item>
+        <item name="android:layout_margin">10dp</item>
+    </style>
+
+    <style name="EditTextPassword">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">textPassword</item>
+        <item name="android:ems">10</item>
+        <item name="android:hint">@string/hintPassword</item>
+        <item name="android:layout_margin">10dp</item>
+    </style>
+
+    <style name="ButtonPassword">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:ems">10</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:text">@string/labelButtonLogin</item>
+    </style>
+
+    <!-- Catgeory List View Styles -->
+    <style name="GridViewCatgeory">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
+    <style name="LayoutCategoryList">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="TextViewCategoryList">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">120dp</item>
+        <item name="android:shadowDx">1.2</item>
+        <item name="android:shadowDy">1.2</item>
+        <item name="android:shadowRadius">2</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:background">@drawable/selector_category_gridview</item>
+    </style>
+
+    <!-- Product Listing Styles -->
+    <style name="ViewPagerProducListing">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="PagerTitleStripProducListing">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">top</item>
+        <item name="android:background">@color/bg_pager_titlestrip_productlisting</item>
+        <item name="android:textColor">@color/tc_pager_titlestrip_productlisting</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingTop">4dp</item>
+    </style>
+    
+</resources>

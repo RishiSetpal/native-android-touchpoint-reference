@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Application Theme Colors -->
+    <color name="bg_application_window">#ffffff</color>
+
+    <!-- Action Bar Colors -->
+    <color name="bg_top_header">#000000</color>
+    <color name="tc_top_header">#ffffff</color>
+    
+    <!-- Login page colors -->
+    <color name="bg_button_login_normal">#BDBDBD</color>
+    <color name="bg_button_login_selected">#79AFED</color>
+    <color name="bg_button_login_pressed">#79AFED</color>
+    <color name="bg_button_login_activated">#79AFED</color>
+
+    <!-- Categories list colors -->
+    <color name="bg_gridView_category_normal">#BDBDBD</color>
+    <color name="bg_gridView_category_selected">#79AFED</color>
+    <color name="bg_gridView_category_pressed">#79AFED</color>
+    <color name="bg_gridView_category_activated">#79AFED</color>
+
+    <!-- Product listing colors -->
+    <color name="bg_pager_titlestrip_productlisting">#33b5e5</color>
+    <color name="tc_pager_titlestrip_productlisting">#ffffff</color>
+
+</resources>
