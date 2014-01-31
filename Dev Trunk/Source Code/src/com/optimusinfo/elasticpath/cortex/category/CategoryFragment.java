@@ -3,7 +3,7 @@ package com.optimusinfo.elasticpath.cortex.category;
 import java.util.ArrayList;
 
 import com.optimusinfo.elasticpath.cortex.EPHomeActivity;
-import com.optimusinfo.elasticpath.cortex.R;
+import com.optimusinfo.elasticpath.cortexAPI.R;
 import com.optimusinfo.elasticpath.cortex.category.Category.CategoryElement;
 import com.optimusinfo.elasticpath.cortex.category.Category.CategoryLink;
 import com.optimusinfo.elasticpath.cortex.common.Constants;

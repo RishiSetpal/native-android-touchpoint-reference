@@ -5,7 +5,7 @@
     <color name="bg_application_window">#ffffff</color>
 
     <!-- Action Bar Colors -->
-    <color name="bg_top_header">#000000</color>
+    <color name="bg_top_header">#FF00A3DD</color>
     <color name="tc_top_header">#ffffff</color>
     
     <!-- Login page colors -->
@@ -15,13 +15,23 @@
     <color name="bg_button_login_activated">#79AFED</color>
 
     <!-- Categories list colors -->
-    <color name="bg_gridView_category_normal">#BDBDBD</color>
-    <color name="bg_gridView_category_selected">#79AFED</color>
-    <color name="bg_gridView_category_pressed">#79AFED</color>
-    <color name="bg_gridView_category_activated">#79AFED</color>
+    <color name="bg_gridView_category_normal">#FF00A3DD</color>
+    <color name="bg_gridView_category_selected">#B200A3DD</color>
+    <color name="bg_gridView_category_pressed">#B200A3DD</color>
+    <color name="bg_gridView_category_activated">#B200A3DD</color>
+    <color name="tc_textView_category_name">#ffffff</color>
 
     <!-- Product listing colors -->
-    <color name="bg_pager_titlestrip_productlisting">#33b5e5</color>
-    <color name="tc_pager_titlestrip_productlisting">#ffffff</color>
-
+    <color name="bg_pager_titlestrip_productlisting">#B200A3DD</color>
+    <color name="tc_pager_titlestrip_productlisting">#FFFFFF</color>
+    <color name="tc_textview_product_name">#00A2DD</color>
+	<color name="tc_textview_product_price">#000000</color>
+	<color name="tc_textview_product_available">#FFFFFF</color>
+	
+	 <!-- Product details colors -->
+	<color name="tc_textview_product_details_title">#000000</color>
+	<color name="bg_listview_product_desc_1">#BFDBDBDB</color>
+	<color name="bg_listview_product_desc_2">#FFFFFF</color>
+	<color name="tc_listview_product_desc">#000000</color>
+	
 </resources>

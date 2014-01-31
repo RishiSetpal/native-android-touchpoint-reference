@@ -1,60 +1,37 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="right"
-    android:orientation="vertical" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/LayoutFragmentProducListing" >
 
-    <TextView
-        android:id="@+id/tvProductListingTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:gravity="left"
-        android:singleLine="true"
-        android:text="@string/labelNoProductTitle"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+    <LinearLayout style="@style/LayoutFragmentProducDetails" >
 
-    <com.optimusinfo.elasticpath.cortex.common.EPImageView
-        android:id="@+id/ivProductListing"
-        android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:layout_margin="10dp"
-        android:contentDescription="@string/contentDesc"
-        android:scaleType="center"
-        android:src="@drawable/img_placeholder" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        <com.optimusinfo.elasticpath.cortex.common.EPImageView
+            android:id="@+id/ivProductListing"
+            style="@style/ImageViewProductListing" />
 
         <TextView
-            android:id="@+id/tvProductListingAvailable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:gravity="left"
-            android:text="@string/labelProductAvailablle"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:id="@+id/tvProductListingTitle"
+            style="@style/TextViewProductListingName" />
 
-        <TextView
-            android:id="@+id/tvProductListingPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="@string/labelProductNoPrice"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_margin="0dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="0dp" >
+
+            <TextView
+                android:id="@+id/tvProductListingPrice"
+                style="@style/TextViewProductListingPrice" />
+
+            <TextView
+                android:id="@+id/tvProductListingAvailable"
+                style="@style/TextViewProductListingAvailable" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btAddToCart"
+            style="@style/ButtonProductListingAvailable" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btAddToCart"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/labelButtonAddtocart" />
-
-</LinearLayout>
+</RelativeLayout>

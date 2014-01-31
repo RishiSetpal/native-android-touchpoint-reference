@@ -14,7 +14,7 @@
         style="@style/EditTextPassword" />
 
     <Button
-        android:id="@+id/btPassword"
+        android:id="@+id/btLogin"
         style="@style/ButtonPassword" />
 
 </LinearLayout>

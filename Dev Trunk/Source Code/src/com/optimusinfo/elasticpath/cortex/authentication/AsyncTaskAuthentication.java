@@ -14,6 +14,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
 import com.optimusinfo.elasticpath.cortex.common.Utils;
 
@@ -107,16 +108,18 @@ public class AsyncTaskAuthentication extends AsyncTask<Void, Void, Boolean> {
 							parameters, HTTP.UTF_8);
 					String entityString = Utils.postData(mCortexUrl + mRoute,
 							ent, mContentType);
+					Log.i("Authentication" , entityString);
 					mListener.onTaskComplete(mObjGson.fromJson(entityString,
 							Authentication.class));
 					return true;
 				} catch (IOException e) {
 					e.printStackTrace();
-					Log.i("ERROR RESPONSE - IO", e.getMessage());
 					return false;
 				} catch (ParseException e) {
 					e.printStackTrace();
-					Log.i("ERROR RESPONSE - PARSE", e.getMessage());
+					return false;
+				} catch (JsonSyntaxException e){
+					e.printStackTrace();
 					return false;
 				}
 			} else {

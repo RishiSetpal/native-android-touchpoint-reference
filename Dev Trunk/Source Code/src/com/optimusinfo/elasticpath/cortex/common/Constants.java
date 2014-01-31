@@ -29,6 +29,11 @@ public class Constants {
 	public class PageUrl {
 		public static final String pageUrl = "/pages/";
 		public static final String INTENT_BASE_URL = "baseURL";
+		public static final String INTENT_CART_URL = "addToCartURL";
+		public static final String INTENT_PRODUCT_TITLE = "productTitle";
+		public static final String INTENT_PRODUCT_PRICE = "productPrice";
+		public static final String INTENT_PRODUCT_IMAGE = "productImage";
+		public static final String INTENT_PRODUCT_QUANT = "productQuantity";
 	}
 
 	public class Preferences {
@@ -38,6 +43,8 @@ public class Constants {
 		public static final String KEY_SCOPE = "CORTEX_SCOPE";
 		public static final String KEY_ROLE = "CORTEX_ROLE";
 		public static final String KEY_ACCESS_TOKEN = "CORTEX_ACCESS_TOKEN";
+		public static final String LIST_CART = "LIST_CART";
+		public static final String KEY_ACCESS_TOKEN_USER = "KEY_ACCESS_TOKEN_USER";
 	}
 
 	public class ApiResponseCode {

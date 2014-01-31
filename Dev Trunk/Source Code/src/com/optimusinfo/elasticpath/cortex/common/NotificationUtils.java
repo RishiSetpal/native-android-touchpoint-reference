@@ -1,6 +1,6 @@
 package com.optimusinfo.elasticpath.cortex.common;
 
-import com.optimusinfo.elasticpath.cortex.R;
+import com.optimusinfo.elasticpath.cortexAPI.R;
 
 import android.content.Context;
 import android.widget.Toast;

@@ -1,75 +1,50 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/llProductDetails"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="center"
-    android:orientation="vertical"
+    style="@style/LayoutActivityProducyDetails"
     android:visibility="invisible" >
+
+    <com.optimusinfo.elasticpath.cortex.common.EPImageView
+        android:id="@+id/ivProductDetail"
+        style="@style/ImageViewProductDetails" />
 
     <TextView
         android:id="@+id/tvProductDetailTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:gravity="left"
-        android:text="@string/labelNoProductTitle"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        style="@style/TextViewProductDetailsTitle" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
-        <com.optimusinfo.elasticpath.cortex.common.EPImageView
-            android:id="@+id/ivProductDetail"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/contentDesc"
-            android:scaleType="center"
-            android:src="@drawable/img_placeholder" />
+        <TextView
+            android:id="@+id/tvProductDetailAvailable"
+            style="@style/TextViewProductDetailsAvailable" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/tvProductDetailAvailable"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:gravity="left"
-                android:text="@string/labelProductAvailablle"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <TextView
-                android:id="@+id/tvProductDetailPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:gravity="right"
-                android:text="@string/labelProductNoPrice"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <Button
-                android:id="@+id/btProductDetailAddToCart"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="@string/labelButtonAddtocart" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tvProductDetailPrice"
+            style="@style/TextViewProductDetailsPrice" />
     </LinearLayout>
 
-    <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <Spinner
+            android:id="@+id/spProductQuantity"
+            style="@style/SpinnerProductDetailsQuantity" />
+
+        <Button
+            android:id="@+id/btProductDetailAddToCart"
+            style="@style/ButtonProductDetailsAvailable" />
+    </LinearLayout>
+
+    <ListView
         android:id="@+id/tvProductDetailDescription"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:text="@string/labelProductNoDescription" />
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp" />
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.optimusinfo.elasticpath.cortex.product.details;
 
-import com.optimusinfo.elasticpath.cortex.R;
+import com.optimusinfo.elasticpath.cortexAPI.R;
+import com.optimusinfo.elasticpath.cortex.cart.CartActivity;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
 import com.optimusinfo.elasticpath.cortex.common.EPImageView;
 import com.optimusinfo.elasticpath.cortex.common.NotificationUtils;
@@ -8,12 +9,14 @@ import com.optimusinfo.elasticpath.cortex.product.details.ProductDetail.ProductA
 import com.optimusinfo.elasticpath.cortex.product.details.ProductDetail.ProductAssets;
 import com.optimusinfo.elasticpath.cortex.product.details.ProductDetail.ProductAvailability;
 import com.optimusinfo.elasticpath.cortex.product.details.ProductDetail.ProductDefinition;
+import com.optimusinfo.elasticpath.cortex.product.details.ProductDetail.ProductDetails;
 import com.optimusinfo.elasticpath.cortex.product.details.ProductDetail.ProductLinks;
 import com.optimusinfo.elasticpath.cortex.product.details.ProductDetail.ProductPrice;
 import com.optimusinfo.elasticpath.cortex.product.details.ProductDetail.ProductRates;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -22,6 +25,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class ProductDetailsActivity extends FragmentActivity {
@@ -47,7 +51,6 @@ public class ProductDetailsActivity extends FragmentActivity {
 
 		mProductBaseUrl = getIntent().getStringExtra(
 				Constants.PageUrl.INTENT_BASE_URL);
-
 		mPreferences = getSharedPreferences(
 				Constants.Preferences.PREFERENCES_FILE_NAME,
 				Context.MODE_PRIVATE);
@@ -132,11 +135,23 @@ public class ProductDetailsActivity extends FragmentActivity {
 		LinearLayout llProductDetails = (LinearLayout) findViewById(R.id.llProductDetails);
 		llProductDetails.setVisibility(View.VISIBLE);
 
+		// Start the product details activity
+		final Intent mCartIntent = new Intent(ProductDetailsActivity.this,
+				CartActivity.class);
 		// Set the product name
 		ProductDefinition[] definition = product.getDefinition();
 		TextView tvTitle = (TextView) findViewById(R.id.tvProductDetailTitle);
 		if (definition != null) {
 			tvTitle.setText(definition[0].getDisplayName());
+			mCartIntent.putExtra(Constants.PageUrl.INTENT_PRODUCT_TITLE,
+					definition[0].getDisplayName());
+		}
+
+		ProductDetails[] description = definition[0].getProductDetails();
+		ListView lvDesc = (ListView) findViewById(R.id.tvProductDetailDescription);
+		if (description != null) {
+			lvDesc.setAdapter(new DescriptionsAdapter(getApplicationContext(),
+					description));
 		}
 
 		// Set the product price
@@ -144,9 +159,15 @@ public class ProductDetailsActivity extends FragmentActivity {
 		ProductRates[] rate = product.getRates();
 		TextView tvPrice = (TextView) findViewById(R.id.tvProductDetailPrice);
 		if (price != null) {
-			tvPrice.setText(price[0].getProductPrice()[0].getDisplay());
+			tvPrice.setText("Price \t".concat(price[0].getProductPrice()[0]
+					.getDisplay()));
+			mCartIntent.putExtra(Constants.PageUrl.INTENT_PRODUCT_PRICE,
+					price[0].getProductPrice()[0].getDisplay());
 		} else if (rate != null) {
-			tvPrice.setText(rate[0].getProductRates()[0].getRate());
+			tvPrice.setText("Price \t".concat(rate[0].getProductRates()[0]
+					.getRate()));
+			mCartIntent.putExtra(Constants.PageUrl.INTENT_PRODUCT_PRICE,
+					rate[0].getProductRates()[0].getRate());
 		}
 
 		// Set the product image
@@ -154,6 +175,8 @@ public class ProductDetailsActivity extends FragmentActivity {
 		EPImageView ivImage = (EPImageView) findViewById(R.id.ivProductDetail);
 		if (assets != null) {
 			ivImage.setImageUrl(assets[0].getProductImages()[0].getImageUrl());
+			mCartIntent.putExtra(Constants.PageUrl.INTENT_PRODUCT_IMAGE,
+					assets[0].getProductImages()[0].getImageUrl());
 		}
 
 		// Initialize the add to cart button
@@ -165,9 +188,11 @@ public class ProductDetailsActivity extends FragmentActivity {
 			btAddToCart.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					NotificationUtils.showNotificationToast(
-							getApplicationContext(),
+					// Start the product details activity
+					mCartIntent.putExtra(Constants.PageUrl.INTENT_CART_URL,
 							addToCartLinks[0].getHREF());
+					startActivity(mCartIntent);
+
 				}
 			});
 		} else {

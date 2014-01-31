@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_vertical"
+    android:layout_margin="5dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="5dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:background="@drawable/layout_bg_fragment_product_listing" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tvCartProductTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:gravity="left"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/tc_textview_product_name"
+                android:singleLine="true"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvCartProductPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:gravity="left"
+                android:singleLine="true"
+                android:text="@string/labelProductNoPrice"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/tc_textview_product_price"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btRemove"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:background="@drawable/selector_button_addtocart"
+                android:text="@string/buttonCartRemove"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/tc_textview_product_available"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <com.optimusinfo.elasticpath.cortex.common.EPImageView
+            android:id="@+id/epCartProductImage"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:scaleType="centerInside"
+            android:src="@drawable/img_placeholder" />
+    </LinearLayout>
+
+</LinearLayout>

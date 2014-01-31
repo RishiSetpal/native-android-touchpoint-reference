@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -14,7 +15,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -77,7 +77,7 @@ public class Utils {
 
 			// Making HTTP request
 			DefaultHttpClient httpClient = new DefaultHttpClient();
-
+			Log.i("GET REQUEST", url);
 			HttpGet httpGet = new HttpGet(url);
 
 			httpGet.setHeader(contentTypeString, contentType);
@@ -201,28 +201,19 @@ public class Utils {
 	 * @return
 	 */
 	public static String postData(String accessToken, String postURL,
-			UrlEncodedFormEntity ent, String contentType) {
+			JSONObject objInput, String contentType) {
 
 		try {
 			HttpClient client = new DefaultHttpClient();
 			HttpPost post = new HttpPost(postURL);
 			post.setHeader("Content-Type", contentType);
 			post.setHeader("Authorization", "Bearer " + accessToken);
-			JSONObject obj = new JSONObject();
-			try {
-				obj.put("quantity", 1);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			post.setEntity(new StringEntity(obj.toString(), "UTF-8"));
+			post.setEntity(new StringEntity(objInput.toString(), "UTF-8"));
 			HttpResponse responsePOST = client.execute(post);
 			HttpEntity resEntity = responsePOST.getEntity();
 			String response = null;
 			if (resEntity != null) {
-				response = EntityUtils.toString(resEntity);
-				Log.i("ADD TO CART", response);
-
+				response = EntityUtils.toString(resEntity);				
 			}
 			return response;
 		} catch (IOException e) {
@@ -232,4 +223,5 @@ public class Utils {
 		}
 		return null;
 	}
+
 }

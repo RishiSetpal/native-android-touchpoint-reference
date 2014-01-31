@@ -2,7 +2,7 @@ package com.optimusinfo.elasticpath.cortex.category;
 
 import java.util.ArrayList;
 
-import com.optimusinfo.elasticpath.cortex.R;
+import com.optimusinfo.elasticpath.cortexAPI.R;
 import com.optimusinfo.elasticpath.cortex.category.Category.CategoryElement;
 
 import android.content.Context;

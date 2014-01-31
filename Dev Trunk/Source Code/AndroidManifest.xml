@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.optimusinfo.elasticpath.cortex"
+    package="com.optimusinfo.elasticpath.cortexAPI"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -37,6 +37,18 @@
             android:name="com.optimusinfo.elasticpath.cortex.product.details.ProductDetailsActivity"
             android:configChanges="orientation"
             android:label="@string/titlePageProductDetails"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.optimusinfo.elasticpath.cortex.cart.CartActivity"
+            android:configChanges="orientation"
+            android:label="@string/titlePageCart"
+            android:screenOrientation="portrait" >
+        </activity>
+         <activity
+            android:name="com.optimusinfo.elasticpath.cortex.authentication.AuthenticationActivity"
+            android:configChanges="orientation"
+            android:label="@string/titlePageCart"
             android:screenOrientation="portrait" >
         </activity>
     </application>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tvCartHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:text="@string/headingPageCart"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
+        android:textColor="@color/bg_button_login_activated" />
+
+    <ListView
+        android:id="@+id/lvCartItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btPurchase"
+        android:layout_below="@+id/tvCartHeading"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:divider="@null" >
+    </ListView>
+
+    <Button
+        android:id="@+id/btPurchase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:background="@drawable/selector_button_login"
+        android:text="@string/buttonCartPurchase"
+        android:textColor="@color/tc_textview_product_available"
+        android:textStyle="bold"
+        android:visibility="invisible" />
+
+</RelativeLayout>

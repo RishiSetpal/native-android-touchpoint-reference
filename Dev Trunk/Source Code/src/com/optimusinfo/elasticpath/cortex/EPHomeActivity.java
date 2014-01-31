@@ -7,6 +7,7 @@ import com.optimusinfo.elasticpath.cortex.common.Constants;
 import com.optimusinfo.elasticpath.cortex.common.NotificationUtils;
 import com.optimusinfo.elasticpath.cortex.configuration.EPConfiguration;
 import com.optimusinfo.elasticpath.cortex.configuration.EPCortex;
+import com.optimusinfo.elasticpath.cortexAPI.R;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -33,9 +34,15 @@ public class EPHomeActivity extends FragmentActivity {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_main);
 
+		// Disable the title
+		getActionBar().setDisplayShowTitleEnabled(false);
 		mObjPreferences = getSharedPreferences(
 				Constants.Preferences.PREFERENCES_FILE_NAME,
 				Context.MODE_PRIVATE);
+		mObjPreferences.edit().remove(Constants.Preferences.LIST_CART).commit();
+		mObjPreferences.edit()
+				.putString(Constants.Preferences.KEY_ACCESS_TOKEN_USER, "")
+				.commit();
 
 		// Get authentication token and save
 		getAuthenticationToken();
@@ -67,11 +74,6 @@ public class EPHomeActivity extends FragmentActivity {
 					@Override
 					public void run() {
 						setProgressBarIndeterminateVisibility(false);
-						NotificationUtils.showNotificationToast(
-								getApplicationContext(),
-								"Authentication Token - "
-										+ authenticationResponse
-												.getAcessToken());
 						// Add the category fragment
 						CategoryFragment fragmentNavigation = new CategoryFragment();
 						getFragmentManager()

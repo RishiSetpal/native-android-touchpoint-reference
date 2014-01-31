@@ -12,7 +12,7 @@ import com.optimusinfo.elasticpath.cortex.common.Constants;
  * 
  */
 public class ProductDetail {
-	
+
 	@SerializedName("_addtocartform")
 	protected ProductAddToCartForm[] mAddToCartForm;
 
@@ -68,23 +68,21 @@ public class ProductDetail {
 		this.mPrice = mPrice;
 	}
 
-	
-
 	/**
 	 * Gets the product list
 	 * 
 	 * @param current
-	 * @param baseUrl	
+	 * @param baseUrl
 	 * @param zoomUrl
 	 * @param accessToken
 	 * @param mProdListener
 	 */
 	public static void getProuctListingFromServer(Context current,
-			String baseUrl,String zoomUrl,
-			String accessToken, ListenerGetProductDetails mProdListener) {
+			String baseUrl, String zoomUrl, String accessToken,
+			ListenerGetProductDetails mProdListener) {
 		try {
-			new AsyncTaskGetProductDetail(current, baseUrl.concat(zoomUrl), accessToken,
-					Constants.RequestHeaders.CONTENT_TYPE_STRING,
+			new AsyncTaskGetProductDetail(current, baseUrl.concat(zoomUrl),
+					accessToken, Constants.RequestHeaders.CONTENT_TYPE_STRING,
 					Constants.RequestHeaders.CONTENT_TYPE,
 					Constants.RequestHeaders.AUTHORIZATION_STRING,
 					Constants.RequestHeaders.AUTHORIZATION_INITIALIZER,
@@ -94,7 +92,7 @@ public class ProductDetail {
 
 		}
 	}
-	
+
 	/**
 	 * Model class for add to cart section
 	 * 
@@ -151,11 +149,15 @@ public class ProductDetail {
 	 * 
 	 */
 	public class ProductDefinition {
+
 		@SerializedName("display-name")
 		protected String mDisplayName;
 
 		@SerializedName("_assets")
 		protected ProductAssets[] mProductAssets;
+
+		@SerializedName("details")
+		protected ProductDetails[] mProductDetails;
 
 		public String getDisplayName() {
 			return mDisplayName;
@@ -172,6 +174,15 @@ public class ProductDetail {
 		public void setProductAssets(ProductAssets[] mProductAssets) {
 			this.mProductAssets = mProductAssets;
 		}
+
+		public ProductDetails[] getProductDetails() {
+			return mProductDetails;
+		}
+
+		public void setProductDetails(ProductDetails[] mProductDetails) {
+			this.mProductDetails = mProductDetails;
+		}
+
 	}
 
 	/**
@@ -292,6 +303,47 @@ public class ProductDetail {
 			this.mRate = mRate;
 		}
 
+	}
+
+	/**
+	 * Model class for Product Assets section
+	 * 
+	 * @author Optimus
+	 * 
+	 */
+	public class ProductDetails {
+		@SerializedName("display-name")
+		protected String mDisplayName;
+
+		@SerializedName("display-value")
+		protected String mDisplayValue;
+
+		@SerializedName("name")
+		protected String mObjectName;
+
+		public String getDisplayName() {
+			return mDisplayName;
+		}
+
+		public void setDisplayName(String mDisplayName) {
+			this.mDisplayName = mDisplayName;
+		}
+
+		public String getDisplayValue() {
+			return mDisplayValue;
+		}
+
+		public void setDisplayValue(String mDisplayValue) {
+			this.mDisplayValue = mDisplayValue;
+		}
+
+		public String getObjectName() {
+			return mObjectName;
+		}
+
+		public void setObjectName(String mObjectName) {
+			this.mObjectName = mObjectName;
+		}
 	}
 
 	/**
