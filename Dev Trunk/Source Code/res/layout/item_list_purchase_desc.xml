@@ -12,9 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_margin="5dp"
+        android:background="@drawable/layout_bg_fragment_product_listing"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:background="@drawable/layout_bg_fragment_product_listing" >
+        android:orientation="horizontal" >
 
         <LinearLayout
             android:layout_width="0dp"
@@ -26,18 +26,18 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/tvCartProductTitle"
+                android:id="@+id/tvPurchaseProductTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
                 android:gravity="left"
+                android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/tc_textview_product_name"
-                android:singleLine="true"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvCartProductPrice"
+                android:id="@+id/tvPurchaseProductPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="2dp"
@@ -47,22 +47,10 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/tc_textview_product_price"
                 android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btRemove"
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="2dp"
-                android:background="@drawable/selector_button_addtocart"
-                android:text="@string/buttonCartRemove"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/tc_textview_product_available"
-                android:textStyle="bold" />
         </LinearLayout>
 
         <com.optimusinfo.elasticpath.cortex.common.EPImageView
-            android:id="@+id/epCartProductImage"
+            android:id="@+id/epPurchaseProductImage"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_margin="5dp"

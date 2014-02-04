@@ -101,7 +101,8 @@ public class Utils {
 				return Integer
 						.toString((Constants.ApiResponseCode.UNAUTHORIZED_ACCESS));
 			default:
-				return "";
+				return Integer.toString(httpResponse.getStatusLine()
+						.getStatusCode());
 			}
 			;
 
@@ -159,6 +160,52 @@ public class Utils {
 	}
 
 	/**
+	 * 
+	 * @param accessToken
+	 * @param postURL
+	 * @param ent
+	 * @param contentType
+	 * @return
+	 */
+	public static int postData(String postUrl, JSONObject requestBody,
+			String accessToken, String contentType,
+			String accessTokenInitializer) {
+		HttpClient client = new DefaultHttpClient();
+		try {
+
+			HttpPost postRequest = new HttpPost(postUrl);
+
+			postRequest.setHeader(Constants.RequestHeaders.CONTENT_TYPE_STRING,
+					contentType);
+			postRequest.setHeader(
+					Constants.RequestHeaders.AUTHORIZATION_STRING,
+					accessTokenInitializer + " " + accessToken);
+			if (requestBody != null) {
+				StringEntity requestEntity = new StringEntity(
+						requestBody.toString());
+				requestEntity.setContentEncoding("UTF-8");
+				requestEntity.setContentType(contentType);
+
+				postRequest.setEntity(requestEntity);
+			}
+
+			HttpResponse responsePOST = client.execute(postRequest);
+
+			Log.i("POST RESPONSE",
+					EntityUtils.toString(responsePOST.getEntity()));
+
+			return responsePOST.getStatusLine().getStatusCode();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} finally {
+			client.getConnectionManager().shutdown();
+		}
+		return 0;
+	}
+
+	/**
 	 * Creates a HTTP post request and posts it
 	 * 
 	 * @param postURL
@@ -172,7 +219,6 @@ public class Utils {
 			String contentType) {
 
 		try {
-
 			HttpClient client = new DefaultHttpClient();
 			HttpPost post = new HttpPost(postURL);
 			post.setHeader("Content-Type", contentType);
@@ -182,38 +228,6 @@ public class Utils {
 			String response = null;
 			if (resEntity != null) {
 				response = EntityUtils.toString(resEntity);
-			}
-			return response;
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	/**
-	 * 
-	 * @param accessToken
-	 * @param postURL
-	 * @param ent
-	 * @param contentType
-	 * @return
-	 */
-	public static String postData(String accessToken, String postURL,
-			JSONObject objInput, String contentType) {
-
-		try {
-			HttpClient client = new DefaultHttpClient();
-			HttpPost post = new HttpPost(postURL);
-			post.setHeader("Content-Type", contentType);
-			post.setHeader("Authorization", "Bearer " + accessToken);
-			post.setEntity(new StringEntity(objInput.toString(), "UTF-8"));
-			HttpResponse responsePOST = client.execute(post);
-			HttpEntity resEntity = responsePOST.getEntity();
-			String response = null;
-			if (resEntity != null) {
-				response = EntityUtils.toString(resEntity);				
 			}
 			return response;
 		} catch (IOException e) {

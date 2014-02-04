@@ -2,10 +2,19 @@ package com.optimusinfo.elasticpath.cortex.common;
 
 public class Constants {
 
+	public class Authentication {
+		public static final String HEADER_GRANT_TYPE = "grant_type";
+		public static final String HEADER_USERNAME = "username";
+		public static final String HEADER_PASSWORD = "password";
+		public static final String HEADER_SCOPE = "scope";
+		public static final String HEADER_ROLE = "role";
+	}
+
 	public class Config {
 		public static final String FILE_NAME_CONFIG = "config.json";
 		public static final String CONTENT_TYPE = "application/x-www-form-urlencoded";
 		public static final String CONTENT_TYPE_ADD_TO_CART = "application/json";
+		public static final String CONTENT_TYPE_PURCHASE_ORDER = "application/json";
 	}
 
 	public class Routes {
@@ -24,6 +33,7 @@ public class Constants {
 		public static final String URL_ZOOM_NAVIGATIONS = "?zoom=element";
 		public static final String URL_ZOOM_PRODUCT_LISTING = "?zoom=element,element:availability,element:definition,element:definition:assets:element,element:price,element:rate,element:addtocartform";
 		public static final String URL_ZOOM_PRODUCT_DETAILS = "?zoom=availability,addtocartform,price,rate,definition,definition:assets:element";
+		public static final String URL_ZOOM_CART = "/default?zoom=total,lineitems:element,lineitems:element:price,lineitems:element:rate,lineitems:element:availability,lineitems:element:item,lineitems:element:item:definition,lineitems:element:item:definition:assets:element,lineitems:element:item:price,lineitems:element:item:rate,order:purchaseform,order:billingaddressinfo:selector:choice:description,order:billingaddressinfo:selector:chosen:description,order:tax,order:total";
 	}
 
 	public class PageUrl {
@@ -34,6 +44,7 @@ public class Constants {
 		public static final String INTENT_PRODUCT_PRICE = "productPrice";
 		public static final String INTENT_PRODUCT_IMAGE = "productImage";
 		public static final String INTENT_PRODUCT_QUANT = "productQuantity";
+		public static final String INTENT_PURCHASE_URL = "purchaseURL";
 	}
 
 	public class Preferences {

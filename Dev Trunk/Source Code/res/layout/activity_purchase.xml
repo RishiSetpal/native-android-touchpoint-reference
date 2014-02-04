@@ -13,37 +13,22 @@
         android:layout_margin="0dp"
         android:background="@color/bg_pager_titlestrip_productlisting"
         android:gravity="center"
-        android:text="@string/headingPageCart"
+        android:text="@string/headingPagePurchase"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/tc_pager_titlestrip_productlisting"
         android:textStyle="bold" />
 
     <ListView
-        android:id="@+id/lvCartItems"
+        android:id="@+id/lvPurchaseItems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btPurchase"
         android:layout_below="@+id/tvCartHeading"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
-        android:divider="@null" >
-    </ListView>
-
-    <Button
-        android:id="@+id/btPurchase"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="0dp"
-        android:background="@drawable/selector_button_login"
-        android:padding="10dp"
-        android:text="@string/buttonCartPurchase"
-        android:textColor="@color/tc_textview_product_available"
-        android:textStyle="bold"
-        android:visibility="invisible" />
+        android:layout_marginTop="10dp"
+        android:divider="@null" >
+    </ListView>
 
 </RelativeLayout>

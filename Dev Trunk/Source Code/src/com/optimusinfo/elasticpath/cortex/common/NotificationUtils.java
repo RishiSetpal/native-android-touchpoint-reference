@@ -28,6 +28,11 @@ public class NotificationUtils {
 					Toast.LENGTH_LONG).show();
 			break;
 		default:
+			Toast.makeText(
+					current,
+					erroCode + " - "
+							+ current.getString(R.string.msgErrorServer),
+					Toast.LENGTH_LONG).show();
 			break;
 		}
 	}

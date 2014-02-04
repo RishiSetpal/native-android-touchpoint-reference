@@ -100,14 +100,14 @@ public class ProductDetail {
 	 * 
 	 */
 	public class ProductAddToCartForm {
-		@SerializedName("links")
-		protected ProductLinks[] mProductLinks;
+		@SerializedName("self")
+		protected ProductLinks mProductLinks;
 
-		public ProductLinks[] getProductLinks() {
+		public ProductLinks getProductLinks() {
 			return mProductLinks;
 		}
 
-		public void setProductLinks(ProductLinks[] mProductLinks) {
+		public void setProductLinks(ProductLinks mProductLinks) {
 			this.mProductLinks = mProductLinks;
 		}
 	}
@@ -119,19 +119,9 @@ public class ProductDetail {
 	 * 
 	 */
 	public class ProductLinks {
-		@SerializedName("rel")
-		protected String mRelation;
-
+		
 		@SerializedName("href")
 		protected String mHREF;
-
-		public String getRelation() {
-			return mRelation;
-		}
-
-		public void setRelation(String mRelation) {
-			this.mRelation = mRelation;
-		}
 
 		public String getHREF() {
 			return mHREF;

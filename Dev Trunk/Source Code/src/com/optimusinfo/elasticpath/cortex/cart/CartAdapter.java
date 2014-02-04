@@ -1,8 +1,5 @@
 package com.optimusinfo.elasticpath.cortex.cart;
 
-import com.optimusinfo.elasticpath.cortex.cart.CartActivity.ProductCartDetails;
-import com.optimusinfo.elasticpath.cortex.common.EPImageView;
-import com.optimusinfo.elasticpath.cortexAPI.R;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,16 +7,22 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.optimusinfo.elasticpath.cortex.cart.CartModel.Element;
+import com.optimusinfo.elasticpath.cortex.cart.CartModel.ItemPrice;
+import com.optimusinfo.elasticpath.cortex.cart.CartModel.ItemRate;
+import com.optimusinfo.elasticpath.cortex.common.EPImageView;
+import com.optimusinfo.elasticpath.cortexAPI.R;
+
 /**
  * This class shows the list view for description of a product
  * 
  * @author Optimus
  * 
  */
-public class CartAdapter extends ArrayAdapter<ProductCartDetails> {
+public class CartAdapter extends ArrayAdapter<Element> {
 
 	private final Context mCurrent;
-	private final ProductCartDetails[] mListDetails;
+	private final Element[] mListDetails;
 
 	/**
 	 * 
@@ -27,10 +30,16 @@ public class CartAdapter extends ArrayAdapter<ProductCartDetails> {
 	 * @param resource
 	 * @param objects
 	 */
-	public CartAdapter(Context context, ProductCartDetails[] objects) {
+	public CartAdapter(Context context, Element[] objects) {
 		super(context, R.layout.item_list_cart_description, objects);
 		mCurrent = context;
 		mListDetails = objects;
+	}
+
+	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return mListDetails.length;
 	}
 
 	@Override
@@ -43,24 +52,37 @@ public class CartAdapter extends ArrayAdapter<ProductCartDetails> {
 		row = inflater.inflate(R.layout.item_list_cart_description, parent,
 				false);
 
-		ProductCartDetails objDetails = mListDetails[position];
+		Element objDetails = mListDetails[position];
 
-		if (objDetails.getProductTitle() != null) {
+		ItemPrice[] objItemPrice = objDetails.getItemsPrice();
+		ItemRate[] objItemRate = objDetails.getItemsRate();
+
+		if (objDetails.getItems()[0].getDefinitions()[0].getDisplayName() != null) {
 			TextView tvTitle = (TextView) row
 					.findViewById(R.id.tvCartProductTitle);
-			tvTitle.setText(objDetails.getProductTitle());
+			tvTitle.setText(objDetails.getItems()[0].getDefinitions()[0]
+					.getDisplayName());
+		}
+		TextView tvPrice = (TextView) row
+				.findViewById(R.id.tvCartProductPrice);
+		if (objItemPrice != null) {			
+			tvPrice.setText("Price \t".concat(objItemPrice[0]
+					.getProductPrices()[0].getDisplayPrice()));
+		} else if (objItemRate !=null){
+			tvPrice.setText("Price \t".concat(objItemRate[0]
+					.getProductPrices()[0].getDisplayPrice()));
 		}
 
-		if (objDetails.getProductPrice() != null) {
-			TextView tvPrice = (TextView) row
-					.findViewById(R.id.tvCartProductPrice);
-			tvPrice.setText("Price \t".concat(objDetails.getProductPrice()));
-		}
+		// Set the image
+		try {
 
-		if (objDetails.getProductImageUrl() != null) {
 			EPImageView ivImage = (EPImageView) row
 					.findViewById(R.id.epCartProductImage);
-			ivImage.setImageUrl(objDetails.getProductImageUrl());
+			ivImage.setImageUrl(objDetails.getItems()[0].getDefinitions()[0]
+					.getItemAssets()[0].getAssetsElements()[0].getImageUrl());
+
+		} catch (NullPointerException e) {
+
 		}
 		return row;
 	}

@@ -8,7 +8,7 @@ package com.optimusinfo.elasticpath.cortex.cart;
  */
 public interface ListenerAddToCart {
 
-	void onTaskSuccessful(String response);
+	void onTaskSuccessful(int responseCode);
 
 	void onTaskFailed(int errorCode);
 

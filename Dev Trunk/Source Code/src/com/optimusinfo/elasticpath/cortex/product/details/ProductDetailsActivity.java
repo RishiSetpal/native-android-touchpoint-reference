@@ -26,6 +26,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class ProductDetailsActivity extends FragmentActivity {
@@ -143,8 +144,6 @@ public class ProductDetailsActivity extends FragmentActivity {
 		TextView tvTitle = (TextView) findViewById(R.id.tvProductDetailTitle);
 		if (definition != null) {
 			tvTitle.setText(definition[0].getDisplayName());
-			mCartIntent.putExtra(Constants.PageUrl.INTENT_PRODUCT_TITLE,
-					definition[0].getDisplayName());
 		}
 
 		ProductDetails[] description = definition[0].getProductDetails();
@@ -161,13 +160,9 @@ public class ProductDetailsActivity extends FragmentActivity {
 		if (price != null) {
 			tvPrice.setText("Price \t".concat(price[0].getProductPrice()[0]
 					.getDisplay()));
-			mCartIntent.putExtra(Constants.PageUrl.INTENT_PRODUCT_PRICE,
-					price[0].getProductPrice()[0].getDisplay());
 		} else if (rate != null) {
 			tvPrice.setText("Price \t".concat(rate[0].getProductRates()[0]
 					.getRate()));
-			mCartIntent.putExtra(Constants.PageUrl.INTENT_PRODUCT_PRICE,
-					rate[0].getProductRates()[0].getRate());
 		}
 
 		// Set the product image
@@ -175,24 +170,25 @@ public class ProductDetailsActivity extends FragmentActivity {
 		EPImageView ivImage = (EPImageView) findViewById(R.id.ivProductDetail);
 		if (assets != null) {
 			ivImage.setImageUrl(assets[0].getProductImages()[0].getImageUrl());
-			mCartIntent.putExtra(Constants.PageUrl.INTENT_PRODUCT_IMAGE,
-					assets[0].getProductImages()[0].getImageUrl());
 		}
 
+		final Spinner spQuantity = (Spinner) findViewById(R.id.spProductQuantity);
 		// Initialize the add to cart button
 		ProductAddToCartForm addToCartForm = product.getAddToCartForm()[0];
-		final ProductLinks[] addToCartLinks = addToCartForm.getProductLinks();
+		final ProductLinks addToCartLinks = addToCartForm.getProductLinks();
 		Button btAddToCart = (Button) findViewById(R.id.btProductDetailAddToCart);
 
-		if (addToCartLinks != null && addToCartLinks.length != 0) {
+		if (addToCartLinks != null) {
 			btAddToCart.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					// Start the product details activity
+					mCartIntent.putExtra(
+							Constants.PageUrl.INTENT_PRODUCT_QUANT, spQuantity
+									.getSelectedItem().toString());
 					mCartIntent.putExtra(Constants.PageUrl.INTENT_CART_URL,
-							addToCartLinks[0].getHREF());
+							addToCartLinks.getHREF());
 					startActivity(mCartIntent);
-
 				}
 			});
 		} else {

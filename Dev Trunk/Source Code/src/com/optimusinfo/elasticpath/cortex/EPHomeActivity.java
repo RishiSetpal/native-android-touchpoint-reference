@@ -31,11 +31,14 @@ public class EPHomeActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// Enable the flag for showing loader at the top right corner
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
 		setContentView(R.layout.activity_main);
 
 		// Disable the title
 		getActionBar().setDisplayShowTitleEnabled(false);
+
 		mObjPreferences = getSharedPreferences(
 				Constants.Preferences.PREFERENCES_FILE_NAME,
 				Context.MODE_PRIVATE);
@@ -43,23 +46,20 @@ public class EPHomeActivity extends FragmentActivity {
 		mObjPreferences.edit()
 				.putString(Constants.Preferences.KEY_ACCESS_TOKEN_USER, "")
 				.commit();
-
 		// Get authentication token and save
 		getAuthenticationToken();
-
 	}
 
 	/**
 	 * This function creates an asynchronous task to get the public
 	 * authentication token
 	 */
-	public void getAuthenticationToken() {
-
+	private void getAuthenticationToken() {
+		// Get the cortex configuration parameters
 		EPCortex objCortexParams = EPConfiguration.getConfigurationParameters(
 				getApplicationContext(), Constants.Config.FILE_NAME_CONFIG);
 
 		mAuthListener = new ListenerAsyncTaskAuthentication() {
-
 			@Override
 			public void onTaskComplete(
 					final Authentication authenticationResponse) {
@@ -69,7 +69,6 @@ public class EPHomeActivity extends FragmentActivity {
 						.putString(Constants.Preferences.KEY_ACCESS_TOKEN,
 								authenticationResponse.getAcessToken())
 						.commit();
-
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
@@ -100,8 +99,8 @@ public class EPHomeActivity extends FragmentActivity {
 		setProgressBarIndeterminateVisibility(true);
 		// get the user authentication and save it to shared preferences
 		Authentication.getTokenFromServer(getApplicationContext(),
-				objCortexParams.getEndpoint(), mAuthListener, false, null,
-				null, objCortexParams.getScope(), objCortexParams.getRole());
+				objCortexParams.getEndpoint(), mAuthListener, null, null,
+				objCortexParams.getScope(), objCortexParams.getRole());
 
 	}
 
@@ -119,5 +118,4 @@ public class EPHomeActivity extends FragmentActivity {
 	public void setObjPreferences(SharedPreferences mObjPreferences) {
 		this.mObjPreferences = mObjPreferences;
 	}
-
 }

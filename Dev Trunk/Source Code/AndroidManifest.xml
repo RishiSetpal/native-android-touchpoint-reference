@@ -51,6 +51,12 @@
             android:label="@string/titlePageCart"
             android:screenOrientation="portrait" >
         </activity>
+         <activity
+            android:name="com.optimusinfo.elasticpath.cortex.purchase.PurchaseActivity"
+            android:configChanges="orientation"
+            android:label="@string/titlePageCart"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

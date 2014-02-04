@@ -26,7 +26,7 @@ public class Authentication {
 	protected String mScope;
 
 	@SerializedName("role")
-	protected String mRole;	
+	protected String mRole;
 
 	public String getAcessToken() {
 		return mAcessToken;
@@ -90,12 +90,12 @@ public class Authentication {
 	 *            - user role
 	 */
 	public static void getTokenFromServer(Context current, String urlEndpoint,
-			ListenerAsyncTaskAuthentication objListener, boolean showDialogs,
-			String username, String password, String scope, String role) {
+			ListenerAsyncTaskAuthentication objListener, String username,
+			String password, String scope, String role) {
 		try {
 			AsyncTaskAuthentication taskGetAcessToken = new AsyncTaskAuthentication(
-					current, urlEndpoint, objListener, showDialogs, username,
-					password, scope, role, Constants.Config.CONTENT_TYPE,
+					current, urlEndpoint, objListener, username, password,
+					scope, role, Constants.Config.CONTENT_TYPE,
 					Constants.Routes.AUTH_ROUTE);
 			taskGetAcessToken.execute();
 		} catch (NullPointerException e) {

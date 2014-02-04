@@ -237,8 +237,7 @@ public class ProductLisitngActivity extends FragmentActivity {
 			ProductAvailability[] availability = mElement.getAvailability();
 			final ProductAddToCartForm addToCartForm = mElement
 					.getAddToCartForm()[0];
-			final ProductLinks[] addToCartLinks = addToCartForm
-					.getProductLinks();
+			final ProductLinks addToCartLinks = addToCartForm.getProductLinks();
 			// Start the product details activity
 			final Intent mCartIntent = new Intent(getActivity(),
 					CartActivity.class);
@@ -247,8 +246,6 @@ public class ProductLisitngActivity extends FragmentActivity {
 			if (definition != null) {
 				((TextView) rootView.findViewById(R.id.tvProductListingTitle))
 						.setText(definition[0].getDisplayName());
-				mCartIntent.putExtra(Constants.PageUrl.INTENT_PRODUCT_TITLE,
-						definition[0].getDisplayName());
 			}
 
 			// set product price
@@ -256,22 +253,16 @@ public class ProductLisitngActivity extends FragmentActivity {
 				((TextView) rootView.findViewById(R.id.tvProductListingPrice))
 						.setText("Price\t".concat(price[0].getProductPrice()[0]
 								.getDisplay()));
-				mCartIntent.putExtra(Constants.PageUrl.INTENT_PRODUCT_PRICE,
-						price[0].getProductPrice()[0].getDisplay());
 			} else if (rate != null) {
 				((TextView) rootView.findViewById(R.id.tvProductListingPrice))
 						.setText("Price\t".concat(rate[0].getProductRates()[0]
 								.getRate()));
-				mCartIntent.putExtra(Constants.PageUrl.INTENT_PRODUCT_PRICE,
-						rate[0].getProductRates()[0].getRate());
 			}
 			// set product image
 			if (asset != null) {
 				((EPImageView) rootView.findViewById(R.id.ivProductListing))
 						.setImageUrl(asset[0].getProductImages()[0]
 								.getImageUrl());
-				mCartIntent.putExtra(Constants.PageUrl.INTENT_PRODUCT_IMAGE,
-						asset[0].getProductImages()[0].getImageUrl());
 			}
 			// set product availability
 			if (availability != null) {
@@ -289,14 +280,17 @@ public class ProductLisitngActivity extends FragmentActivity {
 				}
 			}
 
-			if (addToCartLinks != null && addToCartLinks.length != 0) {
+			if (addToCartLinks != null) {
 				((Button) rootView.findViewById(R.id.btAddToCart))
 						.setOnClickListener(new View.OnClickListener() {
 							@Override
 							public void onClick(View v) {
 								mCartIntent.putExtra(
 										Constants.PageUrl.INTENT_CART_URL,
-										addToCartLinks[0].getHREF());
+										addToCartLinks.getHREF());
+								mCartIntent.putExtra(
+										Constants.PageUrl.INTENT_PRODUCT_QUANT,
+										"1");
 								startActivity(mCartIntent);
 							}
 						});

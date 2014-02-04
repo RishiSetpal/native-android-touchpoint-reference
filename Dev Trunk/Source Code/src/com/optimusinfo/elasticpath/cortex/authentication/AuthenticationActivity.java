@@ -1,5 +1,6 @@
 package com.optimusinfo.elasticpath.cortex.authentication;
 
+import com.optimusinfo.elasticpath.cortex.cart.CartActivity;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
 import com.optimusinfo.elasticpath.cortex.common.NotificationUtils;
 import com.optimusinfo.elasticpath.cortex.configuration.EPConfiguration;
@@ -8,6 +9,7 @@ import com.optimusinfo.elasticpath.cortexAPI.R;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -70,7 +72,10 @@ public class AuthenticationActivity extends FragmentActivity {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			// Incase user presses back button from top navigation
-			super.onBackPressed();
+			Intent intent = new Intent(AuthenticationActivity.this,
+					CartActivity.class);
+			setResult(0, intent);
+			finish();// finishing activity
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -88,7 +93,14 @@ public class AuthenticationActivity extends FragmentActivity {
 		btPurchase.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				getAuthenticationToken();
+				if (tvUsername.getText().toString().length() != 0
+						&& tvPassword.getText().toString().length() != 0) {
+					getAuthenticationToken();
+				} else {
+					NotificationUtils.showNotificationToast(
+							getApplicationContext(),
+							"Please enter a username and password.");
+				}
 			}
 		});
 	}
@@ -123,7 +135,15 @@ public class AuthenticationActivity extends FragmentActivity {
 					@Override
 					public void run() {
 						setProgressBarIndeterminateVisibility(false);
-						onBackPressed();
+						Intent intent = new Intent(AuthenticationActivity.this,
+								CartActivity.class);
+						intent.putExtra(
+								Constants.Preferences.KEY_ACCESS_TOKEN_USER,
+								authenticationResponse.getAcessToken());
+						setResult(
+								CartActivity.RESULT_CODE_AUTHENTICATION_SUCESSFUL,
+								intent);
+						finish();// finishing activity
 					}
 				});
 			}
@@ -134,8 +154,9 @@ public class AuthenticationActivity extends FragmentActivity {
 					@Override
 					public void run() {
 						setProgressBarIndeterminateVisibility(false);
-						NotificationUtils.showErrorToast(
-								AuthenticationActivity.this, errorCode);
+						NotificationUtils.showNotificationToast(
+								getApplicationContext(), errorCode + " - "
+										+ "Incorrect username or password");
 					}
 				});
 			}
@@ -144,9 +165,19 @@ public class AuthenticationActivity extends FragmentActivity {
 		setProgressBarIndeterminateVisibility(true);
 		// get the user authentication and save it to shared preferences
 		Authentication.getTokenFromServer(getApplicationContext(),
-				objCortexParams.getEndpoint(), mAuthListener, false, tvUsername
+				objCortexParams.getEndpoint(), mAuthListener, tvUsername
 						.getText().toString(), tvPassword.getText().toString(),
 				objCortexParams.getScope(), "REGISTERED");
 
 	}
+
+	@Override
+	public void onBackPressed() {
+		// Incase user presses back button from top navigation
+		Intent intent = new Intent(AuthenticationActivity.this,
+				CartActivity.class);
+		setResult(0, intent);
+		finish();// finishing activity
+	}
+
 }

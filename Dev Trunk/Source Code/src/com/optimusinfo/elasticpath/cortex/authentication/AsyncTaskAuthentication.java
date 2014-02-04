@@ -12,7 +12,6 @@ import org.apache.http.protocol.HTTP;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
@@ -27,7 +26,6 @@ import com.optimusinfo.elasticpath.cortex.common.Utils;
 public class AsyncTaskAuthentication extends AsyncTask<Void, Void, Boolean> {
 
 	protected String mCortexUrl;
-	protected boolean mShowDialog;
 	protected Context mCurrent;
 	protected Gson mObjGson;
 	protected ListenerAsyncTaskAuthentication mListener;
@@ -44,14 +42,11 @@ public class AsyncTaskAuthentication extends AsyncTask<Void, Void, Boolean> {
 	 * @param currentActivity
 	 *            the activity calling the async task
 	 * @param url
-	 *            the base url for this aync task
+	 *            the base url for this async task
 	 * @param listener
 	 *            the listener receiving the responses
-	 * @param showDialogs
-	 *            the flag determining whether the dialogs has to be shown or
-	 *            not
 	 * @param userNameLoginForm
-	 *            the username for which the auth token has to be generated
+	 *            the user name for which the auth token has to be generated
 	 * @param passwordLoginForm
 	 *            the password using which the auth token has to be generated
 	 * @param scope
@@ -64,11 +59,10 @@ public class AsyncTaskAuthentication extends AsyncTask<Void, Void, Boolean> {
 	 *            the route URL to be used for calling the cortex auth API
 	 */
 	public AsyncTaskAuthentication(Context current, String url,
-			ListenerAsyncTaskAuthentication listener, boolean showDialogs,
-			String userNameLoginForm, String passwordLoginForm, String scope,
-			String role, String contentType, String route) {
+			ListenerAsyncTaskAuthentication listener, String userNameLoginForm,
+			String passwordLoginForm, String scope, String role,
+			String contentType, String route) {
 		mCurrent = current;
-		mShowDialog = showDialogs;
 		mObjGson = new Gson();
 		mListener = listener;
 		mUsername = userNameLoginForm;
@@ -78,63 +72,66 @@ public class AsyncTaskAuthentication extends AsyncTask<Void, Void, Boolean> {
 		mRole = role;
 		mContentType = contentType;
 		mRoute = route;
-
-		Log.i("AUTH PARAMS", mCortexUrl + mScope + mRole);
 	}
 
 	@Override
 	protected Boolean doInBackground(Void... params) {
 		try {
 			if (Utils.isNetworkAvailable(mCurrent)) {
-
 				// Create the HTTP post Request
 				List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+				// Add grant type
 				parameters
-						.add(new BasicNameValuePair("grant_type", "password"));
+						.add(new BasicNameValuePair(
+								Constants.Authentication.HEADER_GRANT_TYPE,
+								"password"));
+				// Add user name only if provided
 				if (mUsername != null && mUsername.length() != 0) {
 					parameters
-							.add(new BasicNameValuePair("username", mUsername));
+							.add(new BasicNameValuePair(
+									Constants.Authentication.HEADER_USERNAME,
+									mUsername));
 				}
+				// Add pass word only if provided
 				if (mPassword != null && mPassword.length() != 0) {
 					parameters
-							.add(new BasicNameValuePair("password", mPassword));
+							.add(new BasicNameValuePair(
+									Constants.Authentication.HEADER_PASSWORD,
+									mPassword));
 				}
+				// Add scope header
 				parameters.add(new BasicNameValuePair("scope", mScope));
+				// Add role header
 				parameters.add(new BasicNameValuePair("role", mRole));
 
 				try {
 					// Post the Request
 					UrlEncodedFormEntity ent = new UrlEncodedFormEntity(
 							parameters, HTTP.UTF_8);
-					String entityString = Utils.postData(mCortexUrl + mRoute,
+					
+					String entityResponse = Utils.postData(mCortexUrl + mRoute,
 							ent, mContentType);
-					Log.i("Authentication" , entityString);
-					mListener.onTaskComplete(mObjGson.fromJson(entityString,
+					mListener.onTaskComplete(mObjGson.fromJson(entityResponse,
 							Authentication.class));
 					return true;
 				} catch (IOException e) {
-					e.printStackTrace();
-					return false;
+					e.printStackTrace();					
 				} catch (ParseException e) {
-					e.printStackTrace();
-					return false;
-				} catch (JsonSyntaxException e){
-					e.printStackTrace();
-					return false;
+					e.printStackTrace();					
+				} catch (JsonSyntaxException e) {
+					e.printStackTrace();					
 				}
 			} else {
 				mListener.onTaskFailed(Constants.ErrorCodes.ERROR_NETWORK);
 			}
 		} catch (NullPointerException e) {
-			e.printStackTrace();
-			return false;
+			e.printStackTrace();			
 		}
 		return false;
 	}
 
 	@Override
 	protected void onPostExecute(Boolean result) {
-
 		super.onPostExecute(result);
 		if (!result) {
 			mListener.onTaskFailed(Constants.ErrorCodes.ERROR_SERVER);

@@ -9,6 +9,12 @@ import com.optimusinfo.elasticpath.cortex.common.Utils;
 
 import android.os.AsyncTask;
 
+/**
+ * This class executes the add to default cart request
+ * 
+ * @author Optimus
+ * 
+ */
 public class AsyncTaskAddToCart extends AsyncTask<Void, Void, Boolean> {
 
 	protected int mQuantityToAdd;
@@ -40,14 +46,15 @@ public class AsyncTaskAddToCart extends AsyncTask<Void, Void, Boolean> {
 		try {
 			JSONObject objInput = new JSONObject();
 			objInput.put("quantity", mQuantityToAdd);
-			String entityString = Utils.postData(accessToken, urlAddToCartForm,
-					objInput, contentTypeRequest);
-			if (entityString != null && entityString.length() != 0) {
-				mListener.onTaskSuccessful(entityString);
-				return true;
+			int responseCode = Utils.postData(urlAddToCartForm, objInput,
+					accessToken, Constants.RequestHeaders.CONTENT_TYPE,
+					Constants.RequestHeaders.AUTHORIZATION_INITIALIZER);
+			if (responseCode == 201) {
+				mListener.onTaskSuccessful(responseCode);
 			} else {
-				mListener.onTaskFailed(Constants.ErrorCodes.ERROR_SERVER);
+				mListener.onTaskFailed(responseCode);
 			}
+			return true;
 		} catch (ParseException e) {
 			e.printStackTrace();
 		} catch (JSONException e) {
