@@ -3,6 +3,7 @@ package com.optimusinfo.elasticpath.cortex.product.details;
 import com.optimusinfo.elasticpath.cortexAPI.R;
 import com.optimusinfo.elasticpath.cortex.cart.CartActivity;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
+import com.optimusinfo.elasticpath.cortex.common.EPFragmentActivity;
 import com.optimusinfo.elasticpath.cortex.common.EPImageView;
 import com.optimusinfo.elasticpath.cortex.common.NotificationUtils;
 import com.optimusinfo.elasticpath.cortex.product.details.ProductDetail.ProductAddToCartForm;
@@ -14,22 +15,17 @@ import com.optimusinfo.elasticpath.cortex.product.details.ProductDetail.ProductL
 import com.optimusinfo.elasticpath.cortex.product.details.ProductDetail.ProductPrice;
 import com.optimusinfo.elasticpath.cortex.product.details.ProductDetail.ProductRates;
 
-import android.app.ActionBar;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-public class ProductDetailsActivity extends FragmentActivity {
+public class ProductDetailsActivity extends EPFragmentActivity {
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -40,35 +36,47 @@ public class ProductDetailsActivity extends FragmentActivity {
 	 * memory and is a best practice when allowing navigation between objects in
 	 * a potentially large collection.
 	 */
-	protected String mProductBaseUrl, mAccessToken;
-	protected SharedPreferences mPreferences;
+	protected String mProductBaseUrl;
 	protected ListenerGetProductDetails mListenerGetProductDetails;
+	protected ProductDetail mProductDef;
 
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-
+		super.onCreate(savedInstanceState);		
 		setContentView(R.layout.activity_product_details);
-
-		mProductBaseUrl = getIntent().getStringExtra(
-				Constants.PageUrl.INTENT_BASE_URL);
-		mPreferences = getSharedPreferences(
-				Constants.Preferences.PREFERENCES_FILE_NAME,
-				Context.MODE_PRIVATE);
-		mAccessToken = mPreferences.getString(
-				Constants.Preferences.KEY_ACCESS_TOKEN, "");
-
-		// Set up action bar.
-		final ActionBar actionBar = getActionBar();
-
+		// Initialize the params objects
+		super.initializeParams();
+		// Disable the title
+		mObjActionBar.setDisplayShowTitleEnabled(false);
 		// Specify that the Home button should show an "Up" caret, indicating
 		// that touching the
 		// button will take the user one step up in the application's hierarchy.
-		actionBar.setDisplayHomeAsUpEnabled(true);
+		mObjActionBar.setDisplayHomeAsUpEnabled(true);
 
-		// Get the product details
-		getProductDetails();
+		mProductBaseUrl = getIntent().getStringExtra(
+				Constants.PageUrl.INTENT_BASE_URL);
 
+		if (savedInstanceState != null) {
+			mProductDef = (ProductDetail) savedInstanceState
+					.getSerializable("Object");
+		}
+
+		if (mProductDef != null) {
+			initializeViews();
+		} else {
+			// Get the product details
+			getProductDetails();
+		}
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
+		try {
+			outState.putSerializable("Object", mProductDef);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	@Override
@@ -88,12 +96,13 @@ public class ProductDetailsActivity extends FragmentActivity {
 
 			@Override
 			public void onTaskSuccessful(final Object dataNavigations) {
+				mProductDef = (ProductDetail) dataNavigations;
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
 						setProgressBarIndeterminateVisibility(false);
 						// Update the views
-						initializeViews((ProductDetail) dataNavigations);
+						initializeViews();
 					}
 				});
 			}
@@ -125,13 +134,13 @@ public class ProductDetailsActivity extends FragmentActivity {
 		setProgressBarIndeterminateVisibility(true);
 		ProductDetail.getProuctListingFromServer(getApplicationContext(),
 				mProductBaseUrl, Constants.ZoomUrl.URL_ZOOM_PRODUCT_DETAILS,
-				mAccessToken, mListenerGetProductDetails);
+				getUserAuthenticationToken(), mListenerGetProductDetails);
 	}
 
 	/**
 	 * This function updates the views with data
 	 */
-	private void initializeViews(ProductDetail product) {
+	private void initializeViews() {
 
 		LinearLayout llProductDetails = (LinearLayout) findViewById(R.id.llProductDetails);
 		llProductDetails.setVisibility(View.VISIBLE);
@@ -140,7 +149,7 @@ public class ProductDetailsActivity extends FragmentActivity {
 		final Intent mCartIntent = new Intent(ProductDetailsActivity.this,
 				CartActivity.class);
 		// Set the product name
-		ProductDefinition[] definition = product.getDefinition();
+		ProductDefinition[] definition = mProductDef.getDefinition();
 		TextView tvTitle = (TextView) findViewById(R.id.tvProductDetailTitle);
 		if (definition != null) {
 			tvTitle.setText(definition[0].getDisplayName());
@@ -154,15 +163,13 @@ public class ProductDetailsActivity extends FragmentActivity {
 		}
 
 		// Set the product price
-		ProductPrice[] price = product.getPrice();
-		ProductRates[] rate = product.getRates();
+		ProductPrice[] price = mProductDef.getPrice();
+		ProductRates[] rate = mProductDef.getRates();
 		TextView tvPrice = (TextView) findViewById(R.id.tvProductDetailPrice);
 		if (price != null) {
-			tvPrice.setText("Price \t".concat(price[0].getProductPrice()[0]
-					.getDisplay()));
+			tvPrice.setText(price[0].getProductPrice()[0].getDisplay());
 		} else if (rate != null) {
-			tvPrice.setText("Price \t".concat(rate[0].getProductRates()[0]
-					.getRate()));
+			tvPrice.setText(rate[0].getProductRates()[0].getRate());
 		}
 
 		// Set the product image
@@ -172,9 +179,8 @@ public class ProductDetailsActivity extends FragmentActivity {
 			ivImage.setImageUrl(assets[0].getProductImages()[0].getImageUrl());
 		}
 
-		final Spinner spQuantity = (Spinner) findViewById(R.id.spProductQuantity);
 		// Initialize the add to cart button
-		ProductAddToCartForm addToCartForm = product.getAddToCartForm()[0];
+		ProductAddToCartForm addToCartForm = mProductDef.getAddToCartForm()[0];
 		final ProductLinks addToCartLinks = addToCartForm.getProductLinks();
 		Button btAddToCart = (Button) findViewById(R.id.btProductDetailAddToCart);
 
@@ -184,8 +190,7 @@ public class ProductDetailsActivity extends FragmentActivity {
 				public void onClick(View v) {
 					// Start the product details activity
 					mCartIntent.putExtra(
-							Constants.PageUrl.INTENT_PRODUCT_QUANT, spQuantity
-									.getSelectedItem().toString());
+							Constants.PageUrl.INTENT_PRODUCT_QUANT, "1");
 					mCartIntent.putExtra(Constants.PageUrl.INTENT_CART_URL,
 							addToCartLinks.getHREF());
 					startActivity(mCartIntent);
@@ -196,7 +201,7 @@ public class ProductDetailsActivity extends FragmentActivity {
 		}
 
 		// Initialize the product availability
-		ProductAvailability[] availability = product.getAvailability();
+		ProductAvailability[] availability = mProductDef.getAvailability();
 		TextView tvAvailable = (TextView) findViewById(R.id.tvProductDetailAvailable);
 		if (availability != null) {
 			String isAvailable = availability[0].getState();

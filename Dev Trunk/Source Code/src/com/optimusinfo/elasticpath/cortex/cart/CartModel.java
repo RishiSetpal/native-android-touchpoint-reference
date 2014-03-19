@@ -1,19 +1,35 @@
 package com.optimusinfo.elasticpath.cortex.cart;
 
+import java.io.Serializable;
+
 import android.content.Context;
 
 import com.google.gson.annotations.SerializedName;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
 
-public class CartModel {
+public class CartModel implements Serializable {
 	@SerializedName("_lineitems")
 	protected CartLineItems[] mLineItems;
 
 	@SerializedName("_order")
 	protected CartOrder[] mOrderitems;
 
+	@SerializedName("_total")
+	protected CartTotal[] mCartTotal;
+
+	@SerializedName("total-quantity")
+	protected String mTotalQuantity;
+
 	public CartLineItems[] getLineItems() {
 		return mLineItems;
+	}
+
+	public CartTotal[] getCartTotal() {
+		return mCartTotal;
+	}
+
+	public void setCartTotal(CartTotal[] mCartTotal) {
+		this.mCartTotal = mCartTotal;
 	}
 
 	public void setLineItems(CartLineItems[] mLineItems) {
@@ -26,6 +42,14 @@ public class CartModel {
 
 	public void setOrderitems(CartOrder[] mOrderitems) {
 		this.mOrderitems = mOrderitems;
+	}
+
+	public String getTotalQuantity() {
+		return mTotalQuantity;
+	}
+
+	public void setTotalQuantity(String mTotalQuantity) {
+		this.mTotalQuantity = mTotalQuantity;
 	}
 
 	/**
@@ -80,7 +104,7 @@ public class CartModel {
 
 	}
 
-	public class CartLineItems {
+	public class CartLineItems implements Serializable {
 		@SerializedName("_element")
 		protected Element[] mElements;
 
@@ -94,15 +118,26 @@ public class CartModel {
 
 	}
 
-	public class Element {
+	public class Element implements Serializable {
 		@SerializedName("_item")
 		protected Item[] mItems;
 
 		@SerializedName("_price")
 		protected ItemPrice[] mItemsPrice;
-		
+
 		@SerializedName("_rate")
 		protected ItemRate[] mItemsRate;
+
+		@SerializedName("quantity")
+		protected String mQuantity;
+
+		public String getQuantity() {
+			return mQuantity;
+		}
+
+		public void setQuantity(String mQuantity) {
+			this.mQuantity = mQuantity;
+		}
 
 		public ItemRate[] getItemsRate() {
 			return mItemsRate;
@@ -127,8 +162,6 @@ public class CartModel {
 		public void setItemsPrice(ItemPrice[] mItemsPrice) {
 			this.mItemsPrice = mItemsPrice;
 		}
-		
-		
 
 	}
 
@@ -138,7 +171,7 @@ public class CartModel {
 	 * @author Optimus
 	 * 
 	 */
-	public class Item {
+	public class Item implements Serializable {
 		@SerializedName("_definition")
 		protected ItemDefinition[] mDefinitions;
 
@@ -158,7 +191,7 @@ public class CartModel {
 	 * @author Optimus
 	 * 
 	 */
-	public class ItemDefinition {
+	public class ItemDefinition implements Serializable {
 		@SerializedName("display-name")
 		protected String mDisplayName;
 
@@ -188,7 +221,7 @@ public class CartModel {
 	 * @author Optimus
 	 * 
 	 */
-	public class ItemAssets {
+	public class ItemAssets implements Serializable {
 		@SerializedName("_element")
 		protected AssetElements[] mAssetsElements;
 
@@ -207,7 +240,7 @@ public class CartModel {
 	 * @author Optimus
 	 * 
 	 */
-	public class AssetElements {
+	public class AssetElements implements Serializable {
 		@SerializedName("content-location")
 		protected String mImageUrl;
 
@@ -227,7 +260,7 @@ public class CartModel {
 	 * 
 	 */
 
-	public class ItemPrice {
+	public class ItemPrice implements Serializable {
 		@SerializedName("purchase-price")
 		protected PriceDetails[] mProductPrices;
 
@@ -240,7 +273,7 @@ public class CartModel {
 		}
 
 	}
-	
+
 	/**
 	 * Model class to get the items price section
 	 * 
@@ -248,7 +281,7 @@ public class CartModel {
 	 * 
 	 */
 
-	public class ItemRate {
+	public class ItemRate implements Serializable {
 		@SerializedName("rate")
 		protected PriceDetails[] mProductPrices;
 
@@ -268,7 +301,7 @@ public class CartModel {
 	 * @author Optimus
 	 * 
 	 */
-	public class PriceDetails {
+	public class PriceDetails implements Serializable {
 		@SerializedName("display")
 		protected String mDisplayPrice;
 
@@ -288,9 +321,13 @@ public class CartModel {
 	 * @author Optimus
 	 * 
 	 */
-	public class CartOrder {
+	public class CartOrder implements Serializable {
+
 		@SerializedName("_purchaseform")
 		protected PurchaseForm[] mPurchaseForms;
+
+		@SerializedName("self")
+		protected CheckOut mSelf;
 
 		public PurchaseForm[] getPurchaseForms() {
 			return mPurchaseForms;
@@ -299,6 +336,54 @@ public class CartModel {
 		public void setPurchaseForms(PurchaseForm[] mPurchaseForms) {
 			this.mPurchaseForms = mPurchaseForms;
 		}
+
+		public CheckOut getSelf() {
+			return mSelf;
+		}
+
+		public void setSelf(CheckOut mSelf) {
+			this.mSelf = mSelf;
+		}
+	}
+
+	public class CartTotal implements Serializable {
+		@SerializedName("cost")
+		public Cost[] mCosts;
+
+		public Cost[] getCosts() {
+			return mCosts;
+		}
+
+		public void setCosts(Cost[] mCosts) {
+			this.mCosts = mCosts;
+		}
+	}
+
+	public class Cost implements Serializable {
+		@SerializedName("display")
+		protected String mTotalCost;
+
+		public String getTotalCost() {
+			return mTotalCost;
+		}
+
+		public void setTotalCost(String mTotalCost) {
+			this.mTotalCost = mTotalCost;
+		}
+	}
+
+	public class CheckOut implements Serializable {
+		@SerializedName("href")
+		protected String mCheckOutLink;
+
+		public String getCheckOutLink() {
+			return mCheckOutLink;
+		}
+
+		public void setCheckOutLink(String mCheckOutLink) {
+			this.mCheckOutLink = mCheckOutLink;
+		}
+
 	}
 
 	/**
@@ -307,7 +392,7 @@ public class CartModel {
 	 * @author Optimus
 	 * 
 	 */
-	public class PurchaseForm {
+	public class PurchaseForm implements Serializable {
 		@SerializedName("self")
 		protected PurchaseLinks mPurchaseLinks;
 
@@ -327,7 +412,7 @@ public class CartModel {
 	 * @author Optimus
 	 * 
 	 */
-	public class PurchaseLinks {
+	public class PurchaseLinks implements Serializable {
 		@SerializedName("href")
 		protected String mHREF;
 

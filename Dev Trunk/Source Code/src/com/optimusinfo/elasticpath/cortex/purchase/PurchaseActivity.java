@@ -55,7 +55,7 @@ public class PurchaseActivity extends FragmentActivity {
 				Constants.Preferences.PREFERENCES_FILE_NAME,
 				Context.MODE_PRIVATE);
 		mAccessToken = mPreferences.getString(
-				Constants.Preferences.KEY_ACCESS_TOKEN_USER, "");
+				Constants.Preferences.KEY_ACCESS_TOKEN_REGISTERED, "");
 
 		// Get the cart values for current object
 		mPurchaseUrl = getIntent().getStringExtra(

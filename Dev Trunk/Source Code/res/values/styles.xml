@@ -2,13 +2,13 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
     </style>
 
@@ -64,35 +64,7 @@
         <item name="android:textColor">@color/tc_textview_product_available</item>
         <item name="android:textStyle">bold</item>
         <item name="android:background">@drawable/selector_button_login</item>
-    </style>
-
-    <!-- Catgeory List View Styles -->
-    <style name="GridViewCatgeory">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_centerVertical">true</item>
-        <item name="android:layout_centerHorizontal">true</item>
-        <item name="android:layout_margin">5dp</item>
-    </style>
-
-    <style name="LayoutCategoryList">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">fill_parent</item>
-        <item name="android:padding">10dp</item>
-    </style>
-
-    <style name="TextViewCategoryList">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">120dp</item>
-        <item name="android:shadowDx">1.2</item>
-        <item name="android:shadowDy">1.2</item>
-        <item name="android:shadowRadius">2</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
-        <item name="android:background">@drawable/selector_category_gridview</item>
-        <item name="android:textColor">@color/tc_textView_category_name</item>
-        <item name="android:textStyle">bold</item>
-    </style>
+    </style>  
 
     <!-- Product Listing Styles -->
     <style name="ViewPagerProducListing">
@@ -113,9 +85,9 @@
     </style>
 
     <style name="LayoutFragmentProducListing">
-        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">top</item>
+        <item name="android:gravity">center</item>
         <item name="android:layout_margin">10dp</item>
         <item name="android:orientation">vertical</item>
     </style>
@@ -125,8 +97,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_margin">10dp</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:background">@drawable/layout_bg_fragment_product_listing</item>
+        <item name="android:orientation">vertical</item>      
     </style>
 
     <style name="ImageViewProductListing">

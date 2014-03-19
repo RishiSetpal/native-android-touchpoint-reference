@@ -1,7 +1,8 @@
 package com.optimusinfo.elasticpath.cortex.product.details;
 
-import android.content.Context;
+import java.io.Serializable;
 
+import android.content.Context;
 import com.google.gson.annotations.SerializedName;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
 
@@ -11,7 +12,7 @@ import com.optimusinfo.elasticpath.cortex.common.Constants;
  * @author Optimus
  * 
  */
-public class ProductDetail {
+public class ProductDetail implements Serializable {
 
 	@SerializedName("_addtocartform")
 	protected ProductAddToCartForm[] mAddToCartForm;
@@ -99,7 +100,7 @@ public class ProductDetail {
 	 * @author Optimus
 	 * 
 	 */
-	public class ProductAddToCartForm {
+	public class ProductAddToCartForm implements Serializable {
 		@SerializedName("self")
 		protected ProductLinks mProductLinks;
 
@@ -118,7 +119,7 @@ public class ProductDetail {
 	 * @author Optimus
 	 * 
 	 */
-	public class ProductLinks {
+	public class ProductLinks implements Serializable {
 		
 		@SerializedName("href")
 		protected String mHREF;
@@ -138,7 +139,7 @@ public class ProductDetail {
 	 * @author Optimus
 	 * 
 	 */
-	public class ProductDefinition {
+	public class ProductDefinition implements Serializable {
 
 		@SerializedName("display-name")
 		protected String mDisplayName;
@@ -181,7 +182,7 @@ public class ProductDetail {
 	 * @author Optimus
 	 * 
 	 */
-	public class ProductAvailability {
+	public class ProductAvailability implements Serializable {
 		@SerializedName("state")
 		protected String mState;
 
@@ -200,7 +201,7 @@ public class ProductDetail {
 	 * @author Optimus
 	 * 
 	 */
-	public class ProductPrice {
+	public class ProductPrice implements Serializable {
 
 		@SerializedName("purchase-price")
 		protected ProductPurchasePrice[] mProductPrice;
@@ -220,7 +221,7 @@ public class ProductDetail {
 	 * @author Optimus
 	 * 
 	 */
-	public class ProductPurchasePrice {
+	public class ProductPurchasePrice implements Serializable {
 		@SerializedName("amount")
 		protected String mAmount;
 
@@ -261,7 +262,7 @@ public class ProductDetail {
 	 * @author Optimus
 	 * 
 	 */
-	public class ProductRates {
+	public class ProductRates implements Serializable {
 		@SerializedName("rate")
 		protected ProductRatePrice[] mProductRates;
 
@@ -281,7 +282,7 @@ public class ProductDetail {
 	 * @author Optimus
 	 * 
 	 */
-	public class ProductRatePrice {
+	public class ProductRatePrice implements Serializable {
 		@SerializedName("display")
 		protected String mRate;
 
@@ -301,7 +302,7 @@ public class ProductDetail {
 	 * @author Optimus
 	 * 
 	 */
-	public class ProductDetails {
+	public class ProductDetails implements Serializable {
 		@SerializedName("display-name")
 		protected String mDisplayName;
 
@@ -342,7 +343,7 @@ public class ProductDetail {
 	 * @author Optimus
 	 * 
 	 */
-	public class ProductAssets {
+	public class ProductAssets implements Serializable {
 		@SerializedName("_element")
 		protected ProductImage[] mProductImages;
 
@@ -362,7 +363,7 @@ public class ProductDetail {
 	 * @author Optimus
 	 * 
 	 */
-	public class ProductImage {
+	public class ProductImage implements Serializable {
 		@SerializedName("content-location")
 		protected String mImageUrl;
 

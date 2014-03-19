@@ -54,8 +54,7 @@ public class CategoriesAdapter extends BaseAdapter {
 			// set value into textview
 			TextView textView = (TextView) gridView
 					.findViewById(R.id.tvCategoryName);
-			textView.setText(mListElements.get(position).getDisplayName());
-			Log.i("NAME", mListElements.get(position).getDisplayName());
+			textView.setText(mListElements.get(position).getDisplayName());			
 
 		} else {
 			gridView = (View) convertView;

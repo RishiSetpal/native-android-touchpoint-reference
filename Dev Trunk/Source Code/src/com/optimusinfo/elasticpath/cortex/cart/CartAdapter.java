@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.optimusinfo.elasticpath.cortex.cart.CartModel.Element;
@@ -63,17 +64,19 @@ public class CartAdapter extends ArrayAdapter<Element> {
 			tvTitle.setText(objDetails.getItems()[0].getDefinitions()[0]
 					.getDisplayName());
 		}
-		TextView tvPrice = (TextView) row
-				.findViewById(R.id.tvCartProductPrice);
-		if (objItemPrice != null) {			
-			tvPrice.setText("Price \t".concat(objItemPrice[0]
+
+		TextView tvPrice = (TextView) row.findViewById(R.id.tvCartProductPrice);
+		if (objItemPrice != null) {
+			tvPrice.setText("Price: \t".concat(objItemPrice[0]
 					.getProductPrices()[0].getDisplayPrice()));
-		} else if (objItemRate !=null){
-			tvPrice.setText("Price \t".concat(objItemRate[0]
+		} else if (objItemRate != null) {
+			tvPrice.setText("Price: \t".concat(objItemRate[0]
 					.getProductPrices()[0].getDisplayPrice()));
 		}
 
-		// Set the image
+		EditText etQuant = (EditText) row.findViewById(R.id.etCartItemQuantity);
+		etQuant.setText(objDetails.getQuantity());
+
 		try {
 
 			EPImageView ivImage = (EPImageView) row
@@ -84,6 +87,7 @@ public class CartAdapter extends ArrayAdapter<Element> {
 		} catch (NullPointerException e) {
 
 		}
+
 		return row;
 	}
 }

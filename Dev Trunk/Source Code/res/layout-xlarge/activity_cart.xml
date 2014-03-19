@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlCart"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="invisible" >
+
+    <LinearLayout
+        android:id="@+id/llCartHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:weightSum="5" >
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.9"
+            android:gravity="left"
+            android:paddingBottom="0dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="0dp"
+            android:paddingTop="10dp"
+            android:text="@string/labelTextViewShoppingCart"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/tc_textView_cart_header_black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvCartHeaderQuantity"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:paddingBottom="0dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/tc_textView_cart_header_grey"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.1"
+            android:gravity="right"
+            android:paddingBottom="0dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/labelTextViewTotal"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/tc_textView_cart_header_grey"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvCartHeaderTotal"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:paddingBottom="0dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/tc_textView_cart_header_black"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvCartItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/llCartOrderSummary"
+        android:layout_below="@+id/llCartHeader"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="15dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="15.0sp" >
+    </ListView>
+
+    <LinearLayout
+        android:id="@+id/llCartOrderSummary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="0dp"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left|bottom"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.1"
+                        android:gravity="left"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="5dp"
+                        android:text="@string/labelTextViewOrderSubtotal"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/tc_textView_cart_header_grey"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCartFooterOrderSubtotal"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="0dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="5dp"
+                        android:text="N/A"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/tc_textView_cart_header_black"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.1"
+                        android:gravity="left"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="5dp"
+                        android:text="@string/labelTextViewShippingTotal"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/tc_textView_cart_header_grey"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCartFooterShippingTotal"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="0dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="5dp"
+                        android:text="N/A"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/tc_textView_cart_header_black"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.1"
+                        android:gravity="left"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="5dp"
+                        android:text="@string/labelTextViewTaxes"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/tc_textView_cart_header_grey"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCartFooterTaxes"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="0dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="5dp"
+                        android:text="N/A"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/tc_textView_cart_header_black"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="left|bottom"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="right"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="0dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="5dp"
+                        android:text="@string/labelTextViewTotal"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/tc_textView_cart_header_grey"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCartFooterTotal"
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="left"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="0dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="5dp"
+                        android:text="N/A"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/tc_textView_cart_header_black"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btUpdateCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_button_cart"
+                android:padding="10dp"
+                android:text="@string/buttonCartUpdateCart"
+                android:textColor="@color/tc_textview_product_available"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/btCheckOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_button_remove"
+                android:padding="10dp"
+                android:text="@string/buttonCartCheckout"
+                android:textColor="@color/tc_textview_product_available"
+                android:textStyle="bold"
+                android:visibility="visible" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

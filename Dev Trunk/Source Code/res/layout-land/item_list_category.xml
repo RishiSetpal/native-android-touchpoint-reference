@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="0dp"
+    android:background="@drawable/bg_llayout_category_grid_item"
+    android:padding="1dp" >
+
+    <com.optimusinfo.elasticpath.cortex.common.EPImageView
+        android:id="@+id/ivCategoryPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:layout_alignParentTop="true"
+        android:layout_margin="0dp"
+        android:padding="0dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/img_placeholder" />
+
+    <TextView
+        android:id="@+id/tvCategoryName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/ivCategoryPhoto"
+        android:layout_margin="0dp"
+        android:background="@drawable/selector_category_gridview"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:padding="10dp"
+        android:shadowDx="1.2"
+        android:shadowDy="1.2"
+        android:shadowRadius="2"
+        android:singleLine="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/tc_textView_category_name"
+        android:textStyle="bold" />
+
+</RelativeLayout>

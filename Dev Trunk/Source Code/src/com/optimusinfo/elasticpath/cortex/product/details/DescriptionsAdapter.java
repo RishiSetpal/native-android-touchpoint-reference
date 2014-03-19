@@ -46,12 +46,12 @@ public class DescriptionsAdapter extends ArrayAdapter<ProductDetails> {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		row = inflater.inflate(R.layout.item_list_product_description, parent,
 				false);
-
+		/*
 		if (position % 2 == 0) {
 			row.setBackgroundColor(mColor1);
 		} else {
 			row.setBackgroundColor(mColor2);
-		}
+		}*/
 
 		TextView tvName = (TextView) row
 				.findViewById(R.id.tvProductDescItemName);

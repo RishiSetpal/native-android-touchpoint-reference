@@ -122,12 +122,12 @@ public class AuthenticationActivity extends FragmentActivity {
 				// Save the authentication token to application preferences
 				mPreferences
 						.edit()
-						.putString(Constants.Preferences.KEY_ACCESS_TOKEN,
+						.putString(Constants.Preferences.KEY_ACCESS_TOKEN_PUBLIC,
 								authenticationResponse.getAcessToken())
 						.commit();
 				mPreferences
 						.edit()
-						.putString(Constants.Preferences.KEY_ACCESS_TOKEN_USER,
+						.putString(Constants.Preferences.KEY_ACCESS_TOKEN_REGISTERED,
 								authenticationResponse.getAcessToken())
 						.commit();
 
@@ -138,7 +138,7 @@ public class AuthenticationActivity extends FragmentActivity {
 						Intent intent = new Intent(AuthenticationActivity.this,
 								CartActivity.class);
 						intent.putExtra(
-								Constants.Preferences.KEY_ACCESS_TOKEN_USER,
+								Constants.Preferences.KEY_ACCESS_TOKEN_REGISTERED,
 								authenticationResponse.getAcessToken());
 						setResult(
 								CartActivity.RESULT_CODE_AUTHENTICATION_SUCESSFUL,

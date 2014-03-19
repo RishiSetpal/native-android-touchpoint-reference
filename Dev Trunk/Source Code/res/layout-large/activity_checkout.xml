@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlCart"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="invisible" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:scrollbars="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp" >
+
+            <TextView
+                android:id="@+id/tvHeaderTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="left"
+                android:paddingBottom="0dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
+                android:text="@string/labelTextViewCheckoutSummary"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/tc_textView_cart_header_black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvHeaderSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvHeaderTitle"
+                android:gravity="left"
+                android:paddingBottom="0dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="0dp"
+                android:text="@string/messageTextViewCheckoutSummary"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/tc_textView_cart_header_grey" />
+
+            <GridView
+                android:id="@+id/gvAddresses"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_below="@+id/tvHeaderSummary"
+                android:numColumns="2" >
+            </GridView>
+
+            <TextView
+                android:id="@+id/tvPaymentSectionHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gvAddresses"
+                android:gravity="left"
+                android:paddingBottom="0dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="0dp"
+                android:text="@string/labelTextViewPaymentMethods"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/tc_textView_cart_header_black"
+                android:visibility="invisible" />
+
+            <GridView
+                android:id="@+id/gvPaymentMethods"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_below="@+id/tvPaymentSectionHeader"
+                android:numColumns="2" >
+            </GridView>
+
+            <LinearLayout
+                android:id="@+id/llShippingOptions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gvPaymentMethods"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="15dp"
+                        android:text="@string/labelTextViewTotalQuantity"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/tc_textView_cart_header_dark_grey" />
+
+                    <TextView
+                        android:id="@+id/tvQuantity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="0dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/tc_textView_cart_header_grey" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="15dp"
+                        android:text="@string/labelTextViewSubtotal"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/tc_textView_cart_header_dark_grey" />
+
+                    <TextView
+                        android:id="@+id/tvOrderSubtotal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="0dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/tc_textView_cart_header_grey" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="15dp"
+                        android:text="@string/labelTextViewShippingtotal"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/tc_textView_cart_header_dark_grey" />
+
+                    <TextView
+                        android:id="@+id/tvShippingTotal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="0dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/tc_textView_cart_header_grey" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="15dp"
+                        android:text="@string/labelTextViewOrderTotal"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/tc_textView_cart_header_dark_grey" />
+
+                    <TextView
+                        android:id="@+id/tvOrderTotal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="0dp"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/tc_textView_cart_header_grey" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

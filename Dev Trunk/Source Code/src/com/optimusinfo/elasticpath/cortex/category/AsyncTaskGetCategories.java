@@ -1,10 +1,10 @@
 package com.optimusinfo.elasticpath.cortex.category;
 
 import android.content.Context;
-import android.net.ParseException;
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
 import com.optimusinfo.elasticpath.cortex.common.Utils;
 
@@ -19,11 +19,6 @@ public class AsyncTaskGetCategories extends AsyncTask<Void, Void, Boolean> {
 	Context mCurrent;
 	String URL;
 	String accessToken;
-	String headerContentTypeString;
-	String headerContentTypeValue;
-	String headerAuthorizationTypeString;
-	String headerAuthorizationTypeValue;
-	String headerAccessTokenInitializer;
 	Class<?> modelClass;
 	ListenerGetCategories listenerGetNavigations;
 
@@ -59,30 +54,24 @@ public class AsyncTaskGetCategories extends AsyncTask<Void, Void, Boolean> {
 	 *            navigation task
 	 */
 	public AsyncTaskGetCategories(Context current, String url, String token,
-			String contentTypeString, String contentTypeValue,
-			String authoriztionString, String accessTokenInitializer,
 			Class<?> model, ListenerGetCategories listener) {
 		mCurrent = current;
 		URL = url;
 		accessToken = token;
-		headerContentTypeString = contentTypeString;
-		headerContentTypeValue = contentTypeValue;
-		headerAuthorizationTypeString = authoriztionString;
-		headerAccessTokenInitializer = accessTokenInitializer;
 		listenerGetNavigations = listener;
 		modelClass = model;
 	}
 
 	@Override
 	protected Boolean doInBackground(Void... params) {
-
 		try {
 			if (Utils.isNetworkAvailable(mCurrent)) {
 				// Get the categories and their corresponding URLs
 				String responseNavigation = Utils.getJSONFromCortexUrl(URL,
-						accessToken, headerContentTypeValue,
-						headerContentTypeString, headerAuthorizationTypeString,
-						headerAccessTokenInitializer);
+						accessToken, Constants.RequestHeaders.CONTENT_TYPE,
+						Constants.RequestHeaders.CONTENT_TYPE_STRING,
+						Constants.RequestHeaders.AUTHORIZATION_STRING,
+						Constants.RequestHeaders.AUTHORIZATION_INITIALIZER);
 				if (responseNavigation != null
 						&& responseNavigation.length() != 0) {
 					if (0 == responseNavigation
@@ -102,7 +91,7 @@ public class AsyncTaskGetCategories extends AsyncTask<Void, Void, Boolean> {
 			}
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-		} catch (ParseException e) {
+		} catch (JsonParseException e) {
 			e.printStackTrace();
 		}
 		return false;
@@ -115,7 +104,5 @@ public class AsyncTaskGetCategories extends AsyncTask<Void, Void, Boolean> {
 			listenerGetNavigations
 					.onTaskFailed(Constants.ErrorCodes.ERROR_SERVER);
 		}
-
 	}
-
 }

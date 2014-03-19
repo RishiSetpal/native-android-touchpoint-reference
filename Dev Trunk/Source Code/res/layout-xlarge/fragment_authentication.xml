@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/LayoutAuthentication" >
+
+    <EditText
+        android:id="@+id/etUsername"
+        style="@style/EditTextUsername" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/etPassword"
+        style="@style/EditTextPassword" />
+
+    <Button
+        android:id="@+id/btLogin"
+        style="@style/ButtonPassword" />
+
+</LinearLayout>

@@ -5,8 +5,14 @@
 
     <GridView
         android:id="@+id/gvCategories"
-        style="@style/GridViewCatgeory"
-        android:numColumns="2" >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:horizontalSpacing="10dp"
+        android:numColumns="2"
+        android:verticalSpacing="10dp" >
     </GridView>
 
 </RelativeLayout>

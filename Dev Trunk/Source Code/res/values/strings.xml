@@ -17,19 +17,44 @@
     <string name="msgNoProductsPresent">No products listed under this category. Press back to select another category.</string>
     <string name="contentDesc">Product Description</string>
     <string name="labelNoProductTitle">No Title</string>
-    <string name="labelProductNotAvailablle">Out of Stock</string>
-    <string name="labelProductAvailablle">In Stock</string>
-    <string name="labelProductNoPrice">Price\tn/a</string>
+    <string name="labelProductNotAvailablle">OUT OF STOCK</string>
+    <string name="labelProductAvailablle">IN STOCK</string>
+    <string name="labelProductNoPrice">N/A</string>
     <string name="labelButtonAddtocart">Add to Cart</string>
 
     <!-- Strings for Product Details page -->
     <string name="titlePageProductDetails"></string>
     <string name="labelProductNoDescription">Product Description</string>
+
     <!-- Strings for Cart -->
     <string name="titlePageCart"></string>
     <string name="headingPageCart">Your Shopping Cart</string>
+    <string name="labelTextViewShoppingCart">Shopping Cart: </string>
+    <string name="prefixItems">Items</string>
+    <string name="labelTextViewTotal">Total: </string>
+    <string name="labelTextViewOrderSubtotal">Order Subtotal: </string>
+    <string name="labelTextViewShippingTotal">Shipping Total: </string>
+    <string name="labelTextViewTaxes">Taxes: </string>
+    <string name="labelButtonUpdateCart">UPDATE CART</string>
+    <string name="labelButtonCheckout">CHECKOUT</string>
+    <string name="labelTextViewContinue">Continue Shopping</string>
+    <string name="labelTextViewItems">Items</string>
+    <string name="labelTextViewInStock">IN STOCK</string>
+    <string name="labelTextViewShippingNotAvailable">Shipping: N/A</string>
+    <string name="labelTextViewPrice">Price:\t</string>
+    <string name="labelTextViewQty">QTY</string>
     <string name="buttonCartPurchase">Purchase</string>
-     <string name="buttonCartRemove">Remove</string>
-     <string name="headingPagePurchase">Order Confirmation</string>
+    <string name="buttonCartCheckout">CHECKOUT</string>
+    <string name="buttonCartUpdateCart">UPDATE CART</string>
+    <string name="buttonCartRemove">Remove</string>
+    <string name="headingPagePurchase">Order Confirmation</string>
+    <string name="labelTextViewCheckoutSummary">Checkout Summary</string>
+    <string name="messageTextViewCheckoutSummary">View and confirm your order details.\n\nPlease select your shipping and billing preferences below before proceeding to
+the checkout to complete your purchase.</string>
+    <string name="labelTextViewPaymentMethods">Payment Methods</string>
+    <string name="labelTextViewTotalQuantity">Total Quantity</string>
+    <string name="labelTextViewSubtotal">Order Subtotal</string>
+     <string name="labelTextViewShippingtotal">Shipping Total</string>
+     <string name="labelTextViewOrderTotal">Order Total</string>
 
 </resources>

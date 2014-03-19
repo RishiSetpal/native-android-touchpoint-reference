@@ -3,7 +3,6 @@ package com.optimusinfo.elasticpath.cortex.category;
 import android.content.Context;
 
 import com.google.gson.annotations.SerializedName;
-import com.optimusinfo.elasticpath.cortex.common.Constants;
 
 /**
  * JSON data representation for the response returned by the cortex Navigations
@@ -27,12 +26,8 @@ public class Category {
 		try {
 			AsyncTaskGetCategories taskGetNavigations = new AsyncTaskGetCategories(
 					current, urlEndPoint.concat(urlRoute).concat(urlScope)
-							.concat(urlZoom), accessToken,
-					Constants.RequestHeaders.CONTENT_TYPE_STRING,
-					Constants.RequestHeaders.CONTENT_TYPE,
-					Constants.RequestHeaders.AUTHORIZATION_STRING,
-					Constants.RequestHeaders.AUTHORIZATION_INITIALIZER,
-					Category.class, mCatListener);
+							.concat(urlZoom), accessToken, Category.class,
+					mCatListener);
 			taskGetNavigations.execute();
 		} catch (NullPointerException e) {
 			e.printStackTrace();
@@ -49,6 +44,9 @@ public class Category {
 		@SerializedName("name")
 		protected String mDisplayName;
 
+		@SerializedName("details")
+		protected CategoryDetails[] mDetails;
+		
 		@SerializedName("links")
 		protected CategoryLink[] mLinks;
 
@@ -67,6 +65,14 @@ public class Category {
 		public void setLinks(CategoryLink[] links) {
 			this.mLinks = links;
 		}
+
+		public CategoryDetails[] getDetails() {
+			return mDetails;
+		}
+
+		public void setDetails(CategoryDetails[] mDetails) {
+			this.mDetails = mDetails;
+		}		
 	}
 
 	/**
@@ -97,6 +103,44 @@ public class Category {
 		public void setRelation(String mRelation) {
 			this.mRelation = mRelation;
 		}
+	}
+
+	/**
+	 * This class serves as model for Links received in navigations class
+	 * 
+	 * @author Optimus
+	 * 
+	 */
+	public class CategoryDetails {
+		@SerializedName("display-value")
+		protected String mItemDesc;
+
+		public String getItemDesc() {
+			return mItemDesc;
+		}
+
+		public void setItemDesc(String mItemDesc) {
+			this.mItemDesc = mItemDesc;
+		}		
+	}
+
+	/**
+	 * This method returns the items url for Category
+	 * 
+	 * @param mObjElement
+	 */
+	public static String getItemsUrl(CategoryElement currElement) {
+		if (currElement.getLinks() != null) {
+			for (CategoryLink link : currElement.getLinks()) {
+				if (link.getRelation() != null
+						&& link.getRelation().length() != 0) {
+					if (0 == link.getRelation().compareTo("items")) {
+						return link.getItemsUrl();
+					}
+				}
+			}
+		}
+		return "";
 
 	}
 }

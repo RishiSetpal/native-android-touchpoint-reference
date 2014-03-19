@@ -7,7 +7,7 @@
     <!-- Action Bar Colors -->
     <color name="bg_top_header">#FF00A3DD</color>
     <color name="tc_top_header">#ffffff</color>
-    
+
     <!-- Login page colors -->
     <color name="bg_button_login_normal">#BDBDBD</color>
     <color name="bg_button_login_selected">#79AFED</color>
@@ -25,13 +25,21 @@
     <color name="bg_pager_titlestrip_productlisting">#B200A3DD</color>
     <color name="tc_pager_titlestrip_productlisting">#FFFFFF</color>
     <color name="tc_textview_product_name">#00A2DD</color>
-	<color name="tc_textview_product_price">#000000</color>
-	<color name="tc_textview_product_available">#FFFFFF</color>
-	
-	 <!-- Product details colors -->
-	<color name="tc_textview_product_details_title">#000000</color>
-	<color name="bg_listview_product_desc_1">#BFDBDBDB</color>
-	<color name="bg_listview_product_desc_2">#FFFFFF</color>
-	<color name="tc_listview_product_desc">#000000</color>
-	
+    <color name="tc_textview_product_price">#000000</color>
+    <color name="tc_textview_product_available">#FFFFFF</color>
+
+    <!-- Product details colors -->
+    <color name="tc_textview_product_details_title">#000000</color>
+    <color name="bg_listview_product_desc_1">#BFDBDBDB</color>
+    <color name="bg_listview_product_desc_2">#FFFFFF</color>
+    <color name="tc_listview_product_desc">#000000</color>
+
+    <!-- Cart Colors -->
+    <color name="tc_textView_cart_header_black">#000000</color>
+     <color name="tc_textView_cart_header_dark_grey">#484848</color>
+    <color name="tc_textView_cart_header_grey">#909090</color>
+    <color name="tc_textView_cart_header_green">#258F52</color>
+    <color name="tc_textview_cart_item_name_white">#FFFFFF</color>
+    <color name="bg_textview_cart_item_white">#FFFFFF</color>
+
 </resources>

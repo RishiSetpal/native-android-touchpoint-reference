@@ -1,8 +1,7 @@
 package com.optimusinfo.elasticpath.cortex.cart;
 
-import org.apache.http.ParseException;
-
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
 import com.optimusinfo.elasticpath.cortex.common.Utils;
 import android.content.Context;
@@ -63,9 +62,8 @@ public class AsyncTaskGetCartForm extends AsyncTask<Void, Void, Boolean> {
 							.compareTo(Integer
 									.toString(Constants.ApiResponseCode.UNAUTHORIZED_ACCESS))) {
 						mListener.onAuthenticationFailed();
-						return null;
+						return true;
 					} else {
-
 						mListener.onTaskSuccessful(new Gson().fromJson(
 								responseAddToCartForm, AddToCartModel.class));
 						return true;
@@ -73,10 +71,11 @@ public class AsyncTaskGetCartForm extends AsyncTask<Void, Void, Boolean> {
 				}
 			} else {
 				mListener.onTaskFailed(Constants.ErrorCodes.ERROR_NETWORK);
+				return true;
 			}
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-		} catch (ParseException e) {
+		} catch (JsonParseException e) {
 			e.printStackTrace();
 		}
 		return false;

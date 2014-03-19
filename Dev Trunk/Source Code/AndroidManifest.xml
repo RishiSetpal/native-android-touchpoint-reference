@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name="com.optimusinfo.elasticpath.cortex.EPApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -20,7 +21,7 @@
             android:name="com.optimusinfo.elasticpath.cortex.EPHomeActivity"
             android:configChanges="orientation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,28 +31,33 @@
         <activity
             android:name="com.optimusinfo.elasticpath.cortex.product.listing.ProductLisitngActivity"
             android:configChanges="orientation"
-            android:label="@string/titlePageProductListings"
-            android:screenOrientation="portrait" >
+            android:label="@string/titlePageProductListings" >
         </activity>
         <activity
             android:name="com.optimusinfo.elasticpath.cortex.product.details.ProductDetailsActivity"
             android:configChanges="orientation"
-            android:label="@string/titlePageProductDetails"
-            android:screenOrientation="portrait" >
+            android:label="@string/titlePageProductDetails" >
         </activity>
         <activity
             android:name="com.optimusinfo.elasticpath.cortex.cart.CartActivity"
             android:configChanges="orientation"
             android:label="@string/titlePageCart"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" >
         </activity>
-         <activity
+        <activity
             android:name="com.optimusinfo.elasticpath.cortex.authentication.AuthenticationActivity"
             android:configChanges="orientation"
             android:label="@string/titlePageCart"
             android:screenOrientation="portrait" >
         </activity>
-         <activity
+        <activity
+            android:name="com.optimusinfo.elasticpath.cortex.checkout.CheckoutActivity"
+            android:configChanges="orientation"
+            android:label="@string/titlePageCart"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="com.optimusinfo.elasticpath.cortex.purchase.PurchaseActivity"
             android:configChanges="orientation"
             android:label="@string/titlePageCart"

@@ -1,8 +1,6 @@
 package com.optimusinfo.elasticpath.cortex.authentication;
 
 import com.google.gson.annotations.SerializedName;
-import com.optimusinfo.elasticpath.cortex.common.Constants;
-
 import android.content.Context;
 
 /**
@@ -95,8 +93,7 @@ public class Authentication {
 		try {
 			AsyncTaskAuthentication taskGetAcessToken = new AsyncTaskAuthentication(
 					current, urlEndpoint, objListener, username, password,
-					scope, role, Constants.Config.CONTENT_TYPE,
-					Constants.Routes.AUTH_ROUTE);
+					scope, role);
 			taskGetAcessToken.execute();
 		} catch (NullPointerException e) {
 			e.printStackTrace();
