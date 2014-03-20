@@ -36,10 +36,13 @@
 
     <!-- Cart Colors -->
     <color name="tc_textView_cart_header_black">#000000</color>
-     <color name="tc_textView_cart_header_dark_grey">#484848</color>
+    <color name="tc_textView_cart_header_dark_grey">#484848</color>
     <color name="tc_textView_cart_header_grey">#909090</color>
     <color name="tc_textView_cart_header_green">#258F52</color>
     <color name="tc_textview_cart_item_name_white">#FFFFFF</color>
     <color name="bg_textview_cart_item_white">#FFFFFF</color>
+
+    <!-- CheckOut Colors -->
+    <color name="bg_layout_address">#D3D2D4</color>
 
 </resources>

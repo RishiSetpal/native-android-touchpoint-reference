@@ -21,6 +21,10 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+import android.view.View;
+import android.view.View.MeasureSpec;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 
 public class Utils {
 	/**
@@ -236,6 +240,20 @@ public class Utils {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public static int getTotalHeightofListView(AdapterView argAdapterView) {
+		Adapter mAdapter = argAdapterView.getAdapter();
+		int totalHeight = 0;
+		for (int i = 0; i < mAdapter.getCount(); i++) {
+			View mView = mAdapter.getView(i, null, argAdapterView);
+			mView.measure(
+					MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
+
+					MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+			totalHeight += mView.getMeasuredHeight();
+		}
+		return totalHeight;
 	}
 
 }

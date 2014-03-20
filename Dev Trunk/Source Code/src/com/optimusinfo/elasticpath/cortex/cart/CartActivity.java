@@ -24,6 +24,8 @@ public class CartActivity extends EPFragmentActivity {
 	public static int REQUEST_CODE_CHECKOUT = 29;
 	public static int RESULT_CODE_PURCHASE_SUCESSFUL = 30;
 
+	public static boolean isUserLoggedIn = false;
+
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments representing each object in a collection. We use a
@@ -154,6 +156,7 @@ public class CartActivity extends EPFragmentActivity {
 			}
 		};
 		setProgressBarIndeterminateVisibility(true);
+		mLayout.setVisibility(View.GONE);
 		AddToCartModel.getAddToCartForm(getApplicationContext(), mAddToCartUrl,
 				getUserAuthenticationToken(), mGetCartFormListener);
 	}
@@ -311,9 +314,19 @@ public class CartActivity extends EPFragmentActivity {
 		mBTCheckout.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent mAuthIntent = new Intent(CartActivity.this,
-						AuthenticationActivity.class);
-				startActivityForResult(mAuthIntent, REQUEST_CODE_AUTHENTICATION);
+				if (isUserLoggedIn) {
+					Intent mPurchIntent = new Intent(CartActivity.this,
+							CheckoutActivity.class);
+					mPurchIntent.putExtra(Constants.PageUrl.INTENT_CHECKOUT,
+							mCheckOutLink);
+					startActivityForResult(mPurchIntent, REQUEST_CODE_CHECKOUT);
+				} else {
+					Intent mAuthIntent = new Intent(CartActivity.this,
+							AuthenticationActivity.class);
+					startActivityForResult(mAuthIntent,
+							REQUEST_CODE_AUTHENTICATION);
+				}
+
 			}
 		});
 		mLVCart = (ListView) findViewById(R.id.lvCartItems);
@@ -322,12 +335,10 @@ public class CartActivity extends EPFragmentActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
-		if (resultCode == RESULT_CODE_AUTHENTICATION_SUCESSFUL) {			
-			Intent mPurchIntent = new Intent(CartActivity.this,
-					CheckoutActivity.class);
-			mPurchIntent.putExtra(Constants.PageUrl.INTENT_CHECKOUT,
-					mCheckOutLink);
-			startActivityForResult(mPurchIntent, REQUEST_CODE_CHECKOUT);
+		if (resultCode == RESULT_CODE_AUTHENTICATION_SUCESSFUL) {
+			isUserLoggedIn = true;
+			
+			getAddToCartForm();
 		} else if (resultCode == RESULT_CODE_PURCHASE_SUCESSFUL) {
 			finish();
 		}

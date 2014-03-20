@@ -20,8 +20,7 @@
         <activity
             android:name="com.optimusinfo.elasticpath.cortex.EPHomeActivity"
             android:configChanges="orientation"
-            android:label="@string/app_name"
-            >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,7 +41,6 @@
             android:name="com.optimusinfo.elasticpath.cortex.cart.CartActivity"
             android:configChanges="orientation"
             android:label="@string/titlePageCart"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity

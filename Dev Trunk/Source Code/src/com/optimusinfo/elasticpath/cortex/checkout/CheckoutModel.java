@@ -48,6 +48,38 @@ public class CheckoutModel implements Serializable {
 		}
 	}
 
+	public static String getAddressLine(DescriptionElement address) {
+		String addressLine = "";
+		if (address.mAddressName.mGivenName != null) {
+			addressLine = address.mAddressName.mGivenName.concat(" ");
+		}
+		if (address.mAddressName.mFamilyName != null) {
+			addressLine = addressLine.concat(address.mAddressName.mFamilyName)
+					.concat("\n");
+		}
+
+		if (address.mAddress.mStreetAddress != null) {
+			addressLine = addressLine.concat(address.mAddress.mStreetAddress)
+					.concat("\n");
+		}
+		if (address.mAddress.mLocality != null) {
+			addressLine = addressLine.concat(address.mAddress.mLocality)
+					.concat(", ");
+		}
+		if (address.mAddress.mRegion != null) {
+			addressLine = addressLine.concat(address.mAddress.mRegion).concat(
+					", ");
+		}
+		if (address.mAddress.mCountryName != null) {
+			addressLine = addressLine.concat(address.mAddress.mCountryName)
+					.concat(" ");
+		}
+		if (address.mAddress.mPostalCode != null) {
+			addressLine = addressLine.concat(address.mAddress.mPostalCode);
+		}
+		return addressLine;
+	}
+
 	public class Tax implements Serializable {
 		@SerializedName("cost")
 		Cost[] mCosts;

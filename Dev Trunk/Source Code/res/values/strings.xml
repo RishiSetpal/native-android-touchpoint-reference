@@ -51,10 +51,13 @@
     <string name="labelTextViewCheckoutSummary">Checkout Summary</string>
     <string name="messageTextViewCheckoutSummary">View and confirm your order details.\n\nPlease select your shipping and billing preferences below before proceeding to
 the checkout to complete your purchase.</string>
+    <string name="labelTextViewAddress">Addresses</string>
     <string name="labelTextViewPaymentMethods">Payment Methods</string>
-    <string name="labelTextViewTotalQuantity">Total Quantity</string>
-    <string name="labelTextViewSubtotal">Order Subtotal</string>
-     <string name="labelTextViewShippingtotal">Shipping Total</string>
-     <string name="labelTextViewOrderTotal">Order Total</string>
+    <string name="labelTextViewTotalQuantity">TOTAL QUANTITY</string>
+    <string name="labelTextViewSubtotal">ORDER SUBTOTAL</string>
+    <string name="labelTextViewShippingtotal">SHIPPING TOTAL</string>
+    <string name="labelTextViewOrderTotal">ORDER TOTAL</string>
+    <string name="labelRadioButtonUseForShipping">USE FOR SHIPPING</string>
+    <string name="labelRadioButtonUseForBilling">USE FOR BILLING</string>
 
 </resources>

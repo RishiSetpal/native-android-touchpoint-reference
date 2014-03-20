@@ -1,12 +1,10 @@
 package com.optimusinfo.elasticpath.cortex.checkout;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.optimusinfo.elasticpath.cortex.cart.CartModel;
 import com.optimusinfo.elasticpath.cortex.cart.ListenerGetCompleteCartItems;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
 import com.optimusinfo.elasticpath.cortex.common.EPFragmentActivity;
@@ -33,7 +31,7 @@ public class CheckoutActivity extends EPFragmentActivity {
 		mCheckOutLink = getIntent().getStringExtra(
 				Constants.PageUrl.INTENT_CHECKOUT);
 
-		getCompleteCart();
+		getCheckoutSummary();
 
 	}
 
@@ -84,58 +82,6 @@ public class CheckoutActivity extends EPFragmentActivity {
 
 	}
 
-	/**
-	 * This function gets the complete items cart
-	 */
-	public void getCompleteCart() {
-
-		mCartItemsListener = new ListenerGetCompleteCartItems() {
-			@Override
-			public void onTaskSuccessful(final CartModel response) {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						setProgressBarIndeterminateVisibility(false);
-						mCheckOutLink = response.getOrderitems()[0].getSelf()
-								.getCheckOutLink();
-						getCheckoutSummary();
-					}
-				});
-			}
-
-			@Override
-			public void onTaskFailed(final int errorCode) {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						setProgressBarIndeterminateVisibility(false);
-						// TODO - For Future Req
-						NotificationUtils.showErrorToast(
-								getApplicationContext(), errorCode);
-					}
-				});
-			}
-
-			@Override
-			public void onAuthenticationFailed() {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						setProgressBarIndeterminateVisibility(false);
-						// TODO For Future Req
-					}
-				});
-			}
-		};
-		setProgressBarIndeterminateVisibility(true);
-
-		String cartsUrl = mObjCortexParams.getEndpoint().concat("carts/")
-				.concat(mObjCortexParams.getScope())
-				.concat(Constants.ZoomUrl.URL_ZOOM_CART);
-		CartModel.getCartItems(getApplicationContext(), cartsUrl,
-				getUserAuthenticationToken(), mCartItemsListener);
-	}
-
 	private void setUpViews() {
 
 		RelativeLayout mLayout = (RelativeLayout) findViewById(R.id.rlCart);
@@ -154,6 +100,8 @@ public class CheckoutActivity extends EPFragmentActivity {
 
 		TextView tvOrderTotal = (TextView) findViewById(R.id.tvOrderTotal);
 		tvOrderTotal.setText(mObjCheckOut.mTotal[0].mCosts[0].mTotalCost);
+
+		addFragment(R.id.frame_address, new AddressFragment());
 
 	}
 
