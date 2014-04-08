@@ -20,7 +20,8 @@
         <activity
             android:name="com.optimusinfo.elasticpath.cortex.EPHomeActivity"
             android:configChanges="orientation"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustPan"  >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,17 +29,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.optimusinfo.elasticpath.cortex.product.listing.ProductLisitngActivity"
+            android:name="com.optimusinfo.elasticpath.cortex.product.listing.ProductParentListingFragment"
             android:configChanges="orientation"
             android:label="@string/titlePageProductListings" >
         </activity>
         <activity
-            android:name="com.optimusinfo.elasticpath.cortex.product.details.ProductDetailsActivity"
+            android:name="com.optimusinfo.elasticpath.cortex.product.details.ProductDetailsFragment"
             android:configChanges="orientation"
             android:label="@string/titlePageProductDetails" >
         </activity>
         <activity
-            android:name="com.optimusinfo.elasticpath.cortex.cart.CartActivity"
+            android:name="com.optimusinfo.elasticpath.cortex.cart.CartFragment"
             android:configChanges="orientation"
             android:label="@string/titlePageCart"
             android:windowSoftInputMode="adjustPan" >
@@ -46,17 +47,28 @@
         <activity
             android:name="com.optimusinfo.elasticpath.cortex.authentication.AuthenticationActivity"
             android:configChanges="orientation"
-            android:label="@string/titlePageCart"
-            android:screenOrientation="portrait" >
+            android:label="@string/titlePageCart" >
         </activity>
         <activity
-            android:name="com.optimusinfo.elasticpath.cortex.checkout.CheckoutActivity"
+            android:name="com.optimusinfo.elasticpath.cortex.checkout.CheckoutFragment"
             android:configChanges="orientation"
             android:label="@string/titlePageCart"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.optimusinfo.elasticpath.cortex.purchase.PurchaseActivity"
+            android:name="com.optimusinfo.elasticpath.cortex.purchase.PurchaseFragment"
+            android:configChanges="orientation"
+            android:label="@string/titlePageCart"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.optimusinfo.elasticpath.cortex.profile.ProfileFragment"
+            android:configChanges="orientation"
+            android:label="@string/titlePageCart"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.optimusinfo.elasticpath.cortex.profile.address.AddressActivity"
             android:configChanges="orientation"
             android:label="@string/titlePageCart"
             android:screenOrientation="portrait" >

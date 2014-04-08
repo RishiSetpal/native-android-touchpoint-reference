@@ -47,4 +47,16 @@ public class NotificationUtils {
 		Toast.makeText(current, message, Toast.LENGTH_LONG).show();
 	}
 
+	/**
+	 * This method shows the application user messages
+	 * 
+	 * @param current
+	 * @param message
+	 */
+	public static void showNotificationToastFromResources(Context current,
+			int resId) {
+		Toast.makeText(current, current.getString(resId), Toast.LENGTH_LONG)
+				.show();
+	}
+
 }

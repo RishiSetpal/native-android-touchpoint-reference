@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:gravity="left|center_vertical"
         android:orientation="horizontal" >
 
@@ -20,9 +20,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="0dp"
-            android:layout_weight="2"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="3"
             android:gravity="left|center_vertical"
             android:singleLine="true"
             android:text="Cart Item Header"
@@ -35,9 +35,9 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
-            android:layout_marginLeft="0dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="1"
             android:background="@drawable/selector_button_remove"
             android:gravity="center"
@@ -54,7 +54,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:background="@color/bg_textview_cart_item_white"
         android:gravity="bottom"
         android:orientation="horizontal" >
@@ -62,10 +62,10 @@
         <com.optimusinfo.elasticpath.cortex.common.EPImageView
             android:id="@+id/epCartProductImage"
             android:layout_width="0dp"
-            android:layout_height="125dp"
+            android:layout_height="120dp"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:layout_weight="2"
             android:scaleType="centerCrop"
@@ -74,10 +74,10 @@
         <LinearLayout
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="0dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="2"
             android:gravity="center"
             android:orientation="vertical" >
@@ -96,10 +96,10 @@
         <LinearLayout
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginLeft="0dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="3.5"
             android:gravity="left|center_vertical"
             android:orientation="vertical" >
@@ -128,10 +128,10 @@
         <LinearLayout
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginLeft="0dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="1.5"
             android:gravity="center"
             android:orientation="vertical" >

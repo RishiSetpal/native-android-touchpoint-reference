@@ -14,6 +14,11 @@ import com.optimusinfo.elasticpath.cortex.common.Constants;
  */
 public class ProductDetail implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@SerializedName("_addtocartform")
 	protected ProductAddToCartForm[] mAddToCartForm;
 
@@ -101,6 +106,10 @@ public class ProductDetail implements Serializable {
 	 * 
 	 */
 	public class ProductAddToCartForm implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("self")
 		protected ProductLinks mProductLinks;
 
@@ -121,6 +130,10 @@ public class ProductDetail implements Serializable {
 	 */
 	public class ProductLinks implements Serializable {
 		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("href")
 		protected String mHREF;
 
@@ -140,6 +153,11 @@ public class ProductDetail implements Serializable {
 	 * 
 	 */
 	public class ProductDefinition implements Serializable {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 
 		@SerializedName("display-name")
 		protected String mDisplayName;
@@ -183,6 +201,10 @@ public class ProductDetail implements Serializable {
 	 * 
 	 */
 	public class ProductAvailability implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("state")
 		protected String mState;
 
@@ -203,6 +225,10 @@ public class ProductDetail implements Serializable {
 	 */
 	public class ProductPrice implements Serializable {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("purchase-price")
 		protected ProductPurchasePrice[] mProductPrice;
 
@@ -222,6 +248,11 @@ public class ProductDetail implements Serializable {
 	 * 
 	 */
 	public class ProductPurchasePrice implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		@SerializedName("amount")
 		protected String mAmount;
 
@@ -263,6 +294,10 @@ public class ProductDetail implements Serializable {
 	 * 
 	 */
 	public class ProductRates implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("rate")
 		protected ProductRatePrice[] mProductRates;
 
@@ -283,6 +318,10 @@ public class ProductDetail implements Serializable {
 	 * 
 	 */
 	public class ProductRatePrice implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("display")
 		protected String mRate;
 
@@ -303,6 +342,11 @@ public class ProductDetail implements Serializable {
 	 * 
 	 */
 	public class ProductDetails implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		@SerializedName("display-name")
 		protected String mDisplayName;
 
@@ -344,6 +388,10 @@ public class ProductDetail implements Serializable {
 	 * 
 	 */
 	public class ProductAssets implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("_element")
 		protected ProductImage[] mProductImages;
 
@@ -364,6 +412,10 @@ public class ProductDetail implements Serializable {
 	 * 
 	 */
 	public class ProductImage implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("content-location")
 		protected String mImageUrl;
 

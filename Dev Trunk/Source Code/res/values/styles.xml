@@ -2,13 +2,13 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
     </style>
 
@@ -19,7 +19,7 @@
         <item name="android:actionBarStyle">@style/EPActionBar</item>
         <item name="android:windowActionBarOverlay">false</item>
         <item name="android:windowBackground">@color/bg_application_window</item>
-        <item name="android:colorBackground">@color/bg_application_window</item>
+        <item name="android:colorBackground">@color/bg_application_window</item>        
     </style>
 
     <!-- ActionBar styles -->
@@ -27,6 +27,10 @@
         <item name="android:background">@color/bg_top_header</item>
         <item name="android:textColor">@color/tc_top_header</item>
         <item name="android:icon">@drawable/ep_logo</item>
+    </style>
+
+    <style name="EPBreadcrumbs" parent="android:Widget">
+        <item name="android:padding">2dp</item>
     </style>
 
     <!-- Authentication Page Styles -->
@@ -64,7 +68,7 @@
         <item name="android:textColor">@color/tc_textview_product_available</item>
         <item name="android:textStyle">bold</item>
         <item name="android:background">@drawable/selector_button_login</item>
-    </style>  
+    </style>
 
     <!-- Product Listing Styles -->
     <style name="ViewPagerProducListing">
@@ -97,7 +101,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_margin">10dp</item>
-        <item name="android:orientation">vertical</item>      
+        <item name="android:orientation">vertical</item>
     </style>
 
     <style name="ImageViewProductListing">
@@ -116,7 +120,7 @@
         <item name="android:layout_marginBottom">10dp</item>
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_marginRight">10dp</item>
-        <item name="android:background">@drawable/layout_bg_border_bottom</item>
+        <item name="android:background">@drawable/layout_bg_border_black_bottom</item>
         <item name="android:gravity">left</item>
         <item name="android:singleLine">true</item>
         <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
@@ -134,7 +138,7 @@
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_marginRight">0dp</item>
         <item name="android:padding">5dp</item>
-        <item name="android:background">@drawable/layout_bg_border_bottom</item>
+        <item name="android:background">@drawable/layout_bg_border_black_bottom</item>
         <item name="android:gravity">left</item>
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
         <item name="android:textStyle">bold</item>
@@ -243,7 +247,7 @@
         <item name="android:layout_marginLeft">5dp</item>
         <item name="android:layout_marginRight">5dp</item>
         <item name="android:padding">5dp</item>
-        <item name="android:background">@drawable/layout_bg_border_bottom</item>
+        <item name="android:background">@drawable/layout_bg_border_black_bottom</item>
         <item name="android:gravity">left</item>
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
         <item name="android:textStyle">bold</item>
@@ -273,6 +277,6 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:entries">@array/Quantity</item>
-    </style>
+    </style>   
 
 </resources>

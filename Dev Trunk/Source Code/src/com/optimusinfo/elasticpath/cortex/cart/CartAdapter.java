@@ -1,9 +1,13 @@
 package com.optimusinfo.elasticpath.cortex.cart;
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -11,6 +15,7 @@ import android.widget.TextView;
 import com.optimusinfo.elasticpath.cortex.cart.CartModel.Element;
 import com.optimusinfo.elasticpath.cortex.cart.CartModel.ItemPrice;
 import com.optimusinfo.elasticpath.cortex.cart.CartModel.ItemRate;
+import com.optimusinfo.elasticpath.cortex.common.EPFragment;
 import com.optimusinfo.elasticpath.cortex.common.EPImageView;
 import com.optimusinfo.elasticpath.cortexAPI.R;
 
@@ -22,7 +27,7 @@ import com.optimusinfo.elasticpath.cortexAPI.R;
  */
 public class CartAdapter extends ArrayAdapter<Element> {
 
-	private final Context mCurrent;
+	private final EPFragment mCurrent;
 	private final Element[] mListDetails;
 
 	/**
@@ -31,10 +36,11 @@ public class CartAdapter extends ArrayAdapter<Element> {
 	 * @param resource
 	 * @param objects
 	 */
-	public CartAdapter(Context context, Element[] objects) {
-		super(context, R.layout.item_list_cart_description, objects);
-		mCurrent = context;
-		mListDetails = objects;
+	public CartAdapter(EPFragment mCurrent, Element[] objects) {
+		super(mCurrent.getActivity(), R.layout.item_list_cart_description,
+				objects);
+		this.mCurrent = mCurrent;
+		this.mListDetails = objects;
 	}
 
 	@Override
@@ -48,15 +54,17 @@ public class CartAdapter extends ArrayAdapter<Element> {
 
 		View row = convertView;
 
-		LayoutInflater inflater = (LayoutInflater) mCurrent
+		LayoutInflater inflater = (LayoutInflater) mCurrent.getActivity()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		row = inflater.inflate(R.layout.item_list_cart_description, parent,
 				false);
 
 		Element objDetails = mListDetails[position];
 
-		ItemPrice[] objItemPrice = objDetails.getItemsPrice();
-		ItemRate[] objItemRate = objDetails.getItemsRate();
+		final String mDeleteLink = mListDetails[position].mLink.mHref;
+
+		ItemPrice[] objItemPrice = objDetails.getItems()[0].mUnitPrice;
+		ItemRate[] objItemRate = objDetails.getItems()[0].mUnitRate;
 
 		if (objDetails.getItems()[0].getDefinitions()[0].getDisplayName() != null) {
 			TextView tvTitle = (TextView) row
@@ -74,11 +82,47 @@ public class CartAdapter extends ArrayAdapter<Element> {
 					.getProductPrices()[0].getDisplayPrice()));
 		}
 
+		TextView tvCartRemove = (TextView) row
+				.findViewById(R.id.btCartItemRemove);
+		tvCartRemove.setCompoundDrawablePadding(5);
+		tvCartRemove.setCompoundDrawablesWithIntrinsicBounds(0, 0,
+				R.drawable.icon_remove, 0);
+
+		tvCartRemove.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				((CartFragment) mCurrent).deleteCartItem(mDeleteLink);
+			}
+		});
+
+		TextView tvAvailable = (TextView) row
+				.findViewById(R.id.tvProductCartAvailable);
+		tvAvailable.setCompoundDrawablePadding(5);
+		tvAvailable.setCompoundDrawablesWithIntrinsicBounds(0,
+				R.drawable.icon_in_stock, 0, 0);
+
 		EditText etQuant = (EditText) row.findViewById(R.id.etCartItemQuantity);
 		etQuant.setText(objDetails.getQuantity());
+		etQuant.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+		etQuant.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId,
+					KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_DONE) {
+					String quant = v.getText().toString();
+					if (TextUtils.isEmpty(quant)) {
+						quant = "0";
+					}
+					((CartFragment) mCurrent)
+							.updateCartItem(mDeleteLink, quant);
+				}
+				return false;
+			}
+		});
 
 		try {
-
 			EPImageView ivImage = (EPImageView) row
 					.findViewById(R.id.epCartProductImage);
 			ivImage.setImageUrl(objDetails.getItems()[0].getDefinitions()[0]
@@ -87,7 +131,6 @@ public class CartAdapter extends ArrayAdapter<Element> {
 		} catch (NullPointerException e) {
 
 		}
-
 		return row;
 	}
 }

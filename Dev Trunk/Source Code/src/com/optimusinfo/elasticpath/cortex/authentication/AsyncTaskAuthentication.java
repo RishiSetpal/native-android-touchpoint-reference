@@ -1,3 +1,18 @@
+/*
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.optimusinfo.elasticpath.cortex.authentication;
 
 import java.io.UnsupportedEncodingException;
@@ -22,7 +37,7 @@ import com.optimusinfo.elasticpath.cortex.common.Utils;
  * @author Optimus
  * 
  */
-public class AsyncTaskAuthentication extends AsyncTask<Void, Void, Boolean> {
+public class AsyncTaskAuthentication extends AsyncTask<Void, Void, String> {
 
 	protected String mCortexUrl;
 	protected Context mCurrent;
@@ -62,71 +77,69 @@ public class AsyncTaskAuthentication extends AsyncTask<Void, Void, Boolean> {
 		mCortexUrl = url;
 		mScope = scope;
 		mRole = role;
-
 	}
 
 	@Override
-	protected Boolean doInBackground(Void... params) {
+	protected void onPreExecute() {
+		super.onPreExecute();
+		if (!Utils.isNetworkAvailable(mCurrent)) {
+			mListener.onTaskFailed(Constants.ErrorCodes.ERROR_NETWORK, "");
+			cancel(true);
+			return;
+		}
+	}
+
+	@Override
+	protected String doInBackground(Void... params) {
+		String responseJson = null;
 		try {
-			if (Utils.isNetworkAvailable(mCurrent)) {
-				// Create the HTTP post Request
-				List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-				// Add grant type
-				parameters
-						.add(new BasicNameValuePair(
-								Constants.Authentication.HEADER_GRANT_TYPE,
-								"password"));
-
-				// Add user name only if provided
-				if (mUsername != null && mUsername.length() != 0) {
-					parameters
-							.add(new BasicNameValuePair(
-									Constants.Authentication.HEADER_USERNAME,
-									mUsername));
-				}
-
-				// Add pass word only if provided
-				if (mPassword != null && mPassword.length() != 0) {
-					parameters
-							.add(new BasicNameValuePair(
-									Constants.Authentication.HEADER_PASSWORD,
-									mPassword));
-				}
-
-				// Add scope header
+			// Create the HTTP post Request
+			List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+			// Add grant type
+			parameters.add(new BasicNameValuePair(
+					Constants.Authentication.HEADER_GRANT_TYPE, "password"));
+			// Add user name only if provided
+			if (mUsername != null && mUsername.length() != 0) {
 				parameters.add(new BasicNameValuePair(
-						Constants.Authentication.HEADER_SCOPE, mScope));
-				// Add role header
-				parameters.add(new BasicNameValuePair(
-						Constants.Authentication.HEADER_ROLE, mRole));
-
-				// Post the Request
-				UrlEncodedFormEntity objEntity = new UrlEncodedFormEntity(
-						parameters, HTTP.UTF_8);
-				String entityResponse = Utils.postData(
-						mCortexUrl.concat(Constants.Routes.AUTH_ROUTE),
-						objEntity, Constants.Config.CONTENT_TYPE);
-				mListener.onTaskComplete(mObjGson.fromJson(entityResponse,
-						Authentication.class));
-				return true;
-			} else {
-				mListener.onTaskFailed(Constants.ErrorCodes.ERROR_NETWORK);
+						Constants.Authentication.HEADER_USERNAME, mUsername));
 			}
-		} catch (NullPointerException e) {
-			e.printStackTrace();
+			// Add pass word only if provided
+			if (mPassword != null && mPassword.length() != 0) {
+				parameters.add(new BasicNameValuePair(
+						Constants.Authentication.HEADER_PASSWORD, mPassword));
+			}
+			// Add scope header
+			parameters.add(new BasicNameValuePair(
+					Constants.Authentication.HEADER_SCOPE, mScope));
+			// Add role header
+			parameters.add(new BasicNameValuePair(
+					Constants.Authentication.HEADER_ROLE, mRole));
+			// Post the Request
+			UrlEncodedFormEntity objEntity = new UrlEncodedFormEntity(
+					parameters, HTTP.UTF_8);
+
+			responseJson = Utils.postData(
+					mCortexUrl.concat(Constants.Routes.AUTH_ROUTE), objEntity,
+					Constants.Config.CONTENT_TYPE);
+
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
-		} catch (JsonParseException e) {
-			e.printStackTrace();
 		}
-		return false;
+		return responseJson;
 	}
 
 	@Override
-	protected void onPostExecute(Boolean result) {
-		super.onPostExecute(result);
-		if (!result) {
-			mListener.onTaskFailed(Constants.ErrorCodes.ERROR_SERVER);
+	protected void onPostExecute(String entityResponse) {
+		super.onPostExecute(entityResponse);
+		try {
+			mListener.onTaskComplete(mObjGson.fromJson(entityResponse,
+					Authentication.class));
+		} catch (NullPointerException e) {
+			e.printStackTrace();			
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+			mListener.onTaskFailed(Constants.ErrorCodes.ERROR_SERVER,
+					entityResponse);
 		}
 	}
 }

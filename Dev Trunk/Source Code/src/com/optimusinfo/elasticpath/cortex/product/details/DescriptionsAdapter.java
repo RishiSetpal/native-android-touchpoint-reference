@@ -19,8 +19,7 @@ import android.widget.TextView;
 public class DescriptionsAdapter extends ArrayAdapter<ProductDetails> {
 
 	private final Context mCurrent;
-	private final ProductDetails[] mListDetails;
-	private final int mColor1, mColor2;
+	private final ProductDetails[] mListDetails;	
 
 	/**
 	 * 
@@ -31,12 +30,7 @@ public class DescriptionsAdapter extends ArrayAdapter<ProductDetails> {
 	public DescriptionsAdapter(Context context, ProductDetails[] objects) {
 		super(context, R.layout.item_list_product_description, objects);
 		mCurrent = context;
-		mListDetails = objects;
-
-		mColor1 = mCurrent.getResources().getColor(
-				R.color.bg_listview_product_desc_1);
-		mColor2 = mCurrent.getResources().getColor(
-				R.color.bg_listview_product_desc_2);
+		mListDetails = objects;		
 	}
 
 	@Override
@@ -45,13 +39,7 @@ public class DescriptionsAdapter extends ArrayAdapter<ProductDetails> {
 		LayoutInflater inflater = (LayoutInflater) mCurrent
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		row = inflater.inflate(R.layout.item_list_product_description, parent,
-				false);
-		/*
-		if (position % 2 == 0) {
-			row.setBackgroundColor(mColor1);
-		} else {
-			row.setBackgroundColor(mColor2);
-		}*/
+				false);		
 
 		TextView tvName = (TextView) row
 				.findViewById(R.id.tvProductDescItemName);

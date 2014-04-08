@@ -1,9 +1,10 @@
 package com.optimusinfo.elasticpath.cortex.product.listing;
 
-import com.optimusinfo.elasticpath.cortex.cart.CartActivity;
+import com.optimusinfo.elasticpath.cortex.cart.CartFragment;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
+import com.optimusinfo.elasticpath.cortex.common.EPFragment;
 import com.optimusinfo.elasticpath.cortex.common.EPImageView;
-import com.optimusinfo.elasticpath.cortex.product.details.ProductDetailsActivity;
+import com.optimusinfo.elasticpath.cortex.product.details.ProductDetailsFragment;
 import com.optimusinfo.elasticpath.cortex.product.listing.ProductListing.ProductAddToCartForm;
 import com.optimusinfo.elasticpath.cortex.product.listing.ProductListing.ProductAssets;
 import com.optimusinfo.elasticpath.cortex.product.listing.ProductListing.ProductAvailability;
@@ -15,7 +16,6 @@ import com.optimusinfo.elasticpath.cortex.product.listing.ProductListing.Product
 import com.optimusinfo.elasticpath.cortexAPI.R;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +24,12 @@ import android.widget.TextView;
 
 public class ProductListingAdapter extends BaseAdapter {
 
-	private Context mContext;
+	private EPFragment mCurrent;
 	protected ProductListing mProducts;
 
-	public ProductListingAdapter(Context mContext, ProductListing mProducts) {
+	public ProductListingAdapter(EPFragment mContext, ProductListing mProducts) {
 		super();
-		this.mContext = mContext;
+		this.mCurrent = mContext;
 		this.mProducts = mProducts;
 	}
 
@@ -57,13 +57,13 @@ public class ProductListingAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int pos, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = (LayoutInflater) mContext
+		LayoutInflater inflater = (LayoutInflater) mCurrent.getActivity()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View gridView;
 
 		final ProductElement mElement = mProducts.getElements()[pos];
 
-		ProductDefinition[] definition = mElement.getDefinition();
+		final ProductDefinition[] definition = mElement.getDefinition();
 		ProductPrice[] price = mElement.getPrice();
 		ProductRates[] rate = mElement.getRates();
 		ProductAssets[] asset = definition[0].getProductAssets();
@@ -73,7 +73,7 @@ public class ProductListingAdapter extends BaseAdapter {
 		final ProductLinks addToCartLinks = addToCartForm.getProductLinks();
 
 		if (convertView == null) {
-			gridView = new View(mContext);
+			gridView = new View(mCurrent.getActivity());
 
 			gridView = inflater.inflate(R.layout.item_list_product_definition,
 					parent, false);
@@ -98,13 +98,17 @@ public class ProductListingAdapter extends BaseAdapter {
 						.setImageUrl(asset[0].getProductImages()[0]
 								.getImageUrl());
 			}
+			TextView btAddToCart = ((TextView) gridView
+					.findViewById(R.id.btAddToCart));
+			btAddToCart.setCompoundDrawablePadding(5);
+			btAddToCart.setCompoundDrawablesWithIntrinsicBounds(
+					R.drawable.icon_cart, 0, 0, 0);
 			// set product availability
 			if (availability != null) {
 				String isAvailable = availability[0].getState();
 				if (isAvailable.equalsIgnoreCase(Constants.STATE_AVAILABLE)) {
 				} else {
-					((TextView) gridView.findViewById(R.id.btAddToCart))
-							.setEnabled(false);
+					btAddToCart.setEnabled(false);
 				}
 			}
 		} else {
@@ -115,13 +119,13 @@ public class ProductListingAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
+				mCurrent.getMainFragment().detachChildFragments();
 				// Start the product details activity
-				Intent intent = new Intent(mContext,
-						ProductDetailsActivity.class);
-				intent.putExtra(Constants.PageUrl.INTENT_BASE_URL, mElement
-						.getSelf().getHref());
-				mContext.startActivity(intent);
-
+				ProductDetailsFragment mObjFragment = new ProductDetailsFragment(
+						mElement.getSelf().getHref());
+				((EPFragment) mCurrent).addFragmentToBreadcrumb(
+						definition[0].getDisplayName(),
+						R.id.fragment_container, mObjFragment);
 			}
 		});
 
@@ -130,20 +134,15 @@ public class ProductListingAdapter extends BaseAdapter {
 					.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							Intent mCartIntent = new Intent(mContext,
-									CartActivity.class);
-							mCartIntent.putExtra(
-									Constants.PageUrl.INTENT_CART_URL,
-									addToCartLinks.getHREF());
-							mCartIntent
-									.putExtra(
-											Constants.PageUrl.INTENT_PRODUCT_QUANT,
-											"1");
-							mContext.startActivity(mCartIntent);
+							mCurrent.getMainFragment().detachChildFragments();
+							CartFragment mObjFragment = new CartFragment(
+									addToCartLinks.getHREF(), "1");
+							((EPFragment) mCurrent).addFragmentToBreadcrumb(
+									"Cart", R.id.fragment_container,
+									mObjFragment);
 						}
 					});
 		}
-
 		return gridView;
 	}
 

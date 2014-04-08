@@ -1,3 +1,18 @@
+/*
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.optimusinfo.elasticpath.cortex.category;
 
 import android.content.Context;
@@ -14,13 +29,13 @@ import com.optimusinfo.elasticpath.cortex.common.Utils;
  * @author Optimus
  * 
  */
-public class AsyncTaskGetCategories extends AsyncTask<Void, Void, Boolean> {
+public class AsyncTaskGetCategories extends AsyncTask<Void, Void, String> {
 
 	Context mCurrent;
 	String URL;
 	String accessToken;
 	Class<?> modelClass;
-	ListenerGetCategories listenerGetNavigations;
+	ListenerGetCategories mListener;
 
 	/**
 	 * Initializes the variables for the Cortex Navigations task API
@@ -58,51 +73,55 @@ public class AsyncTaskGetCategories extends AsyncTask<Void, Void, Boolean> {
 		mCurrent = current;
 		URL = url;
 		accessToken = token;
-		listenerGetNavigations = listener;
+		mListener = listener;
 		modelClass = model;
 	}
 
 	@Override
-	protected Boolean doInBackground(Void... params) {
-		try {
-			if (Utils.isNetworkAvailable(mCurrent)) {
-				// Get the categories and their corresponding URLs
-				String responseNavigation = Utils.getJSONFromCortexUrl(URL,
-						accessToken, Constants.RequestHeaders.CONTENT_TYPE,
-						Constants.RequestHeaders.CONTENT_TYPE_STRING,
-						Constants.RequestHeaders.AUTHORIZATION_STRING,
-						Constants.RequestHeaders.AUTHORIZATION_INITIALIZER);
-				if (responseNavigation != null
-						&& responseNavigation.length() != 0) {
-					if (0 == responseNavigation
-							.compareTo(Integer
-									.toString(Constants.ApiResponseCode.UNAUTHORIZED_ACCESS))) {
-						listenerGetNavigations.onAuthenticationFailed();
-						return null;
-					} else {
-						listenerGetNavigations.onTaskSuccessful(new Gson()
-								.fromJson(responseNavigation, modelClass));
-						return true;
-					}
-				}
-			} else {
-				listenerGetNavigations
-						.onTaskFailed(Constants.ErrorCodes.ERROR_NETWORK);
-			}
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		} catch (JsonParseException e) {
-			e.printStackTrace();
+	protected void onPreExecute() {
+		super.onPreExecute();
+		if (!Utils.isNetworkAvailable(mCurrent)) {
+			mListener.onTaskFailed(Constants.ErrorCodes.ERROR_NETWORK);
+			cancel(true);
+			return;
 		}
-		return false;
 	}
 
 	@Override
-	protected void onPostExecute(Boolean result) {
+	protected String doInBackground(Void... params) {
+		String responseNavigation = null;
+		try {
+			// Get the categories and their corresponding URLs
+			responseNavigation = Utils.getJSONFromCortexUrl(URL, accessToken,
+					Constants.RequestHeaders.CONTENT_TYPE,
+					Constants.RequestHeaders.CONTENT_TYPE_STRING,
+					Constants.RequestHeaders.AUTHORIZATION_STRING,
+					Constants.RequestHeaders.AUTHORIZATION_INITIALIZER);
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		return responseNavigation;
+	}
+
+	@Override
+	protected void onPostExecute(String result) {
 		super.onPostExecute(result);
-		if (result != null && !result) {
-			listenerGetNavigations
-					.onTaskFailed(Constants.ErrorCodes.ERROR_SERVER);
+		try {
+			if (result.length() != 0) {
+				if (0 == result
+						.compareTo(Integer
+								.toString(Constants.ApiResponseCode.UNAUTHORIZED_ACCESS))) {
+					mListener.onAuthenticationFailed();
+				} else {
+					mListener.onTaskSuccessful(new Gson().fromJson(result,
+							modelClass));
+				}
+			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();			
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+			mListener.onTaskFailed(Constants.ErrorCodes.ERROR_SERVER);
 		}
 	}
 }

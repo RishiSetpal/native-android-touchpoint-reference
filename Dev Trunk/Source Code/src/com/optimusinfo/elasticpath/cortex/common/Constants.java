@@ -35,7 +35,10 @@ public class Constants {
 		public static final String URL_ZOOM_PRODUCT_DETAILS = "?zoom=availability,addtocartform,price,rate,definition,definition:assets:element";
 		public static final String URL_ZOOM_CART = "/default?zoom=total,lineitems:element,lineitems:element:price,lineitems:element:rate,lineitems:element:availability,lineitems:element:item,lineitems:element:item:definition,lineitems:element:item:definition:assets:element,lineitems:element:item:price,lineitems:element:item:rate,order,order:purchaseform";
 		public static final String URL_ZOOM_CHECKOUT = "?zoom=purchaseform,billingaddressinfo:selector:chosen:description,billingaddressinfo:selector:choice,billingaddressinfo:selector:choice:description,tax,total,cart,cart:total,deliveries:element,deliveries:element:destinationinfo:selector:chosen:description,deliveries:element:destinationinfo:selector:choice,deliveries:element:destinationinfo:selector:choice:description,deliveries:element:shippingoptioninfo:selector:chosen:description,deliveries:element:shippingoptioninfo:selector:choice,deliveries:element:shippingoptioninfo:selector:choice:description,paymentmethodinfo,paymentmethodinfo:selector:chosen:description,paymentmethodinfo:selector:choice,paymentmethodinfo:selector:choice:description";
-
+		public static final String URL_ZOOM_ORDER = "?zoom=billingaddress,paymentmeans:element,lineitems:element,lineitems:element:rate";
+		public static final String URL_ZOOM_PROFILE = "/default?zoom=subscriptions:element,purchases:element,addresses:element,paymentmethods:element";
+		public static final String URL_ZOOM_ADDRESS_FORM = "/default?zoom=addresses:addressform";
+		public static final String URL_NEW_ACCOUNT = "/newaccount";
 	}
 
 	public class PageUrl {
@@ -48,6 +51,8 @@ public class Constants {
 		public static final String INTENT_PRODUCT_QUANT = "productQuantity";
 		public static final String INTENT_PURCHASE_URL = "purchaseURL";
 		public static final String INTENT_CHECKOUT = "checkOutLink";
+		public static final String INTENT_ORDER_URL = "orderURL";
+		public static final String INTENT_ADRESS = "address";
 	}
 
 	public class Content {
@@ -64,12 +69,14 @@ public class Constants {
 		public static final String LIST_CART = "LIST_CART";
 		public static final String KEY_ACCESS_TOKEN_PUBLIC = "KEY_ACCESS_TOKEN_PUBLIC";
 		public static final String KEY_ACCESS_TOKEN_REGISTERED = "KEY_ACCESS_TOKEN_REGISTERED";
+		public static final String KEY_USERNAME = "KEY_USERNAME";
 	}
 
 	public class ApiResponseCode {
 		public static final int UNAUTHORIZED_ACCESS = 401;
 		public static final int REQUEST_SUCCESSFUL_UPDATED = 200;
 		public static final int REQUEST_SUCCESSFUL_CREATED = 201;
+		public static final int REQUEST_SUCCESSFUL_DELETED = 204;
 	}
 
 	public class ErrorCodes {

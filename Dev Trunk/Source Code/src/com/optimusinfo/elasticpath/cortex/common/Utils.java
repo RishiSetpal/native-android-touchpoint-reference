@@ -5,13 +5,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
@@ -23,8 +26,11 @@ import android.net.NetworkInfo;
 import android.util.Log;
 import android.view.View;
 import android.view.View.MeasureSpec;
+import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 public class Utils {
 	/**
@@ -72,33 +78,26 @@ public class Utils {
 			String contentType, String contentTypeString,
 			String authorizationString, String accessTokenInitializer) {
 		try {
-
 			// Input stream
 			InputStream objInputStream;
-
 			// JSON String
 			String responseJSON;
-
 			// Making HTTP request
 			DefaultHttpClient httpClient = new DefaultHttpClient();
+
 			Log.i("GET REQUEST", url);
+
 			HttpGet httpGet = new HttpGet(url);
 
 			httpGet.setHeader(contentTypeString, contentType);
 
 			httpGet.setHeader(authorizationString, accessTokenInitializer + " "
 					+ accessToken);
-
 			HttpResponse httpResponse = httpClient.execute(httpGet);
-
 			HttpEntity httpEntity = httpResponse.getEntity();
-
 			switch (httpResponse.getStatusLine().getStatusCode()) {
-
 			case Constants.ApiResponseCode.REQUEST_SUCCESSFUL_CREATED:
-
 			case Constants.ApiResponseCode.REQUEST_SUCCESSFUL_UPDATED:
-
 				objInputStream = httpEntity.getContent();
 				break;
 			case Constants.ApiResponseCode.UNAUTHORIZED_ACCESS:
@@ -115,14 +114,17 @@ public class Utils {
 					new InputStreamReader(objInputStream, "iso-8859-1"), 8);
 			StringBuilder objSb = new StringBuilder();
 			String line = null;
+
 			while ((line = objReader.readLine()) != null) {
 				objSb.append(line + "\n");
 			}
 			objInputStream.close();
+
 			// Instantiate the String before setting it to the result
 			// string
 			responseJSON = new String();
 			responseJSON = objSb.toString();
+
 			return responseJSON;
 		} catch (NullPointerException e) {
 			e.printStackTrace();
@@ -143,13 +145,9 @@ public class Utils {
 	 * @return the corresponding string for the corresponding inputstream
 	 */
 	public static String getStringFromInputStream(InputStream inputStream) {
-
 		if (inputStream != null) {
-
 			String configJson = null;
-
 			try {
-
 				int size = inputStream.available();
 				byte[] buffer = new byte[size];
 				inputStream.read(buffer);
@@ -178,27 +176,26 @@ public class Utils {
 		try {
 
 			HttpPost postRequest = new HttpPost(postUrl);
-
 			postRequest.setHeader(Constants.RequestHeaders.CONTENT_TYPE_STRING,
 					contentType);
 			postRequest.setHeader(
 					Constants.RequestHeaders.AUTHORIZATION_STRING,
 					accessTokenInitializer + " " + accessToken);
+
 			if (requestBody != null) {
 				StringEntity requestEntity = new StringEntity(
 						requestBody.toString());
 				requestEntity.setContentEncoding("UTF-8");
 				requestEntity.setContentType(contentType);
-
 				postRequest.setEntity(requestEntity);
 			}
 
 			HttpResponse responsePOST = client.execute(postRequest);
-
 			Log.i("POST RESPONSE",
 					EntityUtils.toString(responsePOST.getEntity()));
 
 			return responsePOST.getStatusLine().getStatusCode();
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (NullPointerException e) {
@@ -221,18 +218,23 @@ public class Utils {
 	 */
 	public static String postData(String postURL, UrlEncodedFormEntity ent,
 			String contentType) {
-
 		try {
+
 			HttpClient client = new DefaultHttpClient();
+
 			HttpPost post = new HttpPost(postURL);
 			post.setHeader("Content-Type", contentType);
 			post.setEntity(ent);
+
 			HttpResponse responsePOST = client.execute(post);
 			HttpEntity resEntity = responsePOST.getEntity();
+
 			String response = null;
+
 			if (resEntity != null) {
 				response = EntityUtils.toString(resEntity);
 			}
+
 			return response;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -242,6 +244,126 @@ public class Utils {
 		return null;
 	}
 
+	/**
+	 * Creates a HTTP post request and posts it
+	 * 
+	 * @param postURL
+	 *            the request parameters to be submitted with HTTP post
+	 * @param contentType
+	 *            describes the content type of this HTTP post request
+	 * @return the response returned by this request
+	 */
+	public static String postData(String postURL, String accessToken,
+			String contentType, String accessTokenInitializer) {
+		HttpClient client = new DefaultHttpClient();
+		try {
+
+			HttpPost postRequest = new HttpPost(postURL);
+			postRequest.setHeader(Constants.RequestHeaders.CONTENT_TYPE_STRING,
+					contentType);
+			postRequest.setHeader(
+					Constants.RequestHeaders.AUTHORIZATION_STRING,
+					accessTokenInitializer + " " + accessToken);
+
+			HttpResponse httpResponse = client.execute(postRequest);
+			Header[] headers = httpResponse.getAllHeaders();
+
+			switch (httpResponse.getStatusLine().getStatusCode()) {
+
+			case Constants.ApiResponseCode.REQUEST_SUCCESSFUL_CREATED:
+
+			case Constants.ApiResponseCode.REQUEST_SUCCESSFUL_UPDATED:
+				for (Header header : headers) {
+					String name = header.getName();
+					String value = header.getValue();
+					if (name.equalsIgnoreCase("Location")) {
+						return value;
+					}
+				}
+				break;
+			case Constants.ApiResponseCode.UNAUTHORIZED_ACCESS:
+				return Integer
+						.toString((Constants.ApiResponseCode.UNAUTHORIZED_ACCESS));
+			default:
+				return Integer.toString(httpResponse.getStatusLine()
+						.getStatusCode());
+			}
+			;
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+
+	/**
+	 * This function performs the delete request
+	 * 
+	 * @param deleteUrl
+	 * @param accessToken
+	 * @param contentType
+	 * @param contentTypeString
+	 * @param authorizationString
+	 * @param accessTokenInitializer
+	 * @return
+	 */
+	public static int deleteRequest(String deleteUrl, String accessToken,
+			String contentType, String contentTypeString,
+			String authorizationString, String accessTokenInitializer) {
+		// Making HTTP request
+		try {
+			DefaultHttpClient httpClient = new DefaultHttpClient();
+			Log.i("DELETE REQUEST", deleteUrl);
+			HttpDelete httpDelete = new HttpDelete(deleteUrl);
+			httpDelete.setHeader(contentTypeString, contentType);
+			httpDelete.setHeader(authorizationString, accessTokenInitializer
+					+ " " + accessToken);
+			HttpResponse httpResponse = httpClient.execute(httpDelete);
+			return httpResponse.getStatusLine().getStatusCode();
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	public static int putRequest(String deleteUrl, JSONObject requestBody,
+			String accessToken, String contentType, String contentTypeString,
+			String authorizationString, String accessTokenInitializer) {
+		// Making HTTP request
+		try {
+			DefaultHttpClient httpClient = new DefaultHttpClient();
+			Log.i("PUT REQUEST", deleteUrl);
+			HttpPut httpPut = new HttpPut(deleteUrl);
+			httpPut.setHeader(contentTypeString, contentType);
+			httpPut.setHeader(authorizationString, accessTokenInitializer + " "
+					+ accessToken);
+
+			if (requestBody != null) {
+				StringEntity requestEntity = new StringEntity(
+						requestBody.toString());
+				requestEntity.setContentEncoding("UTF-8");
+				requestEntity.setContentType(contentType);
+				httpPut.setEntity(requestEntity);
+			}
+
+			HttpResponse httpResponse = httpClient.execute(httpPut);
+			return httpResponse.getStatusLine().getStatusCode();
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	@SuppressWarnings("rawtypes")
 	public static int getTotalHeightofListView(AdapterView argAdapterView) {
 		Adapter mAdapter = argAdapterView.getAdapter();
 		int totalHeight = 0;
@@ -254,6 +376,27 @@ public class Utils {
 			totalHeight += mView.getMeasuredHeight();
 		}
 		return totalHeight;
+	}
+
+	public static void setListViewHeightBasedOnChildren(ListView listView) {
+		ListAdapter listAdapter = listView.getAdapter();
+		if (listAdapter == null) {
+			// pre-condition
+			return;
+		}
+
+		int totalHeight = 0;
+		for (int i = 0; i < listAdapter.getCount(); i++) {
+			View listItem = listAdapter.getView(i, null, listView);
+			listItem.measure(0, 0);
+			totalHeight += listItem.getMeasuredHeight();
+		}
+
+		ViewGroup.LayoutParams params = listView.getLayoutParams();
+		params.height = totalHeight
+				+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+		listView.setLayoutParams(params);
+		listView.requestLayout();
 	}
 
 }

@@ -49,7 +49,8 @@ public class AsyncTaskAddToCart extends AsyncTask<Void, Void, Boolean> {
 			int responseCode = Utils.postData(urlAddToCartForm, objInput,
 					accessToken, Constants.RequestHeaders.CONTENT_TYPE,
 					Constants.RequestHeaders.AUTHORIZATION_INITIALIZER);
-			if (responseCode == 201) {
+			if (responseCode == Constants.ApiResponseCode.REQUEST_SUCCESSFUL_CREATED
+					|| responseCode == Constants.ApiResponseCode.REQUEST_SUCCESSFUL_UPDATED) {
 				mListener.onTaskSuccessful(responseCode);
 			} else {
 				mListener.onTaskFailed(responseCode);

@@ -1,19 +1,33 @@
+/*
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.optimusinfo.elasticpath.cortex;
 
 import com.optimusinfo.elasticpath.cortex.authentication.Authentication;
 import com.optimusinfo.elasticpath.cortex.authentication.ListenerAsyncTaskAuthentication;
 import com.optimusinfo.elasticpath.cortex.category.CategoryFragment;
-import com.optimusinfo.elasticpath.cortex.checkout.CheckoutModel;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
+import com.optimusinfo.elasticpath.cortex.common.EPFragment;
 import com.optimusinfo.elasticpath.cortex.common.EPFragmentActivity;
 import com.optimusinfo.elasticpath.cortex.common.NotificationUtils;
-import com.optimusinfo.elasticpath.cortex.configuration.EPTestLocal;
 import com.optimusinfo.elasticpath.cortexAPI.R;
 
+import android.app.FragmentBreadCrumbs;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuInflater;
 
 /**
  * This is main application activity in which all the fragments are added. Also
@@ -25,7 +39,7 @@ import android.view.MenuInflater;
 public class EPHomeActivity extends EPFragmentActivity {
 
 	protected ListenerAsyncTaskAuthentication mAuthListener;
-	protected CategoryFragment mObjFragmentCategory;
+	protected FragmentBreadCrumbs mObjBreadCrumbs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +49,21 @@ public class EPHomeActivity extends EPFragmentActivity {
 		// Initialize the param objects
 		super.initializeParams();
 		// Disable the title
-		mObjActionBar.setDisplayShowTitleEnabled(false);
 		mObjActionBar.setDisplayHomeAsUpEnabled(false);
+
+		mObjBreadCrumbs = (FragmentBreadCrumbs) findViewById(R.id.breadcrumbs);
+		mObjBreadCrumbs.setActivity(this);
+		mObjBreadCrumbs.setTitle(
+				getStringFromResource(R.string.breadcrumb_title_home), null);
 
 		if (savedInstanceState == null) {
 			if (TextUtils.isEmpty(getUserAuthenticationToken())) {
 				// Get authentication token and save
 				getNewAuthenticationTokenFromAPI();
 			} else {
-				mObjFragmentCategory = new CategoryFragment();
-				addFragment(R.id.fragment_container, mObjFragmentCategory);
+				CategoryFragment mObjFragment = new CategoryFragment();
+				addFragment("Category", R.id.fragment_container, mObjFragment);
 			}
-		} else {
-
 		}
 	}
 
@@ -72,16 +88,16 @@ public class EPHomeActivity extends EPFragmentActivity {
 					@Override
 					public void run() {
 						setProgressBarIndeterminateVisibility(false);
-						// Add the category fragment
-						mObjFragmentCategory = new CategoryFragment();
-						addFragment(R.id.fragment_container,
-								mObjFragmentCategory);
+						CategoryFragment mObjFragment = new CategoryFragment();
+						addFragment("Category", R.id.fragment_container,
+								mObjFragment);
+
 					}
 				});
 			}
 
 			@Override
-			public void onTaskFailed(final int errorCode) {
+			public void onTaskFailed(final int errorCode, final String response) {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
@@ -102,11 +118,13 @@ public class EPHomeActivity extends EPFragmentActivity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.main, menu);
-
-		return super.onCreateOptionsMenu(menu);
+	public void onRefreshData() {
+		super.onRefreshData();
+		EPFragment mObjMainFragment = getCurrentFragment();
+		if (mObjMainFragment != null) {
+			mObjMainFragment.onRefreshData();
+		} else {
+			getNewAuthenticationTokenFromAPI();
+		}
 	}
-
 }

@@ -1,11 +1,24 @@
+/*
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.optimusinfo.elasticpath.cortex.product.listing;
 
 import android.content.Context;
-import android.net.ParseException;
 import android.os.AsyncTask;
-import android.util.Log;
-
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
 import com.optimusinfo.elasticpath.cortex.common.Utils;
 
@@ -15,7 +28,7 @@ import com.optimusinfo.elasticpath.cortex.common.Utils;
  * @author Optimus
  * 
  */
-public class AsyncTaskGetProductListing extends AsyncTask<Void, Void, Boolean> {
+public class AsyncTaskGetProductListing extends AsyncTask<Void, Void, String> {
 
 	Context mCurrent;
 	String URL;
@@ -25,7 +38,7 @@ public class AsyncTaskGetProductListing extends AsyncTask<Void, Void, Boolean> {
 	String headerAuthorizationTypeString;
 	String headerAuthorizationTypeValue;
 	String headerAccessTokenInitializer;
-	ListenerGetProductListings mProdTaskListener;
+	ListenerGetProductListings mListener;
 
 	/**
 	 * Initializes the variables for the Cortex Navigations task API
@@ -69,52 +82,55 @@ public class AsyncTaskGetProductListing extends AsyncTask<Void, Void, Boolean> {
 		headerContentTypeValue = contentTypeValue;
 		headerAuthorizationTypeString = authoriztionString;
 		headerAccessTokenInitializer = accessTokenInitializer;
-		mProdTaskListener = listener;
+		mListener = listener;
 	}
 
 	@Override
-	protected Boolean doInBackground(Void... params) {
+	protected void onPreExecute() {
+		super.onPreExecute();
+		if (!Utils.isNetworkAvailable(mCurrent)) {
+			mListener.onTaskFailed(Constants.ErrorCodes.ERROR_NETWORK);
+			cancel(true);
+			return;
+		}
+	}
 
+	@Override
+	protected String doInBackground(Void... params) {
+		String responseNavigation = null;
 		try {
-			if (Utils.isNetworkAvailable(mCurrent)) {
-				// Get the categories and their corresponding URLs
-				String responseNavigation = Utils.getJSONFromCortexUrl(URL,
-						accessToken, headerContentTypeValue,
-						headerContentTypeString, headerAuthorizationTypeString,
-						headerAccessTokenInitializer);
-				Log.i("STRING RESPONSE", responseNavigation);
-				if (responseNavigation != null
-						&& responseNavigation.length() != 0) {
-					if (0 == responseNavigation
-							.compareTo(Integer
-									.toString(Constants.ApiResponseCode.UNAUTHORIZED_ACCESS))) {
-						mProdTaskListener.onAuthenticationFailed();
-						return null;
-					} else {
-						mProdTaskListener.onTaskSuccessful(new Gson().fromJson(
-								responseNavigation, ProductListing.class));
-						return true;
-					}
+
+			// Get the categories and their corresponding URLs
+			responseNavigation = Utils
+					.getJSONFromCortexUrl(URL, accessToken,
+							headerContentTypeValue, headerContentTypeString,
+							headerAuthorizationTypeString,
+							headerAccessTokenInitializer);
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		return responseNavigation;
+	}
+
+	@Override
+	protected void onPostExecute(String responseJSON) {
+		super.onPostExecute(responseJSON);
+		try {
+			if (responseJSON.length() != 0) {
+				if (0 == responseJSON
+						.compareTo(Integer
+								.toString(Constants.ApiResponseCode.UNAUTHORIZED_ACCESS))) {
+					mListener.onAuthenticationFailed();
+				} else {
+					mListener.onTaskSuccessful(new Gson().fromJson(
+							responseJSON, ProductListing.class));
 				}
-			} else {
-				mProdTaskListener
-						.onTaskFailed(Constants.ErrorCodes.ERROR_NETWORK);
 			}
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-		} catch (ParseException e) {
+		} catch (JsonParseException e) {
 			e.printStackTrace();
+			mListener.onTaskFailed(Constants.ErrorCodes.ERROR_SERVER);
 		}
-		return false;
 	}
-
-	@Override
-	protected void onPostExecute(Boolean result) {
-		super.onPostExecute(result);
-		if (result != null && !result) {
-			mProdTaskListener.onTaskFailed(Constants.ErrorCodes.ERROR_SERVER);
-		}
-
-	}
-
 }

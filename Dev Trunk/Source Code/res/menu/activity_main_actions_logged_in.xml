@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- Cart Button -->
+    <item
+        android:id="@+id/action_cart"
+        android:icon="@drawable/icon_cart"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_cart"/>
+
+    <!-- Refresh Button -->
+    <item
+        android:id="@+id/action_refresh"
+        android:icon="@drawable/ic_action_refresh"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_refresh"/>
+
+    <!-- Profile -->
+    <item
+        android:id="@+id/action_profile"
+        android:showAsAction="never"
+        android:title="@string/action_profile"/>
+
+    <!-- Check updates -->
+    <item
+        android:id="@+id/action_logout"
+        android:showAsAction="never"
+        android:title="@string/action_logout"/>
+
+</menu>

@@ -8,6 +8,11 @@ import com.google.gson.annotations.SerializedName;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
 
 public class CartModel implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@SerializedName("_lineitems")
 	protected CartLineItems[] mLineItems;
 
@@ -104,7 +109,52 @@ public class CartModel implements Serializable {
 
 	}
 
+	/**
+	 * This method deletes an item from cart
+	 * 
+	 * @param current
+	 * @param url
+	 * @param token
+	 * @param listener
+	 */
+	public static void deleteCartItems(Context current, String url,
+			String token, ListenerDeleteCartItems listener) {
+		try {
+			AsyncTaskDeleteCartItem taskDelete = new AsyncTaskDeleteCartItem(
+					current, url, token,
+					Constants.RequestHeaders.CONTENT_TYPE_STRING,
+					Constants.RequestHeaders.CONTENT_TYPE,
+					Constants.RequestHeaders.AUTHORIZATION_STRING,
+					Constants.RequestHeaders.AUTHORIZATION_INITIALIZER,
+					listener);
+			taskDelete.execute();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void updateCartItems(Context current, String url,
+			String token, ListenerUpdateCartItems listener, String quantiy) {
+		try {
+			AsyncTaskUpdateCartItem taskUpdate = new AsyncTaskUpdateCartItem(
+					current, url, token,
+					Constants.RequestHeaders.CONTENT_TYPE_STRING,
+					Constants.RequestHeaders.CONTENT_TYPE,
+					Constants.RequestHeaders.AUTHORIZATION_STRING,
+					Constants.RequestHeaders.AUTHORIZATION_INITIALIZER,
+					listener, quantiy);
+			taskUpdate.execute();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	public class CartLineItems implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("_element")
 		protected Element[] mElements;
 
@@ -119,6 +169,11 @@ public class CartModel implements Serializable {
 	}
 
 	public class Element implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		@SerializedName("_item")
 		protected Item[] mItems;
 
@@ -130,6 +185,9 @@ public class CartModel implements Serializable {
 
 		@SerializedName("quantity")
 		protected String mQuantity;
+
+		@SerializedName("self")
+		protected DeleteLink mLink;
 
 		public String getQuantity() {
 			return mQuantity;
@@ -163,6 +221,15 @@ public class CartModel implements Serializable {
 			this.mItemsPrice = mItemsPrice;
 		}
 
+		public class DeleteLink implements Serializable {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+			@SerializedName("href")
+			String mHref;
+		}
+
 	}
 
 	/**
@@ -172,8 +239,19 @@ public class CartModel implements Serializable {
 	 * 
 	 */
 	public class Item implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		@SerializedName("_definition")
 		protected ItemDefinition[] mDefinitions;
+
+		@SerializedName("_price")
+		protected ItemPrice[] mUnitPrice;
+
+		@SerializedName("_rate")
+		protected ItemRate[] mUnitRate;
 
 		public ItemDefinition[] getDefinitions() {
 			return mDefinitions;
@@ -192,6 +270,11 @@ public class CartModel implements Serializable {
 	 * 
 	 */
 	public class ItemDefinition implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		@SerializedName("display-name")
 		protected String mDisplayName;
 
@@ -222,6 +305,10 @@ public class CartModel implements Serializable {
 	 * 
 	 */
 	public class ItemAssets implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("_element")
 		protected AssetElements[] mAssetsElements;
 
@@ -241,6 +328,10 @@ public class CartModel implements Serializable {
 	 * 
 	 */
 	public class AssetElements implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("content-location")
 		protected String mImageUrl;
 
@@ -261,6 +352,10 @@ public class CartModel implements Serializable {
 	 */
 
 	public class ItemPrice implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("purchase-price")
 		protected PriceDetails[] mProductPrices;
 
@@ -282,6 +377,10 @@ public class CartModel implements Serializable {
 	 */
 
 	public class ItemRate implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("rate")
 		protected PriceDetails[] mProductPrices;
 
@@ -302,6 +401,10 @@ public class CartModel implements Serializable {
 	 * 
 	 */
 	public class PriceDetails implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("display")
 		protected String mDisplayPrice;
 
@@ -322,6 +425,11 @@ public class CartModel implements Serializable {
 	 * 
 	 */
 	public class CartOrder implements Serializable {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 
 		@SerializedName("_purchaseform")
 		protected PurchaseForm[] mPurchaseForms;
@@ -347,6 +455,10 @@ public class CartModel implements Serializable {
 	}
 
 	public class CartTotal implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("cost")
 		public Cost[] mCosts;
 
@@ -360,6 +472,10 @@ public class CartModel implements Serializable {
 	}
 
 	public class Cost implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("display")
 		protected String mTotalCost;
 
@@ -373,6 +489,10 @@ public class CartModel implements Serializable {
 	}
 
 	public class CheckOut implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("href")
 		protected String mCheckOutLink;
 
@@ -393,6 +513,10 @@ public class CartModel implements Serializable {
 	 * 
 	 */
 	public class PurchaseForm implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("self")
 		protected PurchaseLinks mPurchaseLinks;
 
@@ -413,6 +537,10 @@ public class CartModel implements Serializable {
 	 * 
 	 */
 	public class PurchaseLinks implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("href")
 		protected String mHREF;
 

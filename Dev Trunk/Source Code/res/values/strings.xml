@@ -3,6 +3,12 @@
 
     <string name="app_name">elasticpath</string>
     <string name="action_settings">Settings</string>
+    <string name="action_cart">Shopping Cart</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_login">LOGIN</string>
+    <string name="action_profile">PROFILE</string>
+    <string name="action_logout">LOGOUT</string>
+    <string name="action_home">Home</string>
     <string name="msgErrorServer"> Server Error	</string>
     <string name="msgErrorNetworkUnavailable"> Network not available </string>
     <string name="msgErrorAuthentication"> Authentication failed </string>
@@ -11,6 +17,7 @@
     <string name="hintUsername">Username</string>
     <string name="hintPassword">Password</string>
     <string name="labelButtonLogin">Login</string>
+    <string name="labelButtonCreate">CREATE ACCOUNT</string>
 
     <!-- Strings for Product Lisitng page -->
     <string name="titlePageProductListings"></string>
@@ -42,10 +49,17 @@
     <string name="labelTextViewInStock">IN STOCK</string>
     <string name="labelTextViewShippingNotAvailable">Shipping: N/A</string>
     <string name="labelTextViewPrice">Price:\t</string>
+    <string name="quantityNoItem">0 Items</string>
+    <string name="priceNoItem">$ 0.00</string>
+    <string name="priceNotAvailable">N/A</string>
+    <string name="messageEmptyCart">Your shopping cart is empty.</string>
+    <string name="messageDeleteCartSuccessful">Delete Successful.</string>
     <string name="labelTextViewQty">QTY</string>
     <string name="buttonCartPurchase">Purchase</string>
     <string name="buttonCartCheckout">CHECKOUT</string>
     <string name="buttonCartUpdateCart">UPDATE CART</string>
+    <string name="buttonCartReturnCart">RETURN TO CART</string>
+    <string name="buttonCartCompletePurchase">COMPLETE PURCHASE</string>
     <string name="buttonCartRemove">Remove</string>
     <string name="headingPagePurchase">Order Confirmation</string>
     <string name="labelTextViewCheckoutSummary">Checkout Summary</string>
@@ -53,11 +67,58 @@
 the checkout to complete your purchase.</string>
     <string name="labelTextViewAddress">Addresses</string>
     <string name="labelTextViewPaymentMethods">Payment Methods</string>
+    <string name="labelTextViewShippingOptions">Shipping Options</string>
+    <string name="labelTextViewPurchaseHitory">Purchase History</string>
     <string name="labelTextViewTotalQuantity">TOTAL QUANTITY</string>
     <string name="labelTextViewSubtotal">ORDER SUBTOTAL</string>
     <string name="labelTextViewShippingtotal">SHIPPING TOTAL</string>
     <string name="labelTextViewOrderTotal">ORDER TOTAL</string>
     <string name="labelRadioButtonUseForShipping">USE FOR SHIPPING</string>
     <string name="labelRadioButtonUseForBilling">USE FOR BILLING</string>
+    <string name="labelRadioButtonUseCreditCard">USE THIS CREDIT CARD</string>
+    <string name="labelTextViewOrderNumber">Order: </string>
+    <string name="labelTextViewAddNewAddress">ADD NEW ADDRESS</string>
+    <string name="labelTextViewOrderStatus">Status: </string>
+    <string name="labelTextViewBillingInfo">Billing Information</string>
+    <string name="labelTextViewAddressHeader">ADDRESS</string>
+    <string name="labelTextViewPaymentHeader">PAYMENT</string>
+    <string name="labelTextViewOrderContent">Order Contents</string>
+    <string name="labelTextViewOrderTax">Order Tax:</string>
+    <string name="labelTextViewOrderShipping">Order Shipping:</string>
+    <string name="labelTextViewOrderTotalSmall">Order Total:</string>
+    <string name="labelTextViewUserProfile">User Profile:</string>
+    <string name="messageTextViewUserProfile">View your personal information and edit your shipping/billing addresses.</string>
+    <string name="labelTextViewProfileName">NAME</string>
+    <string name="labelTextViewProfileEmail">EMAIL/USERNAME</string>
+    <string name="buttonAddressRemove">REMOVE</string>
+    <string name="buttonAddressEdit">EDIT</string>
+    <string name="labelTextViewOrderNumberHeader">Order #</string>
+    <string name="labelTextViewDateHeader">Date</string>
+    <string name="labelTextViewTotalHeader">Total</string>
+    <string name="labelTextViewStatusHeader">Status</string>
+    <string name="labelTextViewAddEditAddressHeader">Add/Edit Address</string>
+    <string name="messageTextViewAddEditAddressHeader">Please login with your username and password below.</string>
+    <string name="labelTextViewFirstName">FIRST NAME</string>
+    <string name="labelTextViewLastName">LAST NAME</string>
+    <string name="labelTextViewStreetAddress">STREET ADDRESS</string>
+    <string name="labelTextViewExtendedAddress">EXTENDED ADDRESS</string>
+    <string name="labelTextViewCity">CITY</string>
+    <string name="labelTextViewProvince">PROVINCE</string>
+    <string name="labelTextViewCountry">COUNTRY</string>
+    <string name="labelTextViewPostalCode">POSTAL CODE</string>
+    <string name="labelButtonCancel">CANCEL</string>
+    <string name="labelButtonLogout">LOG OUT</string>
+    <string name="labelButtonSave">SAVE</string>
+    <string name="labelTextViewUserName">USERNAME</string>
+    <string name="labelTextViewPassword">PASSWORD</string>
+    <string name="labelTextViewLoginHeader">Account Login</string>
+    <string name="messageTextViewLoginHeader">Please login with your username and password below.</string>
+    <string name="labelTextViewRegisterHeader">Don\'t Have An Account?</string>
+    <string name="messageTextViewRegisterHeader">Please enter your personal information to create a new user account.</string>
+    <string name="labelTextViewUserLogout">User Logout</string>
+    <string name="messageTextViewUserLogout">Are you sure you want to log out of this storefront?</string>
 
+    
+    <string name="breadcrumb_title_home">Home</string>
+    <string name="ellipsis">…</string>
 </resources>

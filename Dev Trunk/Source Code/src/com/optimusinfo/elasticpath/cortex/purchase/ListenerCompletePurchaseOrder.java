@@ -8,7 +8,7 @@ package com.optimusinfo.elasticpath.cortex.purchase;
  */
 public interface ListenerCompletePurchaseOrder {
 
-	void onTaskSuccessful(int responseCode);
+	void onTaskSuccessful(String orderUrl);
 
 	void onTaskFailed(int errorCode);
 

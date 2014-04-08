@@ -5,11 +5,14 @@ import java.io.Serializable;
 import android.content.Context;
 
 import com.google.gson.annotations.SerializedName;
-import com.optimusinfo.elasticpath.cortex.cart.AsyncTaskGetCompleteCart;
-import com.optimusinfo.elasticpath.cortex.cart.ListenerGetCompleteCartItems;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
 
 public class CheckoutModel implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@SerializedName("_billingaddressinfo")
 	AddressInfo[] mBillingAddressInfo;
@@ -48,6 +51,24 @@ public class CheckoutModel implements Serializable {
 		}
 	}
 
+	/**
+	 * This method selects the Check out option
+	 * 
+	 * @param url
+	 * @param accessToken
+	 * @param listener
+	 */
+	public static void selectOption(String url, String accessToken,
+			ListenerSelectCheckoutOption listener) {
+		try {
+			AsyncTaskSelectCheckOutOption taskSelectionOption = new AsyncTaskSelectCheckOutOption(
+					url, accessToken, listener);
+			taskSelectionOption.execute();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static String getAddressLine(DescriptionElement address) {
 		String addressLine = "";
 		if (address.mAddressName.mGivenName != null) {
@@ -81,26 +102,38 @@ public class CheckoutModel implements Serializable {
 	}
 
 	public class Tax implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("cost")
 		Cost[] mCosts;
 	}
 
 	public class PurchaseForm implements Serializable {
-		@SerializedName("self")
-		PurchaseLinks mPurchaseLinks;
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		@SerializedName("links")
+		LinkElement[] mPurchaseLinks;
 
-		public class PurchaseLinks implements Serializable {
-			@SerializedName("href")
-			String mPurchaseLink;
-		}
 	}
 
 	public class AddressInfo implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("_selector")
 		AddressSelector[] mSelector;
 	}
 
 	public class AddressSelector implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("_choice")
 		AddressChoice[] mChoice;
 		@SerializedName("_chosen")
@@ -108,18 +141,47 @@ public class CheckoutModel implements Serializable {
 	}
 
 	public class AddressChoice implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		@SerializedName("_description")
 		DescriptionElement[] mDescription;
+
+		@SerializedName("links")
+		LinkElement[] mLinks;
+
 	}
 
 	public class DescriptionElement implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("name")
 		AddressName mAddressName;
 		@SerializedName("address")
 		Address mAddress;
 	}
 
+	public class LinkElement implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		@SerializedName("rel")
+		String mRelation;
+		@SerializedName("href")
+		String mHREF;
+	}
+
 	public class Address implements Serializable {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 
 		@SerializedName("family-name")
 		String mCountryName;
@@ -139,6 +201,10 @@ public class CheckoutModel implements Serializable {
 	}
 
 	public class AddressName implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("family-name")
 		String mFamilyName;
 		@SerializedName("given-name")
@@ -146,6 +212,11 @@ public class CheckoutModel implements Serializable {
 	}
 
 	public class CartTotal implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		@SerializedName("_total")
 		protected Total[] mCartTotal;
 
@@ -154,6 +225,10 @@ public class CheckoutModel implements Serializable {
 	}
 
 	public class Total implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("cost")
 		public Cost[] mCosts;
 
@@ -167,6 +242,10 @@ public class CheckoutModel implements Serializable {
 	}
 
 	public class Cost implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("display")
 		protected String mTotalCost;
 
@@ -181,10 +260,19 @@ public class CheckoutModel implements Serializable {
 
 	public class Deliveries implements Serializable {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("_element")
 		DeliveriesElement[] mElement;
 
 		public class DeliveriesElement implements Serializable {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@SerializedName("delivery-type")
 			String mDeliveryType;
 
@@ -192,25 +280,48 @@ public class CheckoutModel implements Serializable {
 			AddressInfo[] mDestinationInfo;
 
 			@SerializedName("_shippingoptioninfo")
-			ShippingAddressInfo[] mShippingAddressInfo;
+			ShippingOptionInfo[] mShippingOptionInfo;
 
 		}
 
-		public class ShippingAddressInfo implements Serializable {
+		public class ShippingOptionInfo implements Serializable {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 			@SerializedName("_selector")
-			ShippingAddressSelector[] mSelector;
+			ShippingOptionSelector[] mSelector;
 		}
 
-		public class ShippingAddressSelector implements Serializable {
+		public class ShippingOptionSelector implements Serializable {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@SerializedName("_choice")
-			ShippingAddressChoice[] mChoice;
+			ShippingOptionChoice[] mChoice;
+
+			@SerializedName("_chosen")
+			ShippingOptionChoice[] mChosen;
 		}
 
-		public class ShippingAddressChoice implements Serializable {
+		public class ShippingOptionChoice implements Serializable {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 			@SerializedName("_description")
 			ShippingElement[] mDescriptionElement;
 
+			@SerializedName("links")
+			LinkElement[] mLinks;
+
 			public class ShippingElement implements Serializable {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
 				@SerializedName("carrier")
 				String mCarrier;
 				@SerializedName("display-name")
@@ -222,10 +333,19 @@ public class CheckoutModel implements Serializable {
 	}
 
 	public class PaymentMethodInfo implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("_selector")
 		PaymentSelector[] mSelector;
 
 		public class PaymentSelector implements Serializable {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@SerializedName("_choice")
 			PaymentChoice[] mChoice;
 
@@ -234,15 +354,53 @@ public class CheckoutModel implements Serializable {
 
 			public class PaymentChoice implements Serializable {
 
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
 				@SerializedName("_description")
 				OptionDescription[] mDescription;
 
+				@SerializedName("links")
+				LinkElement[] mLinks;
+
 				public class OptionDescription implements Serializable {
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
 					@SerializedName("display-value")
 					public String mDisplayValue;
 				}
 			}
 		}
+	}
+
+	public static String getSelectActionLink(LinkElement[] mElements) {
+		for (LinkElement curr : mElements) {
+			if (curr.mRelation.equalsIgnoreCase("selectaction")) {
+				return curr.mHREF;
+			}
+		}
+		return "";
+	}
+
+	public static String getOrderActionLink(LinkElement[] mElements) {
+		for (LinkElement curr : mElements) {
+			if (curr.mRelation.equalsIgnoreCase("submitorderaction")) {
+				return curr.mHREF;
+			}
+		}
+		return "";
+	}
+
+	public static boolean isInfoRequired(LinkElement[] mElements) {
+		for (LinkElement curr : mElements) {
+			if (curr.mRelation.equalsIgnoreCase("needinfo")) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

@@ -3,12 +3,11 @@
     android:id="@+id/llLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
     android:background="#F4F4F4"
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/tvPaymentSectionHeader"
+        android:id="@+id/tvAddressSectionHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -18,7 +17,8 @@
         android:gravity="left"
         android:text="@string/labelTextViewAddress"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/tc_textView_cart_header_black" />
+        android:textColor="@color/tc_textView_cart_header_black"
+        android:textStyle="bold" />
 
     <GridView
         android:id="@+id/gvAddress"

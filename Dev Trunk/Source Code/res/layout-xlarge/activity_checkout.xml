@@ -22,11 +22,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:gravity="left"
-            android:paddingBottom="0dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="10dp"
+            android:padding="0dp"
             android:text="@string/labelTextViewCheckoutSummary"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/tc_textView_cart_header_black"
@@ -37,11 +38,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvHeaderTitle"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="0dp"
             android:gravity="left"
-            android:paddingBottom="0dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
+            android:padding="0dp"
             android:text="@string/messageTextViewCheckoutSummary"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/tc_textView_cart_header_grey" />
@@ -50,42 +52,72 @@
             android:id="@+id/frame_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvHeaderSummary" />
+            android:layout_below="@+id/tvHeaderSummary"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:padding="0dp" />
 
         <FrameLayout
             android:id="@+id/frame_payment_methods"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/frame_address" />
+            android:layout_below="@+id/frame_address"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp" />
 
         <LinearLayout
             android:id="@+id/llShippingOptions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/frame_payment_methods"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/layout_bg_border_blue_top_bottom"
             android:baselineAligned="false"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:paddingBottom="1dp"
+            android:paddingLeft="1dp"
+            android:paddingRight="0dp"
+            android:paddingTop="1dp" >
 
             <FrameLayout
                 android:id="@+id/frame_shipping_options"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_margin="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/drawable_border_dashed"
+                android:paddingBottom="0dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="1dp"
+                android:paddingTop="0dp" />
 
             <LinearLayout
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
+                android:layout_margin="0dp"
                 android:layout_weight="1"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:paddingBottom="0dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:paddingTop="0dp" >
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="left"
-                    android:paddingBottom="0dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp"
+                    android:padding="0dp"
                     android:text="@string/labelTextViewTotalQuantity"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/tc_textView_cart_header_dark_grey" />
@@ -94,22 +126,24 @@
                     android:id="@+id/tvQuantity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="2dp"
                     android:gravity="left"
-                    android:paddingBottom="0dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="5dp"
+                    android:padding="0dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/tc_textView_cart_header_grey" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
                     android:gravity="left"
-                    android:paddingBottom="0dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp"
+                    android:padding="0dp"
                     android:text="@string/labelTextViewSubtotal"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/tc_textView_cart_header_dark_grey" />
@@ -118,22 +152,24 @@
                     android:id="@+id/tvOrderSubtotal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="2dp"
                     android:gravity="left"
-                    android:paddingBottom="0dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="5dp"
+                    android:padding="0dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/tc_textView_cart_header_grey" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
                     android:gravity="left"
-                    android:paddingBottom="0dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp"
+                    android:padding="0dp"
                     android:text="@string/labelTextViewShippingtotal"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/tc_textView_cart_header_dark_grey" />
@@ -142,38 +178,85 @@
                     android:id="@+id/tvShippingTotal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="2dp"
                     android:gravity="left"
-                    android:paddingBottom="0dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="5dp"
+                    android:padding="0dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/tc_textView_cart_header_grey" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="15dp"
                     android:gravity="left"
-                    android:paddingBottom="0dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="10dp"
+                    android:padding="0dp"
                     android:text="@string/labelTextViewOrderTotal"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/tc_textView_cart_header_dark_grey" />
 
                 <TextView
                     android:id="@+id/tvOrderTotal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
                     android:gravity="left"
-                    android:paddingBottom="0dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="5dp"
+                    android:padding="0dp"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/tc_textView_cart_header_black" />
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/llShippingOptions"
+            android:baselineAligned="false"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btReturnCart"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/apptheme_btn_default"
+                android:padding="5dp"
+                android:text="@string/buttonCartReturnCart"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/tc_textview_product_available"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/btCompletePurchase"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/apptheme_btn_default"
+                android:padding="5dp"
+                android:text="@string/buttonCartCompletePurchase"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/tc_textview_product_available"
+                android:textStyle="bold"
+                android:visibility="visible" />
         </LinearLayout>
     </RelativeLayout>
 

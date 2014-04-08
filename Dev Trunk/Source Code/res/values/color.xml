@@ -7,6 +7,8 @@
     <!-- Action Bar Colors -->
     <color name="bg_top_header">#FF00A3DD</color>
     <color name="tc_top_header">#ffffff</color>
+    <color name="bg_top_breadcrumb">#ffffff</color>
+    <color name="bg_breadcrumb">#EBEBEB</color>
 
     <!-- Login page colors -->
     <color name="bg_button_login_normal">#BDBDBD</color>
@@ -33,6 +35,7 @@
     <color name="bg_listview_product_desc_1">#BFDBDBDB</color>
     <color name="bg_listview_product_desc_2">#FFFFFF</color>
     <color name="tc_listview_product_desc">#000000</color>
+    <color name="tc_listview_product_blue">#FF00A3DD</color>
 
     <!-- Cart Colors -->
     <color name="tc_textView_cart_header_black">#000000</color>
@@ -44,5 +47,13 @@
 
     <!-- CheckOut Colors -->
     <color name="bg_layout_address">#D3D2D4</color>
+    <color name="bg_layout_payment_method">#FFFFFF</color>
+    <color name="bg_layout_shipping_method">#D3D2D4</color>
+    <color name="bg_layout_purchase_histroy">#D3D2D4</color>
+
+    <!-- Logout Headers -->
+    <color name="tc_textView_logout_blue">#197EC3</color>
+    <color name="tc_textView_logout_black">#000000</color>
+    <color name="bg_layout_logout_white">#ffffff</color>
 
 </resources>

@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    android:scrollbars="vertical" >
+
+    <LinearLayout
+        android:id="@+id/lHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="left"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="left"
+            android:text="@string/labelTextViewAddEditAddressHeader"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/tc_textView_cart_header_black" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="2dp"
+            android:gravity="left"
+            android:text="@string/messageTextViewAddEditAddressHeader"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/tc_textView_cart_header_grey"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:gravity="left"
+            android:text="@string/labelTextViewFirstName"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/tc_textView_cart_header_black" />
+
+        <EditText
+            android:id="@+id/etFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/selector_edittext_quantity"
+            android:gravity="left"
+            android:hint="@string/labelTextViewFirstName"
+            android:inputType="textPersonName"
+            android:textColor="@color/tc_textView_cart_header_black" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="left"
+            android:text="@string/labelTextViewLastName"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/tc_textView_cart_header_black" />
+
+        <EditText
+            android:id="@+id/etLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/selector_edittext_quantity"
+            android:gravity="left"
+            android:hint="@string/labelTextViewLastName"
+            android:inputType="textPersonName"
+            android:textColor="@color/tc_textView_cart_header_black" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="left"
+            android:text="@string/labelTextViewStreetAddress"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/tc_textView_cart_header_black" />
+
+        <EditText
+            android:id="@+id/etStreetAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/selector_edittext_quantity"
+            android:gravity="left"
+            android:hint="@string/labelTextViewStreetAddress"
+            android:inputType="textPostalAddress"
+            android:textColor="@color/tc_textView_cart_header_black" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="left"
+            android:text="@string/labelTextViewExtendedAddress"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/tc_textView_cart_header_black" />
+
+        <EditText
+            android:id="@+id/etExtendedAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/selector_edittext_quantity"
+            android:gravity="left"
+            android:hint="@string/labelTextViewExtendedAddress"
+            android:inputType="textPostalAddress"
+            android:textColor="@color/tc_textView_cart_header_black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="left"
+                    android:text="@string/labelTextViewCity"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/tc_textView_cart_header_black" />
+
+                <EditText
+                    android:id="@+id/etCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/selector_edittext_quantity"
+                    android:gravity="left"
+                    android:hint="@string/labelTextViewCity"
+                    android:inputType="textPostalAddress"
+                    android:textColor="@color/tc_textView_cart_header_black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="left"
+                    android:text="@string/labelTextViewProvince"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/tc_textView_cart_header_black" />
+
+                <EditText
+                    android:id="@+id/etProvince"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/selector_edittext_quantity"
+                    android:gravity="left"
+                    android:hint="@string/labelTextViewProvince"
+                    android:inputType="textPostalAddress"
+                    android:textColor="@color/tc_textView_cart_header_black" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="left"
+                    android:text="@string/labelTextViewCountry"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/tc_textView_cart_header_black" />
+
+                <EditText
+                    android:id="@+id/etCountry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/selector_edittext_quantity"
+                    android:gravity="left"
+                    android:hint="@string/labelTextViewCountry"
+                    android:inputType="textPostalAddress"
+                    android:textColor="@color/tc_textView_cart_header_black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="left"
+                    android:text="@string/labelTextViewPostalCode"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/tc_textView_cart_header_black" />
+
+                <EditText
+                    android:id="@+id/etPostalCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/selector_edittext_quantity"
+                    android:gravity="left"
+                    android:hint="@string/labelTextViewPostalCode"
+                    android:inputType="textPostalAddress"
+                    android:textColor="@color/tc_textView_cart_header_black" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btCancel"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/apptheme_btn_default"
+                android:padding="5dp"
+                android:text="@string/labelButtonCancel"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/tc_textview_product_available"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/btSave"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/apptheme_btn_default"
+                android:padding="5dp"
+                android:text="@string/labelButtonSave"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/tc_textview_product_available"
+                android:textStyle="bold"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="left"
+            android:text=" "
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/tc_textView_cart_header_black" />
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="5dp" >
+
+    <TextView
+        android:id="@+id/tvOrderNumber"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1"
+        android:text="@string/labelTextViewOrderNumber"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/tc_listview_product_blue" />
+
+    <TextView
+        android:id="@+id/tvOrderDate"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="3"
+        android:lines="2"
+        android:maxLines="2"
+        android:text="@string/labelTextViewOrderNumber"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/tc_listview_product_desc" />
+
+    <TextView
+        android:id="@+id/tvOrderTotal"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1.5"
+        android:text="@string/labelTextViewOrderNumber"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/tc_listview_product_desc" />
+
+    <TextView
+        android:id="@+id/tvOrderStatus"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="2"
+        android:text="@string/labelTextViewOrderNumber"
+        android:textColor="@color/tc_listview_product_desc"
+        android:textSize="10sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

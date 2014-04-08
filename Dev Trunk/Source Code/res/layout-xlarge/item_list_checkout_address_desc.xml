@@ -16,7 +16,9 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="3dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="18sp"
+        android:lines="3"
+        android:maxLines="3"
         android:textColor="@color/tc_listview_product_desc" />
 
     <RadioButton
@@ -29,8 +31,8 @@
         android:layout_marginTop="10dp"
         android:button="@drawable/apptheme_btn_radio_holo_light"
         android:text="@string/labelRadioButtonUseForShipping"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/tc_listview_product_desc"
+        android:textSize="14sp"
         android:textStyle="bold" >
     </RadioButton>
 
@@ -44,8 +46,8 @@
         android:layout_marginTop="0dp"
         android:button="@drawable/apptheme_btn_radio_holo_light"
         android:text="@string/labelRadioButtonUseForBilling"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/tc_listview_product_desc"
+        android:textSize="14sp"
         android:textStyle="bold" >
     </RadioButton>
 
