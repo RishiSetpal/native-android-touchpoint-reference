@@ -7,7 +7,7 @@
   "cortexApi":{
     "path":"integrator",
     "scope":"campus",
-    "endpoint":  "http://touchpoint-developers.elasticpath.com:8080/cortex/",
+    "endpoint":  "http://54.200.118.70:8080/cortex/",
      "role": "PUBLIC"
   }  
 }
