@@ -1,14 +1,29 @@
+<!--
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
     </style>
 
@@ -19,7 +34,7 @@
         <item name="android:actionBarStyle">@style/EPActionBar</item>
         <item name="android:windowActionBarOverlay">false</item>
         <item name="android:windowBackground">@color/bg_application_window</item>
-        <item name="android:colorBackground">@color/bg_application_window</item>        
+        <item name="android:colorBackground">@color/bg_application_window</item>
     </style>
 
     <!-- ActionBar styles -->
@@ -210,7 +225,7 @@
     <style name="TextViewProductDetailsTitle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginTop">5dp</item>
         <item name="android:layout_marginBottom">5dp</item>
         <item name="android:layout_marginLeft">5dp</item>
         <item name="android:layout_marginRight">5dp</item>
@@ -268,15 +283,16 @@
         <item name="android:textColor">@color/tc_textview_product_available</item>
     </style>
 
-    <style name="SpinnerProductDetailsQuantity">
-        <item name="android:layout_width">0dip</item>
+    <style name="TextViewSpinnerCountry">
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_margin">5dp</item>
-        <item name="android:padding">5dp</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:entries">@array/Quantity</item>
-    </style>   
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textColor">@color/tc_textView_cart_header_black</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
 
 </resources>

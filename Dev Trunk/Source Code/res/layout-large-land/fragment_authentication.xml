@@ -8,7 +8,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
         android:baselineAligned="false"
         android:gravity="top"
         android:orientation="horizontal" >
@@ -18,8 +17,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="2"
-            android:gravity="top"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:gravity="top" >
 
             <TextView
                 android:layout_width="match_parent"
@@ -81,14 +80,14 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/apptheme_btn_default"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/eptheme_btn_default"
                 android:padding="5dp"
                 android:text="@string/labelButtonLogin"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/tc_textview_product_available"
                 android:textStyle="bold"
                 android:visibility="visible" />
@@ -100,8 +99,8 @@
             android:layout_gravity="center"
             android:layout_weight="3"
             android:background="@color/bg_layout_address"
-            android:gravity="top"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:gravity="top" >
 
             <TextView
                 android:layout_width="match_parent"
@@ -236,14 +235,14 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/apptheme_btn_default"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/eptheme_btn_default"
                 android:padding="5dp"
                 android:text="@string/labelButtonCreate"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/tc_textview_product_available"
                 android:textStyle="bold"
                 android:visibility="visible" />

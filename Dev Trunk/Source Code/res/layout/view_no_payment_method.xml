@@ -1,0 +1,11 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="20dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:gravity="center"
+    android:text="@string/lableNoPaymentMethod"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:textColor="@color/tc_textView_cart_header_black" />

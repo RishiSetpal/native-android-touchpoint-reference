@@ -15,9 +15,9 @@
         android:layout_marginBottom="0dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="3dp"
         android:textColor="@color/tc_listview_product_desc"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <RadioButton
         android:id="@+id/rbPaymentMethod"
@@ -27,10 +27,10 @@
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="10dp"
-        android:button="@drawable/apptheme_btn_radio_holo_light"
+        android:button="@drawable/eptheme_btn_radio_holo_light"
         android:text="@string/labelRadioButtonUseCreditCard"
         android:textColor="@color/tc_listview_product_desc"
-        android:textSize="14sp"
+        android:textSize="15sp"
         android:textStyle="bold" >
     </RadioButton>
 

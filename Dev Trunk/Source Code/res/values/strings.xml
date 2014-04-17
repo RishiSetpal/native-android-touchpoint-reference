@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
 <resources>
 
     <string name="app_name">elasticpath</string>
@@ -44,7 +59,9 @@
     <string name="labelTextViewTaxes">Taxes: </string>
     <string name="labelButtonUpdateCart">UPDATE CART</string>
     <string name="labelButtonCheckout">CHECKOUT</string>
-    <string name="labelTextViewContinue">Continue Shopping</string>
+    <string name="labelTextViewContinue">&lt;&lt;&#160;&#160;Continue Shopping\n</string>
+    <string name="labelTextViewReturnListing">&lt;&lt;&#160;&#160;Return To Listing\n</string>
+    <string name="labelTextViewReturnProfile">&lt;&lt;&#160;&#160;Return To User Profile\n</string>
     <string name="labelTextViewItems">Items</string>
     <string name="labelTextViewInStock">IN STOCK</string>
     <string name="labelTextViewShippingNotAvailable">Shipping: N/A</string>
@@ -117,8 +134,8 @@ the checkout to complete your purchase.</string>
     <string name="messageTextViewRegisterHeader">Please enter your personal information to create a new user account.</string>
     <string name="labelTextViewUserLogout">User Logout</string>
     <string name="messageTextViewUserLogout">Are you sure you want to log out of this storefront?</string>
-
-    
     <string name="breadcrumb_title_home">Home</string>
     <string name="ellipsis">…</string>
+    <string name="lableNoPaymentMethod">You have no saved Payment methods.</string>
+
 </resources>

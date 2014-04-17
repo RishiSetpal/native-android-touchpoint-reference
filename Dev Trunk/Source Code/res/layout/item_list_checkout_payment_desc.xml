@@ -27,7 +27,7 @@
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="10dp"
-        android:button="@drawable/apptheme_btn_radio_holo_light"
+        android:button="@drawable/eptheme_btn_radio_holo_light"
         android:text="@string/labelRadioButtonUseCreditCard"
         android:textColor="@color/tc_listview_product_desc"
         android:textSize="12sp"

@@ -15,7 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:layout_margin="10dp" >
 
             <TextView
                 android:layout_width="match_parent"
@@ -81,7 +82,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/apptheme_btn_default"
+                android:background="@drawable/eptheme_btn_default"
                 android:padding="5dp"
                 android:text="@string/labelButtonLogin"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -95,7 +96,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@color/bg_layout_address"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:padding="10dp" >
 
             <TextView
                 android:layout_width="match_parent"
@@ -234,7 +236,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/apptheme_btn_default"
+                android:background="@drawable/eptheme_btn_default"
                 android:padding="5dp"
                 android:text="@string/labelButtonCreate"
                 android:textAppearance="?android:attr/textAppearanceSmall"

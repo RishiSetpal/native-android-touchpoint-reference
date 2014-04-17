@@ -16,8 +16,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="15dp"
-        android:orientation="horizontal"
-         >
+        android:orientation="horizontal" >
 
         <TextView
             android:layout_width="0dip"
@@ -95,8 +94,7 @@
         android:id="@+id/llCartOrderSummary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+         android:layout_above="@+id/tvReturn"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
@@ -132,7 +130,7 @@
                         android:paddingRight="5dp"
                         android:paddingTop="5dp"
                         android:text="@string/labelTextViewOrderSubtotal"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/tc_textView_cart_header_grey"
                         android:textStyle="bold" />
 
@@ -147,7 +145,7 @@
                         android:paddingRight="5dp"
                         android:paddingTop="5dp"
                         android:text="@string/priceNoItem"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/tc_textView_cart_header_black"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -168,7 +166,7 @@
                         android:paddingRight="5dp"
                         android:paddingTop="5dp"
                         android:text="@string/labelTextViewShippingTotal"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/tc_textView_cart_header_grey"
                         android:textStyle="bold" />
 
@@ -183,7 +181,7 @@
                         android:paddingRight="5dp"
                         android:paddingTop="5dp"
                         android:text="@string/priceNotAvailable"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/tc_textView_cart_header_black"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -204,7 +202,7 @@
                         android:paddingRight="5dp"
                         android:paddingTop="5dp"
                         android:text="@string/labelTextViewTaxes"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/tc_textView_cart_header_grey"
                         android:textStyle="bold" />
 
@@ -219,7 +217,7 @@
                         android:paddingRight="5dp"
                         android:paddingTop="5dp"
                         android:text="@string/priceNotAvailable"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="@color/tc_textView_cart_header_black"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -284,10 +282,10 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/apptheme_btn_default_grey"
+                android:background="@drawable/eptheme_btn_default_grey"
                 android:padding="5dp"
                 android:text="@string/buttonCartUpdateCart"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/tc_textview_product_available"
                 android:visibility="visible" />
 
@@ -299,13 +297,29 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/apptheme_btn_default"
+                android:background="@drawable/eptheme_btn_default"
                 android:padding="5dp"
                 android:text="@string/buttonCartCheckout"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/tc_textview_product_available"
                 android:visibility="visible" />
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvReturn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="@string/labelTextViewContinue"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/tc_listview_product_blue"
+        android:textStyle="bold" />
 
 </RelativeLayout>

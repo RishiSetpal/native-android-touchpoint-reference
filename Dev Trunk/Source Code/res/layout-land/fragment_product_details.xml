@@ -14,13 +14,14 @@
         android:id="@+id/tvProductDetailTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
+        android:layout_marginBottom="5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
         android:gravity="left"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/tc_textView_cart_header_black" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/tc_textView_cart_header_black"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -109,6 +110,21 @@
                     android:text="@string/labelButtonAddtocart"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/tc_textview_cart_item_name_white" />
+
+                <TextView
+                    android:id="@+id/tvContinueShopping"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btProductDetailAddToCart"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="@string/labelTextViewReturnListing"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/tc_listview_product_blue"
+                    android:textStyle="bold" />
             </RelativeLayout>
         </ScrollView>
 

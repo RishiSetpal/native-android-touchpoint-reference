@@ -30,7 +30,7 @@
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
             android:layout_marginTop="0dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/tc_textView_cart_header_black"
             android:textStyle="bold" />
 
@@ -42,7 +42,7 @@
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
             android:layout_marginTop="3dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/tc_textView_cart_header_black" />
     </LinearLayout>
 
@@ -56,7 +56,7 @@
         android:layout_marginRight="0dp"
         android:layout_marginTop="0dp"
         android:layout_weight="1"
-        android:button="@drawable/apptheme_btn_radio_holo_light"
+        android:button="@drawable/eptheme_btn_radio_holo_light"
         android:gravity="center" >
     </RadioButton>
 

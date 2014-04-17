@@ -39,8 +39,7 @@
             android:gravity="left"
             android:text="@string/messageTextViewAddEditAddressHeader"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/tc_textView_cart_header_grey"
-            />
+            android:textColor="@color/tc_textView_cart_header_grey" />
 
         <TextView
             android:layout_width="match_parent"
@@ -203,19 +202,15 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/tc_textView_cart_header_black" />
 
-                <EditText
-                    android:id="@+id/etProvince"
+                <Spinner
+                    android:id="@+id/spProvince"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="2dp"
-                    android:background="@drawable/selector_edittext_quantity"
-                    android:gravity="left"
-                    android:hint="@string/labelTextViewProvince"
-                    android:inputType="textPostalAddress"
-                    android:textColor="@color/tc_textView_cart_header_black" />
+                    android:background="@drawable/eptheme_spinner_background_holo_light" />
             </LinearLayout>
         </LinearLayout>
 
@@ -243,19 +238,15 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/tc_textView_cart_header_black" />
 
-                <EditText
-                    android:id="@+id/etCountry"
+                <Spinner
+                    android:id="@+id/spCountry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="2dp"
-                    android:background="@drawable/selector_edittext_quantity"
-                    android:gravity="left"
-                    android:hint="@string/labelTextViewCountry"
-                    android:inputType="textPostalAddress"
-                    android:textColor="@color/tc_textView_cart_header_black" />
+                    android:background="@drawable/eptheme_spinner_background_holo_light" />
             </LinearLayout>
 
             <LinearLayout
@@ -308,7 +299,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/apptheme_btn_default"
+                android:background="@drawable/eptheme_btn_default"
                 android:padding="5dp"
                 android:text="@string/labelButtonCancel"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -326,7 +317,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/apptheme_btn_default"
+                android:background="@drawable/eptheme_btn_default"
                 android:padding="5dp"
                 android:text="@string/labelButtonSave"
                 android:textAppearance="?android:attr/textAppearanceSmall"
