@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.optimusinfo.elasticpath.cortexAPI"
     android:versionCode="1"
@@ -6,7 +23,7 @@
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -21,7 +38,7 @@
             android:name="com.optimusinfo.elasticpath.cortex.EPHomeActivity"
             android:configChanges="orientation"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustPan"  >
+            android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,43 +46,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.optimusinfo.elasticpath.cortex.product.listing.ProductParentListingFragment"
-            android:configChanges="orientation"
-            android:label="@string/titlePageProductListings" >
-        </activity>
-        <activity
-            android:name="com.optimusinfo.elasticpath.cortex.product.details.ProductDetailsFragment"
-            android:configChanges="orientation"
-            android:label="@string/titlePageProductDetails" >
-        </activity>
-        <activity
-            android:name="com.optimusinfo.elasticpath.cortex.cart.CartFragment"
-            android:configChanges="orientation"
-            android:label="@string/titlePageCart"
-            android:windowSoftInputMode="adjustPan" >
-        </activity>
-        <activity
             android:name="com.optimusinfo.elasticpath.cortex.authentication.AuthenticationActivity"
             android:configChanges="orientation"
             android:label="@string/titlePageCart" >
-        </activity>
-        <activity
-            android:name="com.optimusinfo.elasticpath.cortex.checkout.CheckoutFragment"
-            android:configChanges="orientation"
-            android:label="@string/titlePageCart"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.optimusinfo.elasticpath.cortex.purchase.PurchaseFragment"
-            android:configChanges="orientation"
-            android:label="@string/titlePageCart"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.optimusinfo.elasticpath.cortex.profile.ProfileFragment"
-            android:configChanges="orientation"
-            android:label="@string/titlePageCart"
-            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.optimusinfo.elasticpath.cortex.profile.address.AddressActivity"

@@ -13,32 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.optimusinfo.elasticpath.cortex.cart;
+package com.optimusinfo.elasticpath.cortex.profile.address;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
 import com.optimusinfo.elasticpath.cortex.common.Utils;
+
 import android.content.Context;
 import android.os.AsyncTask;
 
 /**
- * This class executes the get cart form request
+ * This class executes the get geographies request
  * 
  * @author Optimus
  * 
  */
-public class AsyncTaskGetCartForm extends AsyncTask<Void, Void, String> {
+public class AsyncTaskGetGeographies extends AsyncTask<Void, Void, String> {
 
 	protected Context mCurrent;
 	protected String mURL;
 	protected String mAccessToken;
-	protected String mHeaderContentTypeString;
-	protected String mHeaderContentTypeValue;
-	protected String mHeaderAuthorizationTypeString;
-	protected String mHeaderAccessTokenInitializer;
-
-	protected ListenerGetCartForm mListener;
+	protected Class<?> modelClass;
+	protected ListenerGetGeographies mListener;
 
 	/**
 	 * Initialize the Async Task
@@ -48,18 +45,13 @@ public class AsyncTaskGetCartForm extends AsyncTask<Void, Void, String> {
 	 * @param contentType
 	 * @param token
 	 */
-	public AsyncTaskGetCartForm(Context current, String url, String token,
-			String contentTypeString, String contentTypeValue,
-			String authoriztionString, String accessTokenInitializer,
-			ListenerGetCartForm listener) {
+	public AsyncTaskGetGeographies(Context current, String url, String token,
+			Class<?> model, ListenerGetGeographies listener) {
 		mCurrent = current;
 		mURL = url;
 		mAccessToken = token;
-		mHeaderContentTypeString = contentTypeString;
-		mHeaderContentTypeValue = contentTypeValue;
-		mHeaderAuthorizationTypeString = authoriztionString;
-		mHeaderAccessTokenInitializer = accessTokenInitializer;
 		mListener = listener;
+		modelClass = model;
 	}
 
 	@Override
@@ -74,34 +66,28 @@ public class AsyncTaskGetCartForm extends AsyncTask<Void, Void, String> {
 
 	@Override
 	protected String doInBackground(Void... params) {
-		String responseAddToCartForm = null;
+		String responseGeographies = null;
 		try {
-			responseAddToCartForm = Utils.getJSONFromCortexUrl(mURL,
-					mAccessToken, mHeaderContentTypeValue,
-					mHeaderContentTypeString, mHeaderAuthorizationTypeString,
-					mHeaderAccessTokenInitializer);
+			responseGeographies = Utils.getJSONFromCortexUrl(mURL,
+					mAccessToken, Constants.RequestHeaders.CONTENT_TYPE,
+					Constants.RequestHeaders.CONTENT_TYPE_STRING,
+					Constants.RequestHeaders.AUTHORIZATION_STRING,
+					Constants.RequestHeaders.AUTHORIZATION_INITIALIZER);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-		} catch (JsonParseException e) {
-			e.printStackTrace();
 		}
-		return responseAddToCartForm;
+		return responseGeographies;
 	}
 
 	@Override
-	protected void onPostExecute(String responseAddToCartForm) {
-		super.onPostExecute(responseAddToCartForm);
+	protected void onPostExecute(String result) {
+		super.onPostExecute(result);
 		try {
-			if (responseAddToCartForm != null
-					&& responseAddToCartForm.length() != 0) {
-				if (0 == responseAddToCartForm
-						.compareTo(Integer
-								.toString(Constants.ApiResponseCode.UNAUTHORIZED_ACCESS))) {
-					mListener.onAuthenticationFailed();
-				} else {
-					mListener.onTaskSuccessful(new Gson().fromJson(
-							responseAddToCartForm, AddToCartModel.class));
-				}
+			if (result.length() != 0) {
+
+				mListener.onTaskSuccessful(new Gson().fromJson(result,
+						modelClass));
+
 			}
 		} catch (NullPointerException e) {
 			e.printStackTrace();

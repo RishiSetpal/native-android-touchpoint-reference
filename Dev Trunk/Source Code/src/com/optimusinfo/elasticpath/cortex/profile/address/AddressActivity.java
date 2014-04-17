@@ -1,3 +1,18 @@
+/*
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.optimusinfo.elasticpath.cortex.profile.address;
 
 import org.json.JSONException;
@@ -6,16 +21,24 @@ import org.json.JSONObject;
 import com.optimusinfo.elasticpath.cortexAPI.R;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
 import com.optimusinfo.elasticpath.cortex.common.EPFragmentActivity;
+import com.optimusinfo.elasticpath.cortex.common.NotificationUtils;
 import com.optimusinfo.elasticpath.cortex.profile.ProfileModel.AddressElement;
 import com.optimusinfo.elasticpath.cortex.profile.address.AddressModel.CreateAddressFormModel;
+import com.optimusinfo.elasticpath.cortex.profile.address.GeographiesModel.Geographies;
+import com.optimusinfo.elasticpath.cortex.profile.address.GeographiesModel.GeographyElement;
+import com.optimusinfo.elasticpath.cortex.profile.address.GeographiesModel.RegionElement;
+import com.optimusinfo.elasticpath.cortex.profile.address.GeographiesModel.Regions;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 public class AddressActivity extends EPFragmentActivity {
 
@@ -37,9 +60,12 @@ public class AddressActivity extends EPFragmentActivity {
 	protected ListenerGetAddressForm mListenerGetForm;
 	protected ListenerAddAddress mListenerAddAddress;
 
+	protected ListenerGetGeographies mListenerGetGeographies;
+	protected ListenerGetGeographies mListenerGetRegions;
+
 	protected EditText mETFirstName, mETLastName, mETStreetAddress,
-			mETExtendedAddress, mETCity, mETCountry, mETProvince,
-			mETPostalCode;
+			mETExtendedAddress, mETCity, mETPostalCode;
+	protected Spinner mSPCountry, mSPProvince;
 
 	protected boolean mIsOrderConfirmed = false;
 
@@ -56,17 +82,18 @@ public class AddressActivity extends EPFragmentActivity {
 				Constants.PageUrl.INTENT_ADRESS);
 		// Initialize views
 		initializeViews();
+		// Populate the geographies views
+		getGeographies();
+
 		if (mObjAddress != null) {
 			bindContent();
 		} else {
 			getAddressForm();
 		}
-		setProgressBarIndeterminateVisibility(false);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -82,13 +109,12 @@ public class AddressActivity extends EPFragmentActivity {
 		mETStreetAddress = (EditText) findViewById(R.id.etStreetAddress);
 		mETExtendedAddress = (EditText) findViewById(R.id.etExtendedAddress);
 		mETCity = (EditText) findViewById(R.id.etCity);
-		mETCountry = (EditText) findViewById(R.id.etCountry);
-		mETProvince = (EditText) findViewById(R.id.etProvince);
+		mSPCountry = (Spinner) findViewById(R.id.spCountry);
+		mSPProvince = (Spinner) findViewById(R.id.spProvince);
 		mETPostalCode = (EditText) findViewById(R.id.etPostalCode);
 
 		Button mBtCancel = (Button) findViewById(R.id.btCancel);
 		mBtCancel.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				onCancel();
@@ -118,12 +144,128 @@ public class AddressActivity extends EPFragmentActivity {
 					.setText(mObjAddress.mAddressDesc.mExtendedAddress);
 		}
 		mETCity.setText(mObjAddress.mAddressDesc.mLocality);
-
-		mETCountry.setText(mObjAddress.mAddressDesc.mCountryName);
-
-		mETProvince.setText(mObjAddress.mAddressDesc.mRegion);
-
 		mETPostalCode.setText(mObjAddress.mAddressDesc.mPostalCode);
+	}
+
+	public void getGeographies() {
+		mListenerGetGeographies = new ListenerGetGeographies() {
+			@Override
+			public void onTaskSuccessful(final Object response) {
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						setProgressBarIndeterminateVisibility(false);
+						setUpCountries((Geographies) response);
+					}
+				});
+			}
+
+			@Override
+			public void onTaskFailed(int errorCode) {
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						setProgressBarIndeterminateVisibility(false);
+					}
+				});
+			}
+		};
+		setProgressBarIndeterminateVisibility(true);
+		GeographiesModel.getGeographies(getApplicationContext(),
+				getGeographiesUrl(), getUserAuthenticationToken(),
+				mListenerGetGeographies);
+
+	}
+
+	public void getRegions(String url) {
+		mListenerGetRegions = new ListenerGetGeographies() {
+			@Override
+			public void onTaskSuccessful(final Object response) {
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						setProgressBarIndeterminateVisibility(false);
+						setUpRegions((Regions) response);
+					}
+				});
+			}
+
+			@Override
+			public void onTaskFailed(int errorCode) {
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						setProgressBarIndeterminateVisibility(false);
+					}
+				});
+			}
+		};
+		setProgressBarIndeterminateVisibility(true);
+		GeographiesModel.getRegions(getApplicationContext(), url,
+				getUserAuthenticationToken(), mListenerGetRegions);
+
+	}
+
+	/**
+	 * Set up countries
+	 * 
+	 * @param listObj
+	 */
+	public void setUpCountries(Geographies listObj) {
+		CountrySpinnerAdapter mAdapter = new CountrySpinnerAdapter(
+				getApplicationContext(), android.R.layout.simple_spinner_item,
+				listObj.mElement);
+		mSPCountry.setAdapter(mAdapter);
+		if (mObjAddress != null) {
+			String countryName = mObjAddress.mAddressDesc.mCountryName;
+			int pos = GeographiesModel.getCountriesPosition(countryName,
+					listObj.mElement);
+			mSPCountry.setSelection(pos);
+		}
+
+		mSPCountry.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parentView,
+					View selectedItemView, int position, long id) {
+				String regionsUrl = GeographiesModel.getRegionsUrl(
+						((GeographyElement) mSPCountry
+								.getItemAtPosition(position))).concat(
+						Constants.ZoomUrl.URL_ZOOM_ELEMENT);
+				if (regionsUrl != null) {
+					getRegions(regionsUrl);
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO
+			}
+		});
+	}
+
+	/**
+	 * Set up regions
+	 * 
+	 * @param listObj
+	 */
+	public void setUpRegions(Regions listObj) {
+		RegionSpinnerAdapter mAdapter = new RegionSpinnerAdapter(
+				getApplicationContext(), android.R.layout.simple_spinner_item,
+				listObj.mElement);
+		mSPProvince.setAdapter(mAdapter);
+		if (listObj.mElement.length > 0) {
+			if (mObjAddress != null) {
+				String regionName = mObjAddress.mAddressDesc.mRegion;
+				if (regionName != null) {
+					int pos = GeographiesModel.getRegionsPosition(
+							mObjAddress.mAddressDesc.mRegion, listObj.mElement);
+					mSPProvince.setSelection(pos);
+				}
+			}
+		} else {
+			mSPProvince.setEnabled(false);
+		}
 	}
 
 	public void onEditSave() {
@@ -140,6 +282,9 @@ public class AddressActivity extends EPFragmentActivity {
 									EPFragmentActivity.RESULT_CODE_ADDRESS_RESULT,
 									getIntent());
 							finish();
+						} else {
+							NotificationUtils.showNotificationToast(
+									getApplicationContext(), "Error");
 						}
 					}
 				});
@@ -190,6 +335,9 @@ public class AddressActivity extends EPFragmentActivity {
 									EPFragmentActivity.RESULT_CODE_ADDRESS_RESULT,
 									getIntent());
 							finish();
+						} else {
+							NotificationUtils.showNotificationToast(
+									getApplicationContext(), "Error");
 						}
 					}
 				});
@@ -237,7 +385,6 @@ public class AddressActivity extends EPFragmentActivity {
 					@Override
 					public void run() {
 						setProgressBarIndeterminateVisibility(false);
-						// TODO For Future Req
 					}
 				});
 
@@ -249,7 +396,6 @@ public class AddressActivity extends EPFragmentActivity {
 					@Override
 					public void run() {
 						setProgressBarIndeterminateVisibility(false);
-						// TODO For Future Req
 					}
 				});
 
@@ -286,10 +432,34 @@ public class AddressActivity extends EPFragmentActivity {
 
 	@Override
 	public void onRefreshData() {
-		// TODO Auto-generated method stub
 		super.onRefreshData();
 	}
 
+	public String getAddressUrl() {
+		String scope = mObjCortexParams.getScope();
+		String url = mObjCortexParams.getEndpoint().concat("profiles/")
+				.concat(scope).concat(Constants.ZoomUrl.URL_ZOOM_ADDRESS_FORM);
+		return url;
+	}
+
+	/**
+	 * This method returns the address url
+	 * 
+	 * @return
+	 */
+	public String getGeographiesUrl() {
+		String scope = mObjCortexParams.getScope();
+		String url = mObjCortexParams.getEndpoint().concat("geographies/")
+				.concat(scope)
+				.concat(Constants.ZoomUrl.URL_ZOOM_GEOGRAPHY_ELEMENT);
+		return url;
+	}
+
+	/**
+	 * This method returns the address model json
+	 * 
+	 * @return
+	 */
 	public JSONObject getAddressModelJSON() {
 		JSONObject addressObject = new JSONObject();
 		JSONObject descObject = new JSONObject();
@@ -300,8 +470,17 @@ public class AddressActivity extends EPFragmentActivity {
 			descObject.put("extended-address", mETExtendedAddress.getText()
 					.toString());
 			descObject.put("locality", mETCity.getText().toString());
-			descObject.put("region", mETProvince.getText().toString());
-			descObject.put("country-name", mETCountry.getText().toString());
+			if (mSPProvince.getCount() > 0) {
+				String regionName = ((RegionElement) mSPProvince
+						.getSelectedItem()).mValue;
+				descObject.put("region", regionName);
+			} else {
+				descObject.put("region", " ");
+			}
+
+			String countryName = ((GeographyElement) mSPCountry
+					.getSelectedItem()).mValue;
+			descObject.put("country-name", countryName);
 			descObject.put("postal-code", mETPostalCode.getText().toString());
 			addressObject.put("address", descObject);
 
@@ -314,14 +493,6 @@ public class AddressActivity extends EPFragmentActivity {
 			e.printStackTrace();
 		}
 		return addressObject;
-	}
-
-	public String getAddressUrl() {
-		String scope = mObjCortexParams.getScope();
-		String url = mObjCortexParams.getEndpoint().concat("profiles/")
-				.concat(scope).concat(Constants.ZoomUrl.URL_ZOOM_ADDRESS_FORM);
-
-		return url;
 	}
 
 }

@@ -1,6 +1,23 @@
+/*
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.optimusinfo.elasticpath.cortex.checkout;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
 import com.optimusinfo.elasticpath.cortexAPI.R;
 import com.optimusinfo.elasticpath.cortex.checkout.CheckoutModel.PaymentMethodInfo.PaymentSelector;
 import com.optimusinfo.elasticpath.cortex.checkout.CheckoutModel.PaymentMethodInfo.PaymentSelector.PaymentChoice;
@@ -19,8 +36,7 @@ import android.widget.TextView;
 public class PaymentMethodsAdapter extends BaseAdapter {
 
 	private EPFragment mCurrent;
-	private ArrayList<PaymentChoice> mSelectorElements;
-	private int mIndexChosen;
+	private ArrayList<PaymentChoice> mSelectorElements;	
 
 	public PaymentMethodsAdapter(EPFragment current, PaymentSelector elements) {
 		this.mCurrent = current;
@@ -32,10 +48,11 @@ public class PaymentMethodsAdapter extends BaseAdapter {
 		}
 		if (elements.mChosen != null) {
 			for (PaymentChoice choice : elements.mChosen) {
-				this.mIndexChosen = this.mSelectorElements.size();
 				this.mSelectorElements.add(choice);
 			}
 		}
+
+		Collections.sort(this.mSelectorElements);
 	}
 
 	@Override
@@ -75,7 +92,7 @@ public class PaymentMethodsAdapter extends BaseAdapter {
 			RadioButton rbPaymentMethod = (RadioButton) gridView
 					.findViewById(R.id.rbPaymentMethod);
 
-			if (mIndexChosen == position) {
+			if (mSelectorElements.get(position).mLinks == null) {
 				rbPaymentMethod.setChecked(true);
 			} else {
 				rbPaymentMethod.setChecked(false);

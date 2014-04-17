@@ -1,7 +1,21 @@
+/*
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.optimusinfo.elasticpath.cortex.checkout;
 
 import java.io.Serializable;
-
 import android.content.Context;
 
 import com.google.gson.annotations.SerializedName;
@@ -140,7 +154,8 @@ public class CheckoutModel implements Serializable {
 		AddressChoice[] mChosen;
 	}
 
-	public class AddressChoice implements Serializable {
+	public class AddressChoice implements Serializable,
+			Comparable<AddressChoice> {
 		/**
 		 * 
 		 */
@@ -151,6 +166,12 @@ public class CheckoutModel implements Serializable {
 
 		@SerializedName("links")
 		LinkElement[] mLinks;
+
+		@Override
+		public int compareTo(AddressChoice objNext) {
+			return getAddressLine(this.mDescription[0]).compareTo(
+					getAddressLine(objNext.mDescription[0]));
+		}
 
 	}
 
@@ -177,7 +198,6 @@ public class CheckoutModel implements Serializable {
 	}
 
 	public class Address implements Serializable {
-
 		/**
 		 * 
 		 */
@@ -306,7 +326,8 @@ public class CheckoutModel implements Serializable {
 			ShippingOptionChoice[] mChosen;
 		}
 
-		public class ShippingOptionChoice implements Serializable {
+		public class ShippingOptionChoice implements Serializable,
+				Comparable<ShippingOptionChoice> {
 			/**
 			 * 
 			 */
@@ -328,6 +349,13 @@ public class CheckoutModel implements Serializable {
 				String mDisplayName;
 				@SerializedName("cost")
 				Cost[] mCosts;
+			}
+
+			@Override
+			public int compareTo(ShippingOptionChoice another) {
+				// TODO Auto-generated method stub
+				return this.mDescriptionElement[0].mDisplayName
+						.compareTo(another.mDescriptionElement[0].mDisplayName);
 			}
 		}
 	}
@@ -352,7 +380,8 @@ public class CheckoutModel implements Serializable {
 			@SerializedName("_chosen")
 			PaymentChoice[] mChosen;
 
-			public class PaymentChoice implements Serializable {
+			public class PaymentChoice implements Serializable,
+					Comparable<PaymentChoice> {
 
 				/**
 				 * 
@@ -371,6 +400,13 @@ public class CheckoutModel implements Serializable {
 					private static final long serialVersionUID = 1L;
 					@SerializedName("display-value")
 					public String mDisplayValue;
+				}
+
+				@Override
+				public int compareTo(PaymentChoice another) {
+					// TODO Auto-generated method stub
+					return this.mDescription[0].mDisplayValue
+							.compareTo(another.mDescription[0].mDisplayValue);
 				}
 			}
 		}
@@ -402,5 +438,4 @@ public class CheckoutModel implements Serializable {
 		}
 		return false;
 	}
-
 }

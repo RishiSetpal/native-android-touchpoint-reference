@@ -1,6 +1,23 @@
+/*
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.optimusinfo.elasticpath.cortex.checkout;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
 import com.optimusinfo.elasticpath.cortexAPI.R;
 import com.optimusinfo.elasticpath.cortex.checkout.CheckoutModel.Deliveries.ShippingOptionChoice;
 import com.optimusinfo.elasticpath.cortex.checkout.CheckoutModel.Deliveries.ShippingOptionSelector;
@@ -20,12 +37,10 @@ public class ShippingOptionsAdapter extends BaseAdapter {
 
 	private EPFragment mCurrent;
 	private ArrayList<ShippingOptionChoice> mSelectorElements;
-	private int mIndexChosen;
 
 	public ShippingOptionsAdapter(EPFragment current,
 			ShippingOptionSelector elements) {
 		this.mCurrent = current;
-		this.mIndexChosen = -1;
 		this.mSelectorElements = new ArrayList<ShippingOptionChoice>();
 		if (elements.mChoice != null) {
 			for (ShippingOptionChoice choice : elements.mChoice) {
@@ -34,10 +49,11 @@ public class ShippingOptionsAdapter extends BaseAdapter {
 		}
 		if (elements.mChosen != null) {
 			for (ShippingOptionChoice choice : elements.mChosen) {
-				this.mIndexChosen = this.mSelectorElements.size();
 				this.mSelectorElements.add(choice);
 			}
 		}
+
+		Collections.sort(this.mSelectorElements);
 	}
 
 	@Override
@@ -82,7 +98,7 @@ public class ShippingOptionsAdapter extends BaseAdapter {
 
 			RadioButton rbShippingOption = (RadioButton) gridView
 					.findViewById(R.id.rbShippingOption);
-			if (mIndexChosen == position) {
+			if (mSelectorElements.get(position).mLinks == null) {
 				rbShippingOption.setChecked(true);
 				((CheckoutFragment) mCurrent.getMainFragment())
 						.setShippingAmount(mSelectorElements.get(position).mDescriptionElement[0].mCosts[0].mTotalCost);

@@ -1,3 +1,18 @@
+/*
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.optimusinfo.elasticpath.cortex.product.listing;
 
 import android.content.Context;
@@ -15,6 +30,9 @@ public class ProductListing {
 
 	@SerializedName("_element")
 	protected ProductElement[] mElements;
+
+	@SerializedName("pagination")
+	public Pagination Pagination;
 
 	public ProductElement[] getElements() {
 		return mElements;
@@ -50,6 +68,17 @@ public class ProductListing {
 			e.printStackTrace();
 
 		}
+	}
+
+	public class Pagination {
+		@SerializedName("current")
+		public String CurrentPage;
+
+		@SerializedName("pages")
+		public String TotalPages;
+
+		@SerializedName("results")
+		public String TotalResults;
 	}
 
 	/**
@@ -171,15 +200,15 @@ public class ProductListing {
 	 * @author Optimus
 	 * 
 	 */
-	public class ProductLinks {	
-		
+	public class ProductLinks {
+
 		@SerializedName("href")
-		protected String mHREF;		
+		protected String mHREF;
 
 		public String getHREF() {
 			return mHREF;
 		}
-		
+
 		public void setHREF(String mHREF) {
 			this.mHREF = mHREF;
 		}

@@ -1,3 +1,18 @@
+/*
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.optimusinfo.elasticpath.cortex.profile;
 
 import com.optimusinfo.elasticpath.cortexAPI.R;
@@ -29,12 +44,19 @@ public class AddressAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		return mElements.length + 1;
+		if (mElements != null) {
+			return mElements.length + 1;
+		} else {
+			return 1;
+		}
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return mElements[position];
+		if (mElements != null) {
+			return mElements[position];
+		}
+		return null;
 	}
 
 	@Override
@@ -47,38 +69,37 @@ public class AddressAdapter extends BaseAdapter {
 		LayoutInflater inflater = (LayoutInflater) mCurrent.getActivity()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View gridView;
+		gridView = new View(mCurrent.getActivity());
+		gridView = inflater.inflate(R.layout.item_list_profile_address_desc,
+				null);
 
-		if (position >= mElements.length) {
+		if (mElements == null || position >= mElements.length) {
+			View noAddressLayout = (View) gridView
+					.findViewById(R.id.llNoAddress);
+			noAddressLayout.setVisibility(View.VISIBLE);
 
-			gridView = new View(mCurrent.getActivity());
-			// get layout from mobile.xml
-			gridView = inflater.inflate(R.layout.item_add_new_address, null);
 			gridView.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
 					mCurrent.getMainFragment().detachChildFragments();
-					Intent intent = new Intent(mCurrent.getActivity(), AddressActivity.class);
-					mCurrent.startActivityForResult(intent,
+					Intent intent = new Intent(mCurrent.getActivity(),
+							AddressActivity.class);
+					mCurrent.getActivity().startActivityForResult(intent,
 							EPFragmentActivity.REQUEST_CODE_ADDRESS);
 				}
 			});
 
 		} else {
-
-			gridView = new View(mCurrent.getActivity());
-
-			// get layout from mobile.xml
-			gridView = inflater.inflate(
-					R.layout.item_list_profile_address_desc, null);
-
+			View addressLayout = (View) gridView
+					.findViewById(R.id.llAddressDesc);
+			addressLayout.setVisibility(View.VISIBLE);
 			String billAddress = ProfileModel
 					.getAddressLine(mElements[position]);
-
 			// set value into textview
 			TextView textView = (TextView) gridView
 					.findViewById(R.id.tvAddressLine);
 			textView.setText(billAddress);
-
+			// Set the remove button
 			TextView btRemoveAddress = (TextView) gridView
 					.findViewById(R.id.btRemoveAddress);
 			btRemoveAddress.setCompoundDrawablePadding(5);
@@ -93,6 +114,7 @@ public class AddressAdapter extends BaseAdapter {
 				}
 			});
 
+			// Set the edit button
 			TextView btEditAddress = (TextView) gridView
 					.findViewById(R.id.btEditAddress);
 			btEditAddress.setCompoundDrawablePadding(5);
@@ -102,16 +124,15 @@ public class AddressAdapter extends BaseAdapter {
 				@Override
 				public void onClick(View arg0) {
 					mCurrent.getMainFragment().detachChildFragments();
-					Intent intent = new Intent(mCurrent.getActivity(), AddressActivity.class);
+					Intent intent = new Intent(mCurrent.getActivity(),
+							AddressActivity.class);
 					intent.putExtra(Constants.PageUrl.INTENT_ADRESS,
 							mElements[position]);
-					mCurrent.startActivityForResult(intent,
+					mCurrent.getActivity().startActivityForResult(intent,
 							EPFragmentActivity.REQUEST_CODE_ADDRESS);
 				}
 			});
-
 		}
-
 		return gridView;
 	}
 }

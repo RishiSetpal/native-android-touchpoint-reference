@@ -13,19 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.optimusinfo.elasticpath.cortex.cart;
+package com.optimusinfo.elasticpath.cortex.profile.address;
 
 /**
- * This is the listener for Product Listing asynchronous task
+ * This is the listener for getting geographies
  * 
  * @author Optimus
  * 
  */
-public interface ListenerDeleteCartItems {
-
-	void onTaskSuccessful(int response);
-
+public interface ListenerGetGeographies {
+	void onTaskSuccessful(Object response);
 	void onTaskFailed(int errorCode);
-
-	void onAuthenticationFailed();
 }

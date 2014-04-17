@@ -26,6 +26,8 @@ import com.optimusinfo.elasticpath.cortex.common.NotificationUtils;
 import com.optimusinfo.elasticpath.cortexAPI.R;
 
 import android.app.FragmentBreadCrumbs;
+import android.app.FragmentBreadCrumbs.OnBreadCrumbClickListener;
+import android.app.FragmentManager.BackStackEntry;
 import android.os.Bundle;
 import android.text.TextUtils;
 
@@ -53,8 +55,15 @@ public class EPHomeActivity extends EPFragmentActivity {
 
 		mObjBreadCrumbs = (FragmentBreadCrumbs) findViewById(R.id.breadcrumbs);
 		mObjBreadCrumbs.setActivity(this);
-		mObjBreadCrumbs.setTitle(
-				getStringFromResource(R.string.breadcrumb_title_home), null);
+		mObjBreadCrumbs
+				.setOnBreadCrumbClickListener(new OnBreadCrumbClickListener() {
+					@Override
+					public boolean onBreadCrumbClick(BackStackEntry backStack,
+							int flags) {
+						getCurrentFragment().detachChildFragments();
+						return false;
+					}
+				});
 
 		if (savedInstanceState == null) {
 			if (TextUtils.isEmpty(getUserAuthenticationToken())) {
@@ -62,7 +71,9 @@ public class EPHomeActivity extends EPFragmentActivity {
 				getNewAuthenticationTokenFromAPI();
 			} else {
 				CategoryFragment mObjFragment = new CategoryFragment();
-				addFragment("Category", R.id.fragment_container, mObjFragment);
+				addFragmentToBreadCrumb(
+						getStringFromResource(R.string.breadcrumb_title_home),
+						R.id.fragment_container, mObjFragment);
 			}
 		}
 	}
@@ -89,8 +100,9 @@ public class EPHomeActivity extends EPFragmentActivity {
 					public void run() {
 						setProgressBarIndeterminateVisibility(false);
 						CategoryFragment mObjFragment = new CategoryFragment();
-						addFragment("Category", R.id.fragment_container,
-								mObjFragment);
+						addFragmentToBreadCrumb(
+								getStringFromResource(R.string.breadcrumb_title_home),
+								R.id.fragment_container, mObjFragment);
 
 					}
 				});
@@ -122,6 +134,7 @@ public class EPHomeActivity extends EPFragmentActivity {
 		super.onRefreshData();
 		EPFragment mObjMainFragment = getCurrentFragment();
 		if (mObjMainFragment != null) {
+			mObjMainFragment.detachChildFragments();
 			mObjMainFragment.onRefreshData();
 		} else {
 			getNewAuthenticationTokenFromAPI();

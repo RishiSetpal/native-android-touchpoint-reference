@@ -22,6 +22,7 @@ import com.optimusinfo.elasticpath.cortex.common.EPFragmentActivity;
 import com.optimusinfo.elasticpath.cortex.common.NotificationUtils;
 import com.optimusinfo.elasticpath.cortexAPI.R;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -41,6 +42,7 @@ public class AuthenticationActivity extends EPFragmentActivity {
 	protected ListenerAsyncTaskAuthentication mAuthListener;
 	protected ListenerAddUser mNewAccountListener;
 	protected EditText mTvUsername, mTvPassword;
+	protected Intent mParentIntent;
 
 	protected EditText mEtFirstname, mEtLastname, mEtUsername, mEtPassword;
 
@@ -50,6 +52,7 @@ public class AuthenticationActivity extends EPFragmentActivity {
 		// Set activity content
 		setContentView(R.layout.fragment_authentication);
 		super.initializeParams();
+		mParentIntent = getIntent();
 		// Disable the title
 		mObjActionBar.setDisplayShowTitleEnabled(false);
 		// Initialize views
@@ -58,7 +61,6 @@ public class AuthenticationActivity extends EPFragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -80,10 +82,14 @@ public class AuthenticationActivity extends EPFragmentActivity {
 				if (!TextUtils.isEmpty(mTvUsername.getText().toString())
 						&& !TextUtils.isEmpty(mTvPassword.getText().toString())) {
 					getAuthenticationToken();
-				} else {
-					NotificationUtils.showNotificationToast(
-							getApplicationContext(),
-							"Please enter a username and password.");
+				} else if (TextUtils.isEmpty(mTvUsername.getText().toString())) {
+					NotificationUtils
+							.showNotificationToast(getApplicationContext(),
+									"Please enter a username.");
+				} else if (TextUtils.isEmpty(mTvPassword.getText().toString())) {
+					NotificationUtils
+							.showNotificationToast(getApplicationContext(),
+									"Please enter a password.");
 				}
 			}
 		});
@@ -143,7 +149,7 @@ public class AuthenticationActivity extends EPFragmentActivity {
 						setProgressBarIndeterminateVisibility(false);
 						setResult(
 								EPFragmentActivity.RESULT_CODE_AUTHENTICATION_SUCESSFUL,
-								getIntent());
+								mParentIntent);
 						finish();// finishing activity
 					}
 				});
@@ -156,8 +162,8 @@ public class AuthenticationActivity extends EPFragmentActivity {
 					public void run() {
 						setProgressBarIndeterminateVisibility(false);
 						NotificationUtils.showNotificationToast(
-								getApplicationContext(), errorCode + " - "
-										+ "Incorrect username or password");
+								getApplicationContext(),
+								"Incorrect username or password");
 					}
 				});
 			}
@@ -176,7 +182,7 @@ public class AuthenticationActivity extends EPFragmentActivity {
 	@Override
 	public void onBackPressed() {
 		// Incase user presses back button from top navigation
-		setResult(0, getIntent());
+		setResult(0, mParentIntent);
 		finish();// finishing activity
 	}
 
@@ -200,12 +206,12 @@ public class AuthenticationActivity extends EPFragmentActivity {
 			}
 
 			@Override
-			public void onTaskFailed(int errorCode) {
+			public void onTaskFailed(final int errorCode) {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
 						setProgressBarIndeterminateVisibility(false);
-
+						showErrorMessage(errorCode);
 					}
 				});
 
@@ -245,4 +251,22 @@ public class AuthenticationActivity extends EPFragmentActivity {
 		return url;
 	}
 
+	/**
+	 * This method handles the error responses
+	 * 
+	 * @param errorCode
+	 * @return
+	 */
+	public void showErrorMessage(int errorCode) {
+		switch (errorCode) {
+		case 409:
+			NotificationUtils.showNotificationToast(getApplicationContext(),
+					"Customer with the given user Id already exists");
+			break;
+		default:
+			NotificationUtils.showNotificationToast(getApplicationContext(),
+					"Error");
+			break;
+		}
+	}
 }

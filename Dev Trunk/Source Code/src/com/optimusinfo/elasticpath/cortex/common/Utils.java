@@ -1,3 +1,18 @@
+/*
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.optimusinfo.elasticpath.cortex.common;
 
 import java.io.BufferedReader;
@@ -27,8 +42,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -366,12 +383,17 @@ public class Utils {
 	@SuppressWarnings("rawtypes")
 	public static int getTotalHeightofListView(AdapterView argAdapterView) {
 		Adapter mAdapter = argAdapterView.getAdapter();
+		if (mAdapter == null) {
+			// pre-condition
+			return 0;
+		}
 		int totalHeight = 0;
 		for (int i = 0; i < mAdapter.getCount(); i++) {
 			View mView = mAdapter.getView(i, null, argAdapterView);
+			mView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
+					LayoutParams.WRAP_CONTENT));
 			mView.measure(
 					MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
-
 					MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
 			totalHeight += mView.getMeasuredHeight();
 		}
@@ -397,6 +419,41 @@ public class Utils {
 				+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
 		listView.setLayoutParams(params);
 		listView.requestLayout();
+	}
+
+	/**
+	 * This methods sets the gridview height
+	 * 
+	 * @param gridView
+	 */
+	public static void setGridViewHeightBasedOnChildren(GridView gridView,
+			int columncount) {
+		ViewGroup.LayoutParams params = gridView.getLayoutParams();
+		int size = gridView.getAdapter().getCount();
+		int dynamicHeight = Utils.getTotalHeightofListView(gridView);
+		if (size % columncount == 0) {
+			params.height = (dynamicHeight / columncount) + 25;
+		} else {
+			params.height = (dynamicHeight / columncount)
+					+ (dynamicHeight / size) - 25;
+		}
+		gridView.setLayoutParams(params);
+		gridView.requestLayout();
+	}
+
+	/**
+	 * This methods sets the gridview height
+	 * 
+	 * @param gridView
+	 */
+	public static void setSingleCoulmnGridViewHeightBasedOnChildren(
+			GridView gridView) {
+		ViewGroup.LayoutParams params = gridView.getLayoutParams();
+		int size = gridView.getAdapter().getCount();
+		int dynamicHeight = Utils.getTotalHeightofListView(gridView);
+		params.height = (dynamicHeight) + (dynamicHeight / size);
+		gridView.setLayoutParams(params);
+		gridView.requestLayout();
 	}
 
 }

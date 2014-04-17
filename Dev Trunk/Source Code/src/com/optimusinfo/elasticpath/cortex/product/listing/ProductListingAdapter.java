@@ -1,3 +1,18 @@
+/*
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.optimusinfo.elasticpath.cortex.product.listing;
 
 import com.optimusinfo.elasticpath.cortex.cart.CartFragment;
@@ -72,47 +87,45 @@ public class ProductListingAdapter extends BaseAdapter {
 		final ProductAddToCartForm addToCartForm = mElement.getAddToCartForm()[0];
 		final ProductLinks addToCartLinks = addToCartForm.getProductLinks();
 
-		if (convertView == null) {
-			gridView = new View(mCurrent.getActivity());
+		gridView = new View(mCurrent.getActivity());
 
-			gridView = inflater.inflate(R.layout.item_list_product_definition,
-					parent, false);
+		gridView = inflater.inflate(R.layout.item_list_product_definition,
+				parent, false);
 
-			// Set product title
-			if (definition != null) {
-				((TextView) gridView.findViewById(R.id.tvProductListingTitle))
-						.setText(definition[0].getDisplayName());
-			}
+		// Set product title
+		if (definition != null) {
+			((TextView) gridView.findViewById(R.id.tvProductListingTitle))
+					.setText(definition[0].getDisplayName());
+		}
 
-			// set product price
-			if (price != null) {
-				((TextView) gridView.findViewById(R.id.tvProductListingPrice))
-						.setText(price[0].getProductPrice()[0].getDisplay());
-			} else if (rate != null) {
-				((TextView) gridView.findViewById(R.id.tvProductListingPrice))
-						.setText(rate[0].getProductRates()[0].getRate());
-			}
-			// set product image
-			if (asset != null) {
-				((EPImageView) gridView.findViewById(R.id.ivProductListing))
-						.setImageUrl(asset[0].getProductImages()[0]
-								.getImageUrl());
-			}
-			TextView btAddToCart = ((TextView) gridView
-					.findViewById(R.id.btAddToCart));
-			btAddToCart.setCompoundDrawablePadding(5);
-			btAddToCart.setCompoundDrawablesWithIntrinsicBounds(
-					R.drawable.icon_cart, 0, 0, 0);
-			// set product availability
-			if (availability != null) {
-				String isAvailable = availability[0].getState();
-				if (isAvailable.equalsIgnoreCase(Constants.STATE_AVAILABLE)) {
-				} else {
-					btAddToCart.setEnabled(false);
-				}
-			}
+		// set product price
+		if (price != null) {
+			((TextView) gridView.findViewById(R.id.tvProductListingPrice))
+					.setText(price[0].getProductPrice()[0].getDisplay());
+		} else if (rate != null) {
+			((TextView) gridView.findViewById(R.id.tvProductListingPrice))
+					.setText(rate[0].getProductRates()[0].getRate());
 		} else {
-			gridView = (View) convertView;
+			((TextView) gridView.findViewById(R.id.tvProductListingPrice))
+					.setText("N/A");
+		}
+		// set product image
+		if (asset != null) {
+			((EPImageView) gridView.findViewById(R.id.ivProductListing))
+					.setImageUrl(asset[0].getProductImages()[0].getImageUrl());
+		}
+		TextView btAddToCart = ((TextView) gridView
+				.findViewById(R.id.btAddToCart));
+		btAddToCart.setCompoundDrawablePadding(5);
+		btAddToCart.setCompoundDrawablesWithIntrinsicBounds(
+				R.drawable.icon_cart, 0, 0, 0);
+		// set product availability
+		if (availability != null) {
+			String isAvailable = availability[0].getState();
+			if (isAvailable.equalsIgnoreCase(Constants.STATE_AVAILABLE)) {
+			} else {
+				btAddToCart.setEnabled(false);
+			}
 		}
 
 		gridView.setOnClickListener(new View.OnClickListener() {

@@ -1,3 +1,18 @@
+/*
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.optimusinfo.elasticpath.cortex.purchase;
 
 import com.optimusinfo.elasticpath.cortexAPI.R;
@@ -10,6 +25,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,14 +41,16 @@ public class PurchaseFragment extends EPFragment {
 	 * memory and is a best practice when allowing navigation between objects in
 	 * a potentially large collection.
 	 */
-	protected String mPurchaseUrl, mOrderDetailsUrl;
+	public String mPurchaseUrl;
+
+	protected String mOrderDetailsUrl, mBackTitle;
 
 	protected ListenerCompletePurchaseOrder mPostPurchaseListner;
 	protected ListenerOrderDetails mOrderDetailsListener;
 	protected OrderModel mObjOrder;
 
 	protected LinearLayout mLayout;
-	protected boolean mIsOrderConfirmed = false;
+	public boolean mIsOrderConfirmed = false;
 	protected View mViewParent;
 
 	/**
@@ -41,10 +59,12 @@ public class PurchaseFragment extends EPFragment {
 	 * @param mPurchaseUrl
 	 * @param mOrderDetailsUrl
 	 */
-	public PurchaseFragment(String mPurchaseUrl, String mOrderDetailsUrl) {
+	public PurchaseFragment(String mPurchaseUrl, String mOrderDetailsUrl,
+			String backTitle) {
 		super();
 		this.mPurchaseUrl = mPurchaseUrl;
 		this.mOrderDetailsUrl = mOrderDetailsUrl;
+		this.mBackTitle = backTitle;
 	}
 
 	@Override
@@ -55,11 +75,14 @@ public class PurchaseFragment extends EPFragment {
 		mViewParent = viewNavigation;
 		// Initialize views
 		initializeViews();
-
-		if (mOrderDetailsUrl != null) {
-			getOrderDetails(mOrderDetailsUrl);
-		} else if (mPurchaseUrl != null) {
-			postPurchaseOrder(mPurchaseUrl);
+		if (mObjOrder == null) {
+			if (mOrderDetailsUrl != null) {
+				getOrderDetails(mOrderDetailsUrl);
+			} else if (mPurchaseUrl != null) {
+				postPurchaseOrder(mPurchaseUrl);
+			}
+		} else {
+			setUpViews();
 		}
 
 		return viewNavigation;
@@ -232,6 +255,16 @@ public class PurchaseFragment extends EPFragment {
 				.findViewById(R.id.tvOrderTotal);
 		tvOrderTotal.setText(mObjOrder.mTotal[0].mDisplayValue);
 
+		TextView tvContinue = (TextView) mViewParent
+				.findViewById(R.id.tvContinueShopping);
+		tvContinue.setText(mBackTitle);
+		tvContinue.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				getActivity().onBackPressed();
+			}
+		});
 	}
 
 	@Override
@@ -247,7 +280,6 @@ public class PurchaseFragment extends EPFragment {
 	@Override
 	public void onRefreshData() {
 		// TODO Auto-generated method stub
-		super.onRefreshData();
 		if (mOrderDetailsUrl != null) {
 			getOrderDetails(mOrderDetailsUrl);
 		} else if (mPurchaseUrl != null) {
@@ -258,6 +290,12 @@ public class PurchaseFragment extends EPFragment {
 	@Override
 	public void detachChildFragments() {
 		// No child fragments added
+	}
+
+	@Override
+	public void onAuthenticationSucessful() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

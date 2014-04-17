@@ -1,6 +1,20 @@
+/*
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.optimusinfo.elasticpath.cortex.purchase;
 
-import org.apache.http.ParseException;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
 import com.optimusinfo.elasticpath.cortex.common.Utils;
 
@@ -14,7 +28,7 @@ import android.text.TextUtils;
  * @author Optimus
  * 
  */
-public class AsyncTaskPostPurchaseOrder extends AsyncTask<Void, Void, Boolean> {
+public class AsyncTaskPostPurchaseOrder extends AsyncTask<Void, Void, String> {
 
 	protected String mUrlPurchaseOrder;
 	protected String contentTypeRequest;
@@ -42,37 +56,43 @@ public class AsyncTaskPostPurchaseOrder extends AsyncTask<Void, Void, Boolean> {
 	}
 
 	@Override
-	protected Boolean doInBackground(Void... params) {
+	protected void onPreExecute() {
+		super.onPreExecute();
+		if (!Utils.isNetworkAvailable(mCurrent)) {
+			mListener.onTaskFailed(Constants.ErrorCodes.ERROR_NETWORK);
+			cancel(true);
+			return;
+		}
+	}
+
+	@Override
+	protected String doInBackground(Void... params) {
+		String response = null;
 		try {
-			if (Utils.isNetworkAvailable(mCurrent)) {
-				String response = Utils.postData(mUrlPurchaseOrder,
-						accessToken, Constants.RequestHeaders.CONTENT_TYPE,
-						Constants.RequestHeaders.AUTHORIZATION_INITIALIZER);
-				if (response != null) {
-					if (!TextUtils.isEmpty(response)) {
-						mListener.onTaskSuccessful(response);
-						return true;
-					} else {
-						mListener
-								.onTaskFailed(Constants.ErrorCodes.ERROR_SERVER);
-					}
+			response = Utils.postData(mUrlPurchaseOrder, accessToken,
+					Constants.RequestHeaders.CONTENT_TYPE,
+					Constants.RequestHeaders.AUTHORIZATION_INITIALIZER);
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		return response;
+	}
+
+	@Override
+	protected void onPostExecute(String response) {
+		super.onPostExecute(response);
+		try {
+			if (response != null) {
+				if (!TextUtils.isEmpty(response)) {
+					mListener.onTaskSuccessful(response);
 				} else {
 					mListener.onTaskFailed(Constants.ErrorCodes.ERROR_SERVER);
 				}
 			} else {
-				mListener.onTaskFailed(Constants.ErrorCodes.ERROR_NETWORK);
+				mListener.onTaskFailed(Constants.ErrorCodes.ERROR_SERVER);
 			}
-		} catch (ParseException e) {
+		} catch (NullPointerException e) {
 			e.printStackTrace();
-		}
-		return false;
-	}
-
-	@Override
-	protected void onPostExecute(Boolean result) {
-		super.onPostExecute(result);
-		if (result != null && !result) {
-			mListener.onTaskFailed(Constants.ErrorCodes.ERROR_SERVER);
 		}
 	}
 }

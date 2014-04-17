@@ -1,3 +1,18 @@
+/*
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.optimusinfo.elasticpath.cortex.checkout;
 
 import android.os.Bundle;
@@ -6,25 +21,40 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.optimusinfo.elasticpath.cortex.checkout.CheckoutModel.AddressInfo;
+import com.optimusinfo.elasticpath.cortex.checkout.CheckoutModel.AddressSelector;
+import com.optimusinfo.elasticpath.cortex.checkout.CheckoutModel.Deliveries;
+import com.optimusinfo.elasticpath.cortex.checkout.CheckoutModel.PaymentMethodInfo;
+import com.optimusinfo.elasticpath.cortex.checkout.CheckoutModel.Deliveries.DeliveriesElement;
+import com.optimusinfo.elasticpath.cortex.checkout.CheckoutModel.Deliveries.ShippingOptionInfo;
+import com.optimusinfo.elasticpath.cortex.checkout.CheckoutModel.Deliveries.ShippingOptionSelector;
+import com.optimusinfo.elasticpath.cortex.checkout.CheckoutModel.PaymentMethodInfo.PaymentSelector;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
 import com.optimusinfo.elasticpath.cortex.common.EPFragment;
 import com.optimusinfo.elasticpath.cortex.common.NotificationUtils;
+import com.optimusinfo.elasticpath.cortex.common.Utils;
 import com.optimusinfo.elasticpath.cortex.purchase.PurchaseFragment;
 import com.optimusinfo.elasticpath.cortexAPI.R;
 
 public class CheckoutFragment extends EPFragment {
 
 	protected String mCheckOutLink;
-	protected CheckoutModel mObjCheckOut;
-	protected RelativeLayout mLayout;
 	protected String isOptionsSet;
+
+	protected CheckoutModel mObjCheckOut;
 
 	protected ListenerCheckOutOrder mListener;
 	protected ListenerSelectCheckoutOption mOptionListener;
-	protected View mViewParent;
+
+	protected View mViewParent,mNoMethodView;
+
+	protected RelativeLayout mLayout;
+	private GridView mAddressGridView, mMethodGridView,
+			mShippingOptionGridView;
 
 	/**
 	 * Check out constructor
@@ -155,6 +185,20 @@ public class CheckoutFragment extends EPFragment {
 
 	private void setUpViews() {
 		mLayout.setVisibility(View.VISIBLE);
+
+		mAddressGridView = (GridView) mViewParent.findViewById(R.id.gvAddress);
+		mMethodGridView = (GridView) mViewParent
+				.findViewById(R.id.gvPaymentMethods);
+
+		mShippingOptionGridView = (GridView) mViewParent
+				.findViewById(R.id.gvShippingOptions);
+
+		mNoMethodView = getActivity().getLayoutInflater().inflate(
+				R.layout.view_no_payment_method, null);
+		if (((ViewGroup) mMethodGridView.getParent()).getChildCount() < 3) {
+			((ViewGroup) mMethodGridView.getParent()).addView(mNoMethodView);
+		}
+
 		TextView tvQuant = (TextView) mViewParent.findViewById(R.id.tvQuantity);
 		tvQuant.setText(mObjCheckOut.mCartTotal[0].mTotalQuantity.concat(" ")
 				.concat(this.getString(R.string.prefixItems)));
@@ -167,13 +211,6 @@ public class CheckoutFragment extends EPFragment {
 		TextView tvOrderTotal = (TextView) mViewParent
 				.findViewById(R.id.tvOrderTotal);
 		tvOrderTotal.setText(mObjCheckOut.mTotal[0].mCosts[0].mTotalCost);
-
-		addChildFragment("Address", R.id.frame_address,
-				(EPFragment) new AddressFragment());
-		addChildFragment("Payment_Method", R.id.frame_payment_methods,
-				(EPFragment) new PaymentMethodFragment());
-		addChildFragment("Shipping Option", R.id.frame_shipping_options,
-				(EPFragment) new ShippingOptionsFragment());
 
 		Button mReturnCart = (Button) mViewParent
 				.findViewById(R.id.btReturnCart);
@@ -202,13 +239,124 @@ public class CheckoutFragment extends EPFragment {
 						.getOrderActionLink(mObjCheckOut.mPurchaseForm[0].mPurchaseLinks);
 				detachChildFragments();
 				PurchaseFragment mObjFragment = new PurchaseFragment(
-						purchaseUrl, null);
+						purchaseUrl, null, getActivity().getString(
+								R.string.labelTextViewContinue));
 				addFragmentToBreadcrumb("Order", R.id.fragment_container,
 						mObjFragment);
 			}
 		});
+
+		TextView tvContinue = (TextView) mViewParent
+				.findViewById(R.id.tvContinueShopping);
+		tvContinue.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				getActivity().onBackPressed();
+			}
+		});
+
+		showAddressGridView();
+		showPaymentMethods();
+		showShippingOptions();
 	}
 
+	/**
+	 * This method shows the address gridview
+	 */
+	public void showAddressGridView() {
+
+		AddressSelector mBillingElements = null;
+		AddressSelector mShippingElements = null;
+		AddressInfo[] mBillingAddressInfo = mObjCheckOut.mBillingAddressInfo;
+
+		if (mBillingAddressInfo != null
+				&& mBillingAddressInfo[0].mSelector != null) {
+			mBillingElements = mBillingAddressInfo[0].mSelector[0];
+		}
+
+		Deliveries[] mDeliveries = mObjCheckOut.mDeliveries;
+		if (mDeliveries != null) {
+			DeliveriesElement[] mElement = mDeliveries[0].mElement;
+			if (mElement != null) {
+				AddressInfo[] mDestinationInfo = mElement[0].mDestinationInfo;
+				if (mDestinationInfo != null) {
+					mShippingElements = mDestinationInfo[0].mSelector[0];
+				}
+			}
+		}
+		AddressAdapter mAdapter = new AddressAdapter(this, mBillingElements,
+				mShippingElements);
+		if (mAdapter != null) {
+			mAddressGridView.setAdapter(mAdapter);
+			Utils.setGridViewHeightBasedOnChildren(mAddressGridView,
+					getIntegerResource(R.integer.numColumns));
+		}
+
+	}
+
+	/**
+	 * 
+	 */
+	public void showPaymentMethods() {
+		PaymentMethodInfo[] mPaymentInfo = mObjCheckOut.mPaymentInfo;
+		PaymentSelector mElements = null;
+		PaymentMethodsAdapter mAdapter = null;
+
+		if (mPaymentInfo != null && mPaymentInfo[0].mSelector != null) {
+			mElements = mPaymentInfo[0].mSelector[0];
+		}
+
+		if (mElements != null) {
+			mAdapter = new PaymentMethodsAdapter(this, mElements);
+		}
+
+		if (mAdapter != null) {
+			mNoMethodView.setVisibility(View.GONE);
+			mMethodGridView.setAdapter(mAdapter);
+			Utils.setGridViewHeightBasedOnChildren(mMethodGridView,
+					getIntegerResource(R.integer.numColumns));
+		} else {
+			mNoMethodView.setVisibility(View.VISIBLE);
+		}
+
+	}
+
+	public void showShippingOptions() {
+		Deliveries[] mDeliveries = mObjCheckOut.mDeliveries;
+		ShippingOptionSelector mElements = null;
+		ShippingOptionsAdapter mAdapter = null;
+
+		if (mDeliveries != null) {
+			DeliveriesElement[] mElement = mDeliveries[0].mElement;
+			if (mElement != null) {
+				ShippingOptionInfo[] mShippingOptionInfo = mElement[0].mShippingOptionInfo;
+				if (mShippingOptionInfo != null) {
+					mElements = mShippingOptionInfo[0].mSelector[0];
+				}
+			}
+		}
+
+		if (mElements != null) {
+			mAdapter = new ShippingOptionsAdapter(this, mElements);
+		}
+
+		if (mAdapter != null) {
+			((ViewGroup) mShippingOptionGridView.getParent())
+					.setVisibility(View.VISIBLE);
+			mShippingOptionGridView.setAdapter(mAdapter);
+			Utils.setSingleCoulmnGridViewHeightBasedOnChildren(mShippingOptionGridView);
+		} else {
+			((ViewGroup) mShippingOptionGridView.getParent())
+					.setVisibility(View.INVISIBLE);
+		}
+	}
+
+	/**
+	 * This method sets the shipping amount
+	 * 
+	 * @param amount
+	 */
 	public void setShippingAmount(String amount) {
 		TextView tvShippingTotal = (TextView) mViewParent
 				.findViewById(R.id.tvShippingTotal);
@@ -218,15 +366,21 @@ public class CheckoutFragment extends EPFragment {
 	@Override
 	public void onRefreshData() {
 		// TODO Auto-generated method stub
-		super.onRefreshData();
 		getCheckoutSummary();
 	}
 
 	@Override
 	public void detachChildFragments() {
-		removeChildFragment(R.id.frame_address);
-		removeChildFragment(R.id.frame_payment_methods);
-		removeChildFragment(R.id.frame_shipping_options);
+
 	}
 
+	@Override
+	public void onBackPressed() {
+		getActivity().onBackPressed();
+	}
+
+	@Override
+	public void onAuthenticationSucessful() {
+		onRefreshData();
+	}
 }

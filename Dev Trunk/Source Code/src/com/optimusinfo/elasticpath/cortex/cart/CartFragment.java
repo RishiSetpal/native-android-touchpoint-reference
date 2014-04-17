@@ -1,3 +1,18 @@
+/*
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.optimusinfo.elasticpath.cortex.cart;
 
 import com.optimusinfo.elasticpath.cortexAPI.R;
@@ -13,7 +28,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,6 +45,7 @@ public class CartFragment extends EPFragment {
 	 */
 	protected String mAddToCartUrl, mProductQuantity, mPurchaseUrl;
 	protected String mCheckOutLink;
+	protected boolean mIsOrderAdded, mIsCallInProgress;
 
 	/**
 	 * Constructor
@@ -42,6 +57,8 @@ public class CartFragment extends EPFragment {
 		super();
 		this.mAddToCartUrl = mAddToCartUrl;
 		this.mProductQuantity = mProductQuantity;
+		this.mIsOrderAdded = false;
+		this.mIsCallInProgress = false;
 	}
 
 	// Request call listeners
@@ -54,7 +71,7 @@ public class CartFragment extends EPFragment {
 
 	// Page views
 	protected RelativeLayout mLayout;
-	protected Button mBTCheckout, mBTUpdate;
+	protected View mBTCheckout, mBTUpdate;
 	protected ListView mLVCart;
 	protected View mViewParent;
 
@@ -66,18 +83,22 @@ public class CartFragment extends EPFragment {
 		mViewParent = viewNavigation;
 		// Initialize the view elements
 		initializeViews();
-		if (mObjCart != null) {
-			mPurchaseUrl = mObjCart.getOrderitems()[0].getPurchaseForms()[0]
-					.getPurchaseLinks().getHREF();
-			mCheckOutLink = mObjCart.getOrderitems()[0].getSelf()
-					.getCheckOutLink();
-			setViewData();
-		} else {
-			if (mAddToCartUrl == null) {
-				getCompleteCart();
+		if (savedInstanceState == null) {
+			if (mObjCart != null) {
+				mPurchaseUrl = mObjCart.getOrderitems()[0].getPurchaseForms()[0]
+						.getPurchaseLinks().getHREF();
+				mCheckOutLink = mObjCart.getOrderitems()[0].getSelf()
+						.getCheckOutLink();
+				setViewData();
 			} else {
-				// Perform the add to cart method
-				getAddToCartForm();
+				if (mAddToCartUrl == null) {
+					getCompleteCart();
+				} else {
+					if (mIsCallInProgress == false) {
+						// Perform the add to cart method
+						getAddToCartForm();
+					}
+				}
 			}
 		}
 		return viewNavigation;
@@ -114,7 +135,6 @@ public class CartFragment extends EPFragment {
 					public void run() {
 						getActivity().setProgressBarIndeterminateVisibility(
 								false);
-						// TODO - For Future Req
 						NotificationUtils.showErrorToast(getActivity(),
 								errorCode);
 					}
@@ -128,13 +148,13 @@ public class CartFragment extends EPFragment {
 					public void run() {
 						getActivity().setProgressBarIndeterminateVisibility(
 								false);
-						// TODO For Future Req
 					}
 				});
 			}
 		};
 		getActivity().setProgressBarIndeterminateVisibility(true);
 		mLayout.setVisibility(View.GONE);
+		mIsCallInProgress = true;
 		AddToCartModel.getAddToCartForm(getActivity(), mAddToCartUrl,
 				getUserAuthenticationToken(), mGetCartFormListener);
 	}
@@ -154,6 +174,7 @@ public class CartFragment extends EPFragment {
 					public void run() {
 						getActivity().setProgressBarIndeterminateVisibility(
 								false);
+						mIsOrderAdded = true;
 						// get the complete cart list
 						getCompleteCart();
 					}
@@ -167,7 +188,6 @@ public class CartFragment extends EPFragment {
 					public void run() {
 						getActivity().setProgressBarIndeterminateVisibility(
 								false);
-						// TODO - For Future Req
 						NotificationUtils.showErrorToast(getActivity(),
 								errorCode);
 					}
@@ -181,7 +201,6 @@ public class CartFragment extends EPFragment {
 					public void run() {
 						getActivity().setProgressBarIndeterminateVisibility(
 								false);
-						// TODO For Future Req
 					}
 				});
 			}
@@ -219,6 +238,7 @@ public class CartFragment extends EPFragment {
 					public void run() {
 						getActivity().setProgressBarIndeterminateVisibility(
 								false);
+						mIsCallInProgress = false;
 						// populate the list view
 						setViewData();
 					}
@@ -232,7 +252,6 @@ public class CartFragment extends EPFragment {
 					public void run() {
 						getActivity().setProgressBarIndeterminateVisibility(
 								false);
-						// TODO - For Future Req
 						NotificationUtils.showErrorToast(getActivity(),
 								errorCode);
 					}
@@ -246,7 +265,6 @@ public class CartFragment extends EPFragment {
 					public void run() {
 						getActivity().setProgressBarIndeterminateVisibility(
 								false);
-						// TODO For Future Req
 					}
 				});
 			}
@@ -271,7 +289,6 @@ public class CartFragment extends EPFragment {
 					public void run() {
 						getActivity().setProgressBarIndeterminateVisibility(
 								false);
-						// TODO For Future Req
 						if (response == Constants.ApiResponseCode.REQUEST_SUCCESSFUL_DELETED) {
 							getCompleteCart();
 						}
@@ -300,7 +317,6 @@ public class CartFragment extends EPFragment {
 					public void run() {
 						getActivity().setProgressBarIndeterminateVisibility(
 								false);
-						// TODO For Future Req
 					}
 				});
 
@@ -320,7 +336,7 @@ public class CartFragment extends EPFragment {
 					public void run() {
 						getActivity().setProgressBarIndeterminateVisibility(
 								false);
-
+						mBTUpdate.setEnabled(true);
 					}
 				});
 			}
@@ -332,7 +348,6 @@ public class CartFragment extends EPFragment {
 					public void run() {
 						getActivity().setProgressBarIndeterminateVisibility(
 								false);
-						// TODO For Future Req
 					}
 				});
 			}
@@ -344,7 +359,6 @@ public class CartFragment extends EPFragment {
 					public void run() {
 						getActivity().setProgressBarIndeterminateVisibility(
 								false);
-						// TODO For Future Req
 					}
 				});
 			}
@@ -364,25 +378,20 @@ public class CartFragment extends EPFragment {
 	 */
 	private void setViewData() {
 		mLayout.setVisibility(View.VISIBLE);
+		mBTUpdate.setEnabled(false);
+		mIsOrderAdded = true;
 
 		if (mObjCart.mTotalQuantity.equalsIgnoreCase("0")) {
 			mBTCheckout.setVisibility(View.VISIBLE);
 			mBTCheckout.setEnabled(false);
-
 			mBTUpdate.setVisibility(View.VISIBLE);
-			mBTUpdate.setEnabled(false);
-
 			mLVCart.setVisibility(View.INVISIBLE);
-
 			NotificationUtils.showNotificationToastFromResources(getActivity(),
 					R.string.messageEmptyCart);
-
 		} else {
 			mBTCheckout.setVisibility(View.VISIBLE);
 			mBTCheckout.setEnabled(true);
-
 			mBTUpdate.setVisibility(View.VISIBLE);
-			mBTUpdate.setEnabled(true);
 
 			CartAdapter mListAdapter = new CartAdapter(this,
 					mObjCart.getLineItems()[0].getElements());
@@ -419,19 +428,19 @@ public class CartFragment extends EPFragment {
 	private void initializeViews() {
 		mLayout = (RelativeLayout) mViewParent.findViewById(R.id.rlCart);
 		// Initialize the purchase button
-		mBTCheckout = (Button) mViewParent.findViewById(R.id.btCheckOut);
+		mBTCheckout = (View) mViewParent.findViewById(R.id.btCheckOut);
 		mBTCheckout.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (isUserLoggedIn()) {
 					CheckoutFragment objFragment = new CheckoutFragment(
 							mCheckOutLink);
-					addFragmentToBreadcrumb("Checkout",
+					addFragmentToBreadcrumb("Checkout Summary",
 							R.id.fragment_container, objFragment);
 				} else {
 					Intent mAuthIntent = new Intent(getActivity(),
 							AuthenticationActivity.class);
-					startActivityForResult(mAuthIntent,
+					getActivity().startActivityForResult(mAuthIntent,
 							EPFragmentActivity.REQUEST_CODE_AUTHENTICATION);
 				}
 
@@ -439,32 +448,55 @@ public class CartFragment extends EPFragment {
 		});
 		mLVCart = (ListView) mViewParent.findViewById(R.id.lvCartItems);
 
-		mBTUpdate = (Button) mViewParent.findViewById(R.id.btUpdateCart);
+		mBTUpdate = (View) mViewParent.findViewById(R.id.btUpdateCart);
 		mBTUpdate.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				onRefreshData();
+				getCompleteCart();
+			}
+		});
+		mBTUpdate.setEnabled(false);
+
+		View tvReturn = (View) mViewParent.findViewById(R.id.tvReturn);
+		tvReturn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				getActivity().onBackPressed();
+
 			}
 		});
 	}
 
 	@Override
 	public void onRefreshData() {
-		// TODO Auto-generated method stub
-		super.onRefreshData();
-		if (mAddToCartUrl == null) {
+		if (mIsOrderAdded == true) {
 			getCompleteCart();
 		} else {
-			// Perform the add to cart method
-			getAddToCartForm();
+			if (mAddToCartUrl != null) {
+				// Perform the add to cart method
+				getAddToCartForm();
+			}
 		}
-
 	}
 
 	@Override
 	public void detachChildFragments() {
 		// No Child fragments added
+	}
 
+	@Override
+	public void onBackPressed() {
+		// No Custom back button implementation required
+	}
+
+	@Override
+	public void onAuthenticationSucessful() {
+		if (mAddToCartUrl != null) {
+			// Perform the add to cart method
+			getAddToCartForm();
+		} else {
+			getCompleteCart();
+		}
 	}
 }

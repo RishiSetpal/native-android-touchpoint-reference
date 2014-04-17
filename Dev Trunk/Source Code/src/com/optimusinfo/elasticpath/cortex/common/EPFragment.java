@@ -1,3 +1,18 @@
+/*
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.optimusinfo.elasticpath.cortex.common;
 
 import com.optimusinfo.elasticpath.cortex.configuration.EPCortex;
@@ -33,13 +48,6 @@ public abstract class EPFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		// Retain this fragment across configuration changes.
 		setRetainInstance(true);
-	}
-
-	/**
-	 * Skeleton method to fire the refresh data call
-	 */
-	public void onRefreshData() {
-
 	}
 
 	/**
@@ -117,11 +125,6 @@ public abstract class EPFragment extends Fragment {
 	}
 
 	/**
-	 * Abstract Method to remove child fragments if any
-	 */
-	public abstract void detachChildFragments();
-
-	/**
 	 * This method adds a prent breadcrumb
 	 * 
 	 * @param title
@@ -139,12 +142,30 @@ public abstract class EPFragment extends Fragment {
 		EPFragment mCurrentFrgament = (EPFragment) getFragmentManager()
 				.findFragmentById(R.id.fragment_container);
 		return mCurrentFrgament;
-	}	
+	}
+
+	public int getIntegerResource(int resId) {
+		return getResources().getInteger(resId);
+	}
 
 	/**
 	 * Called when back is pressed
 	 */
-	public void onBackPressed() {	
-		
-	}
+	public abstract void onBackPressed();
+
+	/**
+	 * Skeleton method to fire the refresh data call
+	 */
+	public abstract void onRefreshData();
+
+	/**
+	 * Abstract Method to remove child fragments if any
+	 */
+	public abstract void detachChildFragments();
+
+	/**
+	 * Abstract Method to perform action when authentication is sucessful
+	 */
+	public abstract void onAuthenticationSucessful();
+
 }

@@ -85,7 +85,7 @@ public class AsyncTaskAddUser extends AsyncTask<Void, Void, Integer> {
 				mListener.onTaskFailed(responseCode);
 			}
 		} catch (NullPointerException e) {
-			e.printStackTrace();			
+			e.printStackTrace();
 		}
 	}
 }

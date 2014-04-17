@@ -1,3 +1,18 @@
+/*
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.optimusinfo.elasticpath.cortex.common;
 
 import android.app.ActionBar;
@@ -88,22 +103,13 @@ public abstract class EPFragmentActivity extends FragmentActivity implements
 	}
 
 	@Override
-	protected void onResume() {
-		super.onResume();
-
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-	}
-
-	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			// Incase user presses back button from top navigation
-			onBackPressed();
+			if (getFragmentManager().getBackStackEntryCount() > 1) {
+				onBackPressed();
+			}
 			break;
 		case R.id.action_cart:
 			if (getCurrentFragment() instanceof CartFragment) {
@@ -220,8 +226,8 @@ public abstract class EPFragmentActivity extends FragmentActivity implements
 	public void addFragmentToBreadCrumb(String title, int fargmentContainerId,
 			EPFragment objFragment) {
 		String breadTitle = title;
-		if (title.length() > 12) {
-			breadTitle = title.substring(0, 10).concat(
+		if (title.length() > 16) {
+			breadTitle = title.substring(0, 14).concat(
 					getString(R.string.ellipsis));
 		}
 		mStackLevel++;
@@ -271,8 +277,10 @@ public abstract class EPFragmentActivity extends FragmentActivity implements
 		if (requestCode == REQUEST_CODE_AUTHENTICATION
 				&& resultCode == RESULT_CODE_AUTHENTICATION_SUCESSFUL) {
 			this.invalidateOptionsMenu();
+			getCurrentFragment().onAuthenticationSucessful();
+		} else if (requestCode == REQUEST_CODE_ADDRESS) {
+			getCurrentFragment().onRefreshData();
 		}
-		onRefreshData();
 	}
 
 	/** Logout Listener */
@@ -314,13 +322,13 @@ public abstract class EPFragmentActivity extends FragmentActivity implements
 		if (getCurrentFragment() instanceof PurchaseFragment) {
 			getCurrentFragment().onBackPressed();
 		} else {
-			if (count > 0) {
+			if (count > 1) {
+				getCurrentFragment().detachChildFragments();
 				getFragmentManager().popBackStack();
 			} else {
 				finish();
 			}
 		}
-
 	}
 
 }

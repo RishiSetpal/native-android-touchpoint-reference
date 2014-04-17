@@ -1,3 +1,18 @@
+/*
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.optimusinfo.elasticpath.cortex.cart;
 
 import org.json.JSONException;
@@ -15,7 +30,7 @@ import android.os.AsyncTask;
  * @author Optimus
  * 
  */
-public class AsyncTaskUpdateCartItem extends AsyncTask<Void, Void, Boolean> {
+public class AsyncTaskUpdateCartItem extends AsyncTask<Void, Void, Integer> {
 
 	Context mCurrent;
 	String URL;
@@ -53,24 +68,26 @@ public class AsyncTaskUpdateCartItem extends AsyncTask<Void, Void, Boolean> {
 	}
 
 	@Override
-	protected Boolean doInBackground(Void... params) {
-		try {
-			if (Utils.isNetworkAvailable(mCurrent)) {
-				int responseCode = 0;
-				JSONObject objInput = new JSONObject();
-				objInput.put("quantity", mQuantityToAdd);
+	protected void onPreExecute() {
+		super.onPreExecute();
+		if (!Utils.isNetworkAvailable(mCurrent)) {
+			mListener.onTaskFailed(Constants.ErrorCodes.ERROR_NETWORK);
+			cancel(true);
+			return;
+		}
+	}
 
-				responseCode = Utils.putRequest(URL, objInput, accessToken,
-						headerContentTypeValue, headerContentTypeString,
-						headerAuthorizationTypeString,
-						headerAccessTokenInitializer);
-				if (responseCode != 0) {
-					mListener.onTaskSuccessful(responseCode);
-					return true;
-				}
-			} else {
-				mListener.onTaskFailed(Constants.ErrorCodes.ERROR_NETWORK);
-			}
+	@Override
+	protected Integer doInBackground(Void... params) {
+		int responseCode = 0;
+		try {
+			JSONObject objInput = new JSONObject();
+			objInput.put("quantity", mQuantityToAdd);
+			responseCode = Utils
+					.putRequest(URL, objInput, accessToken,
+							headerContentTypeValue, headerContentTypeString,
+							headerAuthorizationTypeString,
+							headerAccessTokenInitializer);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		} catch (JsonParseException e) {
@@ -79,13 +96,22 @@ public class AsyncTaskUpdateCartItem extends AsyncTask<Void, Void, Boolean> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return false;
+		return responseCode;
 	}
 
 	@Override
-	protected void onPostExecute(Boolean result) {
-		super.onPostExecute(result);
-		if (result != null && !result) {
+	protected void onPostExecute(Integer responseCode) {
+		super.onPostExecute(responseCode);
+		try {
+			if (responseCode != 0) {
+				mListener.onTaskSuccessful(responseCode);
+			} else {
+				mListener.onTaskFailed(responseCode);
+			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} catch (JsonParseException e) {
+			e.printStackTrace();
 			mListener.onTaskFailed(Constants.ErrorCodes.ERROR_SERVER);
 		}
 	}

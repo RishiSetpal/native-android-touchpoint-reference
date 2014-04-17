@@ -218,4 +218,14 @@ public class CategoryFragment extends EPFragment {
 	public void detachChildFragments() {
 		// No Child fragments added so empty
 	}
+
+	@Override
+	public void onBackPressed() {
+		// TODO :- When custom back button implementation is required
+	}
+
+	@Override
+	public void onAuthenticationSucessful() {
+		onRefreshData();
+	}
 }

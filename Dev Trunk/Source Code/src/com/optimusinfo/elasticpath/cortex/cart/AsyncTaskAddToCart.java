@@ -1,9 +1,24 @@
+/*
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.optimusinfo.elasticpath.cortex.cart;
 
-import org.apache.http.ParseException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.JsonParseException;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
 import com.optimusinfo.elasticpath.cortex.common.Utils;
 
@@ -15,7 +30,7 @@ import android.os.AsyncTask;
  * @author Optimus
  * 
  */
-public class AsyncTaskAddToCart extends AsyncTask<Void, Void, Boolean> {
+public class AsyncTaskAddToCart extends AsyncTask<Void, Void, Integer> {
 
 	protected int mQuantityToAdd;
 	protected String urlAddToCartForm;
@@ -42,32 +57,36 @@ public class AsyncTaskAddToCart extends AsyncTask<Void, Void, Boolean> {
 	}
 
 	@Override
-	protected Boolean doInBackground(Void... params) {
+	protected Integer doInBackground(Void... params) {
+		int responseCode = 0;
 		try {
 			JSONObject objInput = new JSONObject();
 			objInput.put("quantity", mQuantityToAdd);
-			int responseCode = Utils.postData(urlAddToCartForm, objInput,
+			responseCode = Utils.postData(urlAddToCartForm, objInput,
 					accessToken, Constants.RequestHeaders.CONTENT_TYPE,
 					Constants.RequestHeaders.AUTHORIZATION_INITIALIZER);
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return responseCode;
+	}
+
+	@Override
+	protected void onPostExecute(Integer responseCode) {
+		super.onPostExecute(responseCode);
+		try {
 			if (responseCode == Constants.ApiResponseCode.REQUEST_SUCCESSFUL_CREATED
 					|| responseCode == Constants.ApiResponseCode.REQUEST_SUCCESSFUL_UPDATED) {
 				mListener.onTaskSuccessful(responseCode);
 			} else {
 				mListener.onTaskFailed(responseCode);
 			}
-			return true;
-		} catch (ParseException e) {
+		} catch (NullPointerException e) {
 			e.printStackTrace();
-		} catch (JSONException e) {
+		} catch (JsonParseException e) {
 			e.printStackTrace();
-		}
-		return false;
-	}
-
-	@Override
-	protected void onPostExecute(Boolean result) {
-		super.onPostExecute(result);
-		if (result != null && !result) {
 			mListener.onTaskFailed(Constants.ErrorCodes.ERROR_SERVER);
 		}
 	}

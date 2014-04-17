@@ -1,6 +1,23 @@
+/*
+ * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * 
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.optimusinfo.elasticpath.cortex.checkout;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import com.optimusinfo.elasticpath.cortexAPI.R;
 import com.optimusinfo.elasticpath.cortex.checkout.CheckoutModel.AddressChoice;
 import com.optimusinfo.elasticpath.cortex.checkout.CheckoutModel.AddressSelector;
@@ -24,10 +41,10 @@ public class AddressAdapter extends BaseAdapter {
 
 	private EPFragment mCurrent;
 
-	protected ArrayList<AddressChoice> mBillingElements;
+	protected List<AddressChoice> mBillingElements;
 	protected int mIndexBillingChosen;
 
-	protected ArrayList<AddressChoice> mShippingElements;
+	protected List<AddressChoice> mShippingElements;
 	protected int mIndexShippingChosen;
 
 	public AddressAdapter(EPFragment current, AddressSelector bElements,
@@ -37,12 +54,12 @@ public class AddressAdapter extends BaseAdapter {
 		mIndexShippingChosen = -1;
 
 		this.mBillingElements = new ArrayList<CheckoutModel.AddressChoice>();
-		if (bElements.mChoice != null) {
+		if (bElements != null && bElements.mChoice != null) {
 			for (AddressChoice choice : bElements.mChoice) {
 				this.mBillingElements.add(choice);
 			}
 		}
-		if (bElements.mChosen != null) {
+		if (bElements != null && bElements.mChosen != null) {
 			for (AddressChoice choice : bElements.mChosen) {
 				this.mIndexBillingChosen = this.mBillingElements.size();
 				this.mBillingElements.add(choice);
@@ -63,7 +80,6 @@ public class AddressAdapter extends BaseAdapter {
 				}
 			}
 		}
-
 	}
 
 	@Override
@@ -86,24 +102,26 @@ public class AddressAdapter extends BaseAdapter {
 		LayoutInflater inflater = (LayoutInflater) mCurrent.getActivity()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View gridView;
+		gridView = new View(mCurrent.getActivity());
+		gridView = inflater.inflate(R.layout.item_list_checkout_address_desc,
+				null);
 		if (position >= mBillingElements.size()) {
-			gridView = new View(mCurrent.getActivity());
-			// get layout from mobile.xml
-			gridView = inflater.inflate(R.layout.item_add_new_address, null);
+			View noAddressLayout = (View) gridView
+					.findViewById(R.id.llNoAddress);
+			noAddressLayout.setVisibility(View.VISIBLE);
 			gridView.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					Intent intent = new Intent(mCurrent.getActivity(), AddressActivity.class);
-					mCurrent.startActivityForResult(intent,
+					Intent intent = new Intent(mCurrent.getActivity(),
+							AddressActivity.class);
+					mCurrent.getActivity().startActivityForResult(intent,
 							EPFragmentActivity.REQUEST_CODE_ADDRESS);
 				}
 			});
 		} else {
-			gridView = new View(mCurrent.getActivity());
-			// get layout from mobile.xml
-			gridView = inflater.inflate(
-					R.layout.item_list_checkout_address_desc, null);
-
+			View addressLayout = (View) gridView
+					.findViewById(R.id.llAddressDesc);
+			addressLayout.setVisibility(View.VISIBLE);
 			String shipAddress = "";
 			if (mIndexShippingChosen != -1) {
 				shipAddress = CheckoutModel.getAddressLine(mShippingElements
