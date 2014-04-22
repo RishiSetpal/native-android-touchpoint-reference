@@ -154,7 +154,7 @@ public class AddressActivity extends EPFragmentActivity {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setProgressBarIndeterminateVisibility(false);
+						showProgressDialog(false);
 						setUpCountries((Geographies) response);
 					}
 				});
@@ -165,12 +165,12 @@ public class AddressActivity extends EPFragmentActivity {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setProgressBarIndeterminateVisibility(false);
+						showProgressDialog(false);
 					}
 				});
 			}
 		};
-		setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		GeographiesModel.getGeographies(getApplicationContext(),
 				getGeographiesUrl(), getUserAuthenticationToken(),
 				mListenerGetGeographies);
@@ -184,7 +184,7 @@ public class AddressActivity extends EPFragmentActivity {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setProgressBarIndeterminateVisibility(false);
+						showProgressDialog(false);
 						setUpRegions((Regions) response);
 					}
 				});
@@ -195,12 +195,12 @@ public class AddressActivity extends EPFragmentActivity {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setProgressBarIndeterminateVisibility(false);
+						showProgressDialog(false);
 					}
 				});
 			}
 		};
-		setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		GeographiesModel.getRegions(getApplicationContext(), url,
 				getUserAuthenticationToken(), mListenerGetRegions);
 
@@ -276,7 +276,7 @@ public class AddressActivity extends EPFragmentActivity {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setProgressBarIndeterminateVisibility(false);
+						showProgressDialog(false);
 						if (response != 400) {
 							setResult(
 									EPFragmentActivity.RESULT_CODE_ADDRESS_RESULT,
@@ -295,8 +295,10 @@ public class AddressActivity extends EPFragmentActivity {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setProgressBarIndeterminateVisibility(false);
+						showProgressDialog(false);
 						// TODO For Future Req
+						NotificationUtils.showNotificationToast(
+								getApplicationContext(), "Error");
 					}
 				});
 
@@ -307,15 +309,17 @@ public class AddressActivity extends EPFragmentActivity {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setProgressBarIndeterminateVisibility(false);
+						showProgressDialog(false);
 						// TODO For Future Req
+						NotificationUtils.showNotificationToast(
+								getApplicationContext(), "Error");
 					}
 				});
 
 			}
 		};
 
-		setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		AddressModel.updateAddress(getApplicationContext(),
 				mObjAddress.mSelfLinks.mHREF, getUserAuthenticationToken(),
 				mListenerUpdate, getAddressModelJSON());
@@ -329,7 +333,7 @@ public class AddressActivity extends EPFragmentActivity {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setProgressBarIndeterminateVisibility(false);
+						showProgressDialog(false);
 						if (response != 400) {
 							setResult(
 									EPFragmentActivity.RESULT_CODE_ADDRESS_RESULT,
@@ -348,8 +352,10 @@ public class AddressActivity extends EPFragmentActivity {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setProgressBarIndeterminateVisibility(false);
+						showProgressDialog(false);
 						// TODO For Future Req
+						NotificationUtils.showNotificationToast(
+								getApplicationContext(), "Error");
 					}
 				});
 
@@ -360,14 +366,16 @@ public class AddressActivity extends EPFragmentActivity {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setProgressBarIndeterminateVisibility(false);
+						showProgressDialog(false);
 						// TODO For Future Req
+						NotificationUtils.showNotificationToast(
+								getApplicationContext(), "Error");
 					}
 				});
 
 			}
 		};
-		setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		AddressModel.addAddress(mAddressPostUrl,
 				Constants.Config.CONTENT_TYPE_ADD_TO_CART,
 				getUserAuthenticationToken(), mListenerAddAddress,
@@ -384,7 +392,7 @@ public class AddressActivity extends EPFragmentActivity {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setProgressBarIndeterminateVisibility(false);
+						showProgressDialog(false);
 					}
 				});
 
@@ -395,7 +403,7 @@ public class AddressActivity extends EPFragmentActivity {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setProgressBarIndeterminateVisibility(false);
+						showProgressDialog(false);
 					}
 				});
 
@@ -406,14 +414,14 @@ public class AddressActivity extends EPFragmentActivity {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setProgressBarIndeterminateVisibility(false);
+						showProgressDialog(false);
 						// TODO For Future Req
 					}
 				});
 
 			}
 		};
-		setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		AddressModel.getAddressForm(getApplicationContext(), getAddressUrl(),
 				getUserAuthenticationToken(), mListenerGetForm);
 

@@ -112,8 +112,7 @@ public class ProfileFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						setUpViews();
 					}
 				});
@@ -124,8 +123,7 @@ public class ProfileFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						// TODO - For Future Req
 						NotificationUtils.showErrorToast(getActivity(),
 								errorCode);
@@ -138,8 +136,7 @@ public class ProfileFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						// TODO For Future Req
 						NotificationUtils.showErrorToast(getActivity(),
 								Constants.ErrorCodes.ERROR_SERVER);
@@ -148,7 +145,7 @@ public class ProfileFragment extends EPFragment {
 			}
 		};
 
-		getActivity().setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		mLayout.setVisibility(View.INVISIBLE);
 		if (!TextUtils.isEmpty(urlProfile)) {
 			ProfileModel.getProfileDetails(getActivity(), urlProfile,
@@ -168,8 +165,7 @@ public class ProfileFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						if (response == Constants.ApiResponseCode.REQUEST_SUCCESSFUL_DELETED) {
 							onRefreshData();
 						}
@@ -182,8 +178,7 @@ public class ProfileFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						// TODO For Future Req
 					}
 				});
@@ -195,8 +190,7 @@ public class ProfileFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						// TODO For Future Req
 					}
 				});
@@ -204,7 +198,7 @@ public class ProfileFragment extends EPFragment {
 			}
 		};
 
-		getActivity().setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		ProfileModel.deleteAddress(getActivity(), deleteAddressLink,
 				getUserAuthenticationToken(), mDeleteAddressListner);
 
@@ -278,7 +272,7 @@ public class ProfileFragment extends EPFragment {
 		}
 		View noMethodView = getActivity().getLayoutInflater().inflate(
 				R.layout.view_no_payment_method, null);
-		
+
 		if (mAdapter != null) {
 			noMethodView.setVisibility(View.GONE);
 			mPaymentsGridView.setAdapter(mAdapter);
@@ -286,7 +280,7 @@ public class ProfileFragment extends EPFragment {
 					getIntegerResource(R.integer.numColumns));
 		} else {
 			noMethodView.setVisibility(View.VISIBLE);
-			((ViewGroup)mPaymentsGridView.getParent()).addView(noMethodView);
+			((ViewGroup) mPaymentsGridView.getParent()).addView(noMethodView);
 		}
 	}
 

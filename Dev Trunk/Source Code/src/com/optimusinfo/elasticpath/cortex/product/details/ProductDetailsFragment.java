@@ -91,8 +91,7 @@ public class ProductDetailsFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						if (getMainFragment() instanceof ProductDetailsFragment) {
 							// Update the views
 							initializeViews(mViewParent);
@@ -106,8 +105,7 @@ public class ProductDetailsFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						// TODO - For Future Req
 						NotificationUtils.showErrorToast(getActivity(),
 								errorCode);
@@ -120,14 +118,13 @@ public class ProductDetailsFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						// TODO For Future Req
 					}
 				});
 			}
 		};
-		getActivity().setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		ProductDetail.getProuctListingFromServer(getActivity(),
 				mProductBaseUrl, Constants.ZoomUrl.URL_ZOOM_PRODUCT_DETAILS,
 				getUserAuthenticationToken(), mListenerGetProductDetails);

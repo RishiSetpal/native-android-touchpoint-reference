@@ -104,8 +104,7 @@ public class CategoryFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						if (getMainFragment() instanceof CategoryFragment) {
 							mCategoriesAdapter = new CategoriesAdapter(
 									getActivity(), mListElements);
@@ -124,8 +123,7 @@ public class CategoryFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						NotificationUtils.showErrorToast(getActivity(),
 								errorCode);
 					}
@@ -138,8 +136,7 @@ public class CategoryFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						// Show the authentication failed error
 						NotificationUtils.showNotificationToast(
 								getActivity(),
@@ -155,7 +152,7 @@ public class CategoryFragment extends EPFragment {
 		// Get access token
 		String accessToken = getUserAuthenticationToken();
 
-		getActivity().setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		if (mCategoryUrl != null) {
 			// Get categories from server
 			CategoryModel.getChildCategoriesFromServer(getActivity(),

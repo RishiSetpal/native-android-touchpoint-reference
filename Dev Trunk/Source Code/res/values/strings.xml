@@ -137,5 +137,6 @@ the checkout to complete your purchase.</string>
     <string name="breadcrumb_title_home">Home</string>
     <string name="ellipsis">…</string>
     <string name="lableNoPaymentMethod">You have no saved Payment methods.</string>
+    <string name="messageLoading">Loading…</string>
 
 </resources>

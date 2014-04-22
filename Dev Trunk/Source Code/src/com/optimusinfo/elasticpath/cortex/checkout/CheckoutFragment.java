@@ -50,7 +50,7 @@ public class CheckoutFragment extends EPFragment {
 	protected ListenerCheckOutOrder mListener;
 	protected ListenerSelectCheckoutOption mOptionListener;
 
-	protected View mViewParent,mNoMethodView;
+	protected View mViewParent, mNoMethodView;
 
 	protected RelativeLayout mLayout;
 	private GridView mAddressGridView, mMethodGridView,
@@ -90,8 +90,7 @@ public class CheckoutFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						setUpViews();
 					}
 				});
@@ -102,8 +101,7 @@ public class CheckoutFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						// TODO - For Future Req
 						NotificationUtils.showErrorToast(getActivity(),
 								errorCode);
@@ -116,15 +114,14 @@ public class CheckoutFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						// TODO For Future Req
 					}
 				});
 			}
 		};
 
-		getActivity().setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		mLayout.setVisibility(View.INVISIBLE);
 		CheckoutModel.getCheckOutSummary(getActivity(),
 				mCheckOutLink.concat(Constants.ZoomUrl.URL_ZOOM_CHECKOUT),
@@ -140,8 +137,7 @@ public class CheckoutFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						// TODO For Future Req
 						if (responseCode != 404) {
 							onRefreshData();
@@ -156,8 +152,7 @@ public class CheckoutFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						// TODO For Future Req
 					}
 				});
@@ -169,15 +164,14 @@ public class CheckoutFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						// TODO For Future Req
 					}
 				});
 			}
 		};
 
-		getActivity().setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		mLayout.setVisibility(View.INVISIBLE);
 		CheckoutModel.selectOption(url, getUserAuthenticationToken(),
 				mOptionListener);

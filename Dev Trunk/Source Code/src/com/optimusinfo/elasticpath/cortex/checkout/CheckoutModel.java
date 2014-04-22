@@ -203,7 +203,7 @@ public class CheckoutModel implements Serializable {
 		 */
 		private static final long serialVersionUID = 1L;
 
-		@SerializedName("family-name")
+		@SerializedName("country-name")
 		String mCountryName;
 
 		@SerializedName("locality")

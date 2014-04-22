@@ -115,8 +115,7 @@ public class CartFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						if (objResponse.getAddToCartLinks() != null
 								&& objResponse.getAddToCartLinks().length > 0) {
 							postAddToCart(objResponse.getAddToCartLinks()[0].mHREF);
@@ -133,8 +132,7 @@ public class CartFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						NotificationUtils.showErrorToast(getActivity(),
 								errorCode);
 					}
@@ -146,13 +144,12 @@ public class CartFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 					}
 				});
 			}
 		};
-		getActivity().setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		mLayout.setVisibility(View.GONE);
 		mIsCallInProgress = true;
 		AddToCartModel.getAddToCartForm(getActivity(), mAddToCartUrl,
@@ -172,8 +169,7 @@ public class CartFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						mIsOrderAdded = true;
 						// get the complete cart list
 						getCompleteCart();
@@ -186,8 +182,7 @@ public class CartFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						NotificationUtils.showErrorToast(getActivity(),
 								errorCode);
 					}
@@ -199,8 +194,7 @@ public class CartFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 					}
 				});
 			}
@@ -211,7 +205,7 @@ public class CartFragment extends EPFragment {
 		} else {
 			quantiy = 1;
 		}
-		getActivity().setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		CartModel.addToCart(quantiy, mPostUrl,
 				Constants.Config.CONTENT_TYPE_ADD_TO_CART,
 				getUserAuthenticationToken(), mAddToCartListner);
@@ -236,8 +230,7 @@ public class CartFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						mIsCallInProgress = false;
 						// populate the list view
 						setViewData();
@@ -250,8 +243,7 @@ public class CartFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						NotificationUtils.showErrorToast(getActivity(),
 								errorCode);
 					}
@@ -263,13 +255,12 @@ public class CartFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 					}
 				});
 			}
 		};
-		getActivity().setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		mLayout.setVisibility(View.INVISIBLE);
 		String cartsUrl = getObjCortexParams().getEndpoint().concat("carts/")
 				.concat(getObjCortexParams().getScope())
@@ -287,8 +278,7 @@ public class CartFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						if (response == Constants.ApiResponseCode.REQUEST_SUCCESSFUL_DELETED) {
 							getCompleteCart();
 						}
@@ -304,8 +294,7 @@ public class CartFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 					}
 				});
 			}
@@ -315,14 +304,13 @@ public class CartFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 					}
 				});
 
 			}
 		};
-		getActivity().setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		CartModel.deleteCartItems(getActivity(), url,
 				getUserAuthenticationToken(), mDeleteItemsListener);
 	}
@@ -334,8 +322,7 @@ public class CartFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						mBTUpdate.setEnabled(true);
 					}
 				});
@@ -346,8 +333,7 @@ public class CartFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 					}
 				});
 			}
@@ -357,14 +343,13 @@ public class CartFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 					}
 				});
 			}
 		};
 
-		getActivity().setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		CartModel.updateCartItems(getActivity(), url,
 				getUserAuthenticationToken(), mUpdateCartItems, quantity);
 	}

@@ -76,6 +76,7 @@ public class EPHomeActivity extends EPFragmentActivity {
 						R.id.fragment_container, mObjFragment);
 			}
 		}
+
 	}
 
 	/**
@@ -83,7 +84,6 @@ public class EPHomeActivity extends EPFragmentActivity {
 	 * authentication token
 	 */
 	private void getNewAuthenticationTokenFromAPI() {
-
 		mAuthListener = new ListenerAsyncTaskAuthentication() {
 			@Override
 			public void onTaskComplete(
@@ -98,7 +98,7 @@ public class EPHomeActivity extends EPFragmentActivity {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setProgressBarIndeterminateVisibility(false);
+						showProgressDialog(false);
 						CategoryFragment mObjFragment = new CategoryFragment();
 						addFragmentToBreadCrumb(
 								getStringFromResource(R.string.breadcrumb_title_home),
@@ -113,7 +113,7 @@ public class EPHomeActivity extends EPFragmentActivity {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setProgressBarIndeterminateVisibility(false);
+						showProgressDialog(false);
 						NotificationUtils.showErrorToast(
 								getApplicationContext(), errorCode);
 					}
@@ -121,7 +121,7 @@ public class EPHomeActivity extends EPFragmentActivity {
 			}
 		};
 
-		setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		// get the user authentication and save it to shared preferences
 		Authentication.getTokenFromServer(getApplicationContext(),
 				mObjCortexParams.getEndpoint(), mAuthListener, null, null,

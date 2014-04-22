@@ -107,8 +107,7 @@ public class PurchaseFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						mIsOrderConfirmed = true;
 						mOrderDetailsUrl = response;
 						getOrderDetails(mOrderDetailsUrl);
@@ -121,8 +120,7 @@ public class PurchaseFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						// TODO - For Future Req
 						NotificationUtils.showErrorToast(getActivity(),
 								errorCode);
@@ -135,8 +133,7 @@ public class PurchaseFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						// TODO For Future Req
 						NotificationUtils.showErrorToast(getActivity(),
 								Constants.ErrorCodes.ERROR_SERVER);
@@ -144,7 +141,7 @@ public class PurchaseFragment extends EPFragment {
 				});
 			}
 		};
-		getActivity().setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		mLayout.setVisibility(View.INVISIBLE);
 		if (!TextUtils.isEmpty(mPostUrl)) {
 			OrderModel.postPurchaseOrder(getActivity(), mPostUrl,
@@ -168,8 +165,7 @@ public class PurchaseFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						setUpViews();
 					}
 				});
@@ -180,8 +176,7 @@ public class PurchaseFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						// TODO - For Future Req
 						NotificationUtils.showErrorToast(getActivity(),
 								errorCode);
@@ -194,8 +189,7 @@ public class PurchaseFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						// TODO For Future Req
 						NotificationUtils.showErrorToast(getActivity(),
 								Constants.ErrorCodes.ERROR_SERVER);
@@ -204,7 +198,7 @@ public class PurchaseFragment extends EPFragment {
 			}
 		};
 
-		getActivity().setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		mLayout.setVisibility(View.INVISIBLE);
 		if (!TextUtils.isEmpty(urlOrder)) {
 			OrderModel.getOrderDetails(getActivity(), urlOrder,

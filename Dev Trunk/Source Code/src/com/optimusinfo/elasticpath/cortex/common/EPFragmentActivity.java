@@ -18,6 +18,7 @@ package com.optimusinfo.elasticpath.cortex.common;
 import android.app.ActionBar;
 import android.app.DialogFragment;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,7 +29,6 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.Window;
 
 import com.optimusinfo.elasticpath.cortex.authentication.AuthenticationActivity;
 import com.optimusinfo.elasticpath.cortex.cart.CartFragment;
@@ -47,6 +47,8 @@ public abstract class EPFragmentActivity extends FragmentActivity implements
 	protected EPCortex mObjCortexParams;
 	protected ActionBar mObjActionBar;
 
+	protected ProgressDialog mProgressDialog;
+
 	public static int REQUEST_CODE_AUTHENTICATION = 27;
 	public static int RESULT_CODE_AUTHENTICATION_SUCESSFUL = 28;
 
@@ -62,16 +64,31 @@ public abstract class EPFragmentActivity extends FragmentActivity implements
 	public static int REQUEST_CODE_PURCHASE = 62;
 	public static int RESULT_CODE_PURCHASE_COMPLETE = 63;
 
+	public static String DIALOG_STATE_PROGRESS = "progress";
+
 	protected int mStackLevel = 0;
+	protected boolean mProgressState = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		// Enable the flag for showing loader at the top right corner
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		if (mProgressDialog == null) {
+			mProgressDialog = new ProgressDialog(this);
+			mProgressDialog.setMessage(getString(R.string.messageLoading));
+			mProgressDialog.setCancelable(false);
+			mProgressDialog.setCanceledOnTouchOutside(false);
+		}
+
 		if (savedInstanceState != null) {
 			mStackLevel = savedInstanceState.getInt("level");
+			mProgressState = savedInstanceState
+					.getBoolean(DIALOG_STATE_PROGRESS);
 		}
+
+		showProgressDialog(mProgressState);
+
 	}
 
 	protected void initializeParams() {
@@ -269,6 +286,8 @@ public abstract class EPFragmentActivity extends FragmentActivity implements
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putInt("level", mStackLevel);
+		outState.putBoolean(DIALOG_STATE_PROGRESS, mProgressDialog.isShowing());
+		showProgressDialog(false);
 	}
 
 	@Override
@@ -329,6 +348,22 @@ public abstract class EPFragmentActivity extends FragmentActivity implements
 				finish();
 			}
 		}
+	}
+
+	public void showProgressDialog(boolean isVisible) {
+		if (isVisible) {
+			mProgressDialog.show();
+		} else {
+			if (mProgressDialog.isShowing()) {
+				mProgressDialog.dismiss();
+			}
+		}
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
 	}
 
 }

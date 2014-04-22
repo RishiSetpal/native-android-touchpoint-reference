@@ -148,6 +148,10 @@ public abstract class EPFragment extends Fragment {
 		return getResources().getInteger(resId);
 	}
 
+	public void showProgressDialog(boolean isVisible) {
+		((EPFragmentActivity) getActivity()).showProgressDialog(isVisible);
+	}
+
 	/**
 	 * Called when back is pressed
 	 */

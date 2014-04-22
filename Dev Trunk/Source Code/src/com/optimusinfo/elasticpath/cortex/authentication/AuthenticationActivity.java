@@ -68,8 +68,6 @@ public class AuthenticationActivity extends EPFragmentActivity {
 	 * This function updates the views with data
 	 */
 	private void initializeViews() {
-		// Set any progress bar to false
-		setProgressBarIndeterminateVisibility(false);
 
 		// Initialize login views
 		mTvUsername = (EditText) findViewById(R.id.etUsername);
@@ -146,7 +144,7 @@ public class AuthenticationActivity extends EPFragmentActivity {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setProgressBarIndeterminateVisibility(false);
+						showProgressDialog(false);
 						setResult(
 								EPFragmentActivity.RESULT_CODE_AUTHENTICATION_SUCESSFUL,
 								mParentIntent);
@@ -160,7 +158,7 @@ public class AuthenticationActivity extends EPFragmentActivity {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setProgressBarIndeterminateVisibility(false);
+						showProgressDialog(false);
 						NotificationUtils.showNotificationToast(
 								getApplicationContext(),
 								"Incorrect username or password");
@@ -169,7 +167,7 @@ public class AuthenticationActivity extends EPFragmentActivity {
 			}
 		};
 
-		setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		// get the user authentication and save it to shared preferences
 		Authentication.getTokenFromServer(getApplicationContext(),
 				mObjCortexParams.getEndpoint(), mAuthListener, mTvUsername
@@ -194,7 +192,7 @@ public class AuthenticationActivity extends EPFragmentActivity {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setProgressBarIndeterminateVisibility(false);
+						showProgressDialog(false);
 						NotificationUtils.showNotificationToast(
 								getApplicationContext(), "Success");
 						mEtFirstname.getText().clear();
@@ -210,7 +208,7 @@ public class AuthenticationActivity extends EPFragmentActivity {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setProgressBarIndeterminateVisibility(false);
+						showProgressDialog(false);
 						showErrorMessage(errorCode);
 					}
 				});
@@ -222,14 +220,15 @@ public class AuthenticationActivity extends EPFragmentActivity {
 				runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						setProgressBarIndeterminateVisibility(false);
-
+						showProgressDialog(false);
+						NotificationUtils.showNotificationToast(
+								getApplicationContext(), "Error");
 					}
 				});
 
 			}
 		};
-		setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		RegistrationModel.addNewAccount(getApplicationContext(),
 				getnewAccountFormUrl(), getUserAuthenticationToken(),
 				mNewAccountListener, RegistrationModel.getUserRegistrationJson(

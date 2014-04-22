@@ -94,8 +94,7 @@ public class ProductParentListingFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						mPullRefreshGridView.onRefreshComplete();
 						if (getMainFragment() instanceof ProductParentListingFragment) {
 							if (mObjProducts.getElements() != null) {
@@ -116,8 +115,7 @@ public class ProductParentListingFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 						NotificationUtils.showErrorToast(getActivity(),
 								errorCode);
 					}
@@ -129,13 +127,12 @@ public class ProductParentListingFragment extends EPFragment {
 				getActivity().runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						getActivity().setProgressBarIndeterminateVisibility(
-								false);
+						showProgressDialog(false);
 					}
 				});
 			}
 		};
-		getActivity().setProgressBarIndeterminateVisibility(true);
+		showProgressDialog(true);
 		ProductListing.getProuctListingFromServer(getActivity(),
 				mProductBaseUrl, Constants.PageUrl.pageUrl,
 				String.valueOf(mCurrentPageNumber),
@@ -174,6 +171,7 @@ public class ProductParentListingFragment extends EPFragment {
 
 				});
 		mProductListGridView = mPullRefreshGridView.getRefreshableView();
+		mPullRefreshGridView.setMode(Mode.DISABLED);
 	}
 
 	public void showProductList() {
