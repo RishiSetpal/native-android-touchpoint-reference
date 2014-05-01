@@ -47,7 +47,7 @@
         android:background="@drawable/layout_bg_fragment_product_listing_desc"
         android:orientation="horizontal" >
 
-        <com.optimusinfo.elasticpath.cortex.common.EPImageView
+        <ImageView
             android:id="@+id/ivProductListing"
             android:layout_width="0dip"
             android:layout_height="175dp"

@@ -25,13 +25,14 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.optimusinfo.elasticpath.cortex.cart.CartModel.Element;
 import com.optimusinfo.elasticpath.cortex.cart.CartModel.ItemPrice;
 import com.optimusinfo.elasticpath.cortex.cart.CartModel.ItemRate;
 import com.optimusinfo.elasticpath.cortex.common.EPFragment;
-import com.optimusinfo.elasticpath.cortex.common.EPImageView;
+import com.optimusinfo.elasticpath.cortex.common.imageutils.ImageLoader;
 import com.optimusinfo.elasticpath.cortexAPI.R;
 
 /**
@@ -44,6 +45,7 @@ public class CartAdapter extends ArrayAdapter<Element> {
 
 	private final EPFragment mCurrent;
 	private final Element[] mListDetails;
+	private ImageLoader mImageLoader;
 
 	/**
 	 * 
@@ -56,6 +58,7 @@ public class CartAdapter extends ArrayAdapter<Element> {
 				objects);
 		this.mCurrent = mCurrent;
 		this.mListDetails = objects;
+		this.mImageLoader = new ImageLoader(mCurrent.getActivity());
 	}
 
 	@Override
@@ -138,10 +141,14 @@ public class CartAdapter extends ArrayAdapter<Element> {
 		});
 
 		try {
-			EPImageView ivImage = (EPImageView) row
+			ImageView ivImage = (ImageView) row
 					.findViewById(R.id.epCartProductImage);
-			ivImage.setImageUrl(objDetails.getItems()[0].getDefinitions()[0]
+			ivImage.setTag(objDetails.getItems()[0].getDefinitions()[0]
 					.getItemAssets()[0].getAssetsElements()[0].getImageUrl());
+			mImageLoader.displayRoundedCornersImage(
+					objDetails.getItems()[0].getDefinitions()[0]
+							.getItemAssets()[0].getAssetsElements()[0]
+							.getImageUrl(), ivImage, true);
 
 		} catch (NullPointerException e) {
 

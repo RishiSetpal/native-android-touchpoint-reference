@@ -21,6 +21,7 @@ import com.optimusinfo.elasticpath.cortex.common.Constants;
 import com.optimusinfo.elasticpath.cortex.common.EPFragment;
 import com.optimusinfo.elasticpath.cortex.common.EPImageView;
 import com.optimusinfo.elasticpath.cortex.common.NotificationUtils;
+import com.optimusinfo.elasticpath.cortex.common.imageutils.ImageLoader;
 import com.optimusinfo.elasticpath.cortex.product.details.ProductDetail.ProductAddToCartForm;
 import com.optimusinfo.elasticpath.cortex.product.details.ProductDetail.ProductAssets;
 import com.optimusinfo.elasticpath.cortex.product.details.ProductDetail.ProductAvailability;
@@ -52,6 +53,7 @@ public class ProductDetailsFragment extends EPFragment {
 	protected ListenerGetProductDetails mListenerGetProductDetails;
 	protected ProductDetail mProductDef;
 	protected View mViewParent;
+	private ImageLoader mImageLoader;
 
 	/**
 	 * Constructure for this fragment
@@ -61,6 +63,7 @@ public class ProductDetailsFragment extends EPFragment {
 	public ProductDetailsFragment(String mProductBaseUrl) {
 		super();
 		this.mProductBaseUrl = mProductBaseUrl;
+		
 	}
 
 	@Override
@@ -69,7 +72,7 @@ public class ProductDetailsFragment extends EPFragment {
 		View viewNavigation = inflater.inflate(
 				R.layout.fragment_product_details, container, false);
 		mViewParent = viewNavigation;
-
+		this.mImageLoader = new ImageLoader(getActivity());
 		if (mProductDef != null) {
 			initializeViews(viewNavigation);
 		} else {
@@ -170,7 +173,10 @@ public class ProductDetailsFragment extends EPFragment {
 		EPImageView ivImage = (EPImageView) parent
 				.findViewById(R.id.ivProductDetail);
 		if (assets != null) {
-			ivImage.setImageUrl(assets[0].getProductImages()[0].getImageUrl());
+			ivImage.setTag(assets[0].getProductImages()[0].getImageUrl());
+			mImageLoader.displayRoundedCornersImage(
+					assets[0].getProductImages()[0].getImageUrl(), ivImage,
+					true);
 		}
 
 		// Initialize the add to cart button

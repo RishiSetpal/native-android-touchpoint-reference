@@ -42,6 +42,13 @@ import android.widget.Spinner;
 
 public class AddressActivity extends EPFragmentActivity {
 
+	public static final String KEY_REGIONS = "REGIONS";
+	public static final String KEY_GEOGRAPHIES = "GEOGRAPHIES";
+
+	public static final String KEY_POSITION_COUNTRIES = "POSTION_COUNTRIES";
+	public static final String KEY_POSITION_REGIONS = "POSTION_REGIONS";
+
+	public static final String KEY_ADDRESS_POST = "ADDRESS_POST_URL";
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments representing each object in a collection. We use a
@@ -69,6 +76,12 @@ public class AddressActivity extends EPFragmentActivity {
 
 	protected boolean mIsOrderConfirmed = false;
 
+	protected Geographies mGeographies;
+	protected Regions mRegions;
+
+	public int posCountry = 0;
+	public int posRegion = 0;
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Set the content view
@@ -82,12 +95,30 @@ public class AddressActivity extends EPFragmentActivity {
 				Constants.PageUrl.INTENT_ADRESS);
 		// Initialize views
 		initializeViews();
-		// Populate the geographies views
-		getGeographies();
+
+		if (savedInstanceState != null) {
+			mGeographies = (Geographies) savedInstanceState
+					.getSerializable(KEY_GEOGRAPHIES);
+			mRegions = (Regions) savedInstanceState
+					.getSerializable(KEY_REGIONS);			
+			posCountry = savedInstanceState.getInt(KEY_POSITION_COUNTRIES);
+			posRegion = savedInstanceState.getInt(KEY_POSITION_REGIONS);
+			mAddressPostUrl = savedInstanceState.getString(KEY_ADDRESS_POST);
+
+		}
+
+		if (mGeographies == null) {
+			// Populate the geographies views
+			getGeographies();
+		} else {
+			setUpCountries(mGeographies);
+			setUpRegions(mRegions);
+		}
 
 		if (mObjAddress != null) {
 			bindContent();
-		} else {
+		}
+		if (mAddressPostUrl == null) {
 			getAddressForm();
 		}
 	}
@@ -212,15 +243,19 @@ public class AddressActivity extends EPFragmentActivity {
 	 * @param listObj
 	 */
 	public void setUpCountries(Geographies listObj) {
+		mGeographies = listObj;
 		CountrySpinnerAdapter mAdapter = new CountrySpinnerAdapter(
 				getApplicationContext(), android.R.layout.simple_spinner_item,
-				listObj.mElement);
+				mGeographies.mElement);
 		mSPCountry.setAdapter(mAdapter);
-		if (mObjAddress != null) {
+		if (mObjAddress != null && posCountry == 0) {
 			String countryName = mObjAddress.mAddressDesc.mCountryName;
-			int pos = GeographiesModel.getCountriesPosition(countryName,
-					listObj.mElement);
-			mSPCountry.setSelection(pos);
+			posCountry = GeographiesModel.getCountriesPosition(countryName,
+					mGeographies.mElement);
+		}
+
+		if (posCountry != 0) {
+			mSPCountry.setSelection(posCountry);
 		}
 
 		mSPCountry.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -250,21 +285,27 @@ public class AddressActivity extends EPFragmentActivity {
 	 * @param listObj
 	 */
 	public void setUpRegions(Regions listObj) {
+		mRegions = listObj;
 		RegionSpinnerAdapter mAdapter = new RegionSpinnerAdapter(
 				getApplicationContext(), android.R.layout.simple_spinner_item,
-				listObj.mElement);
+				mRegions.mElement);
 		mSPProvince.setAdapter(mAdapter);
-		if (listObj.mElement.length > 0) {
-			if (mObjAddress != null) {
+		if (mRegions.mElement.length > 0) {
+			if (mObjAddress != null && posRegion == 0) {
 				String regionName = mObjAddress.mAddressDesc.mRegion;
 				if (regionName != null) {
-					int pos = GeographiesModel.getRegionsPosition(
-							mObjAddress.mAddressDesc.mRegion, listObj.mElement);
-					mSPProvince.setSelection(pos);
+					posRegion = GeographiesModel
+							.getRegionsPosition(
+									mObjAddress.mAddressDesc.mRegion,
+									mRegions.mElement);
 				}
 			}
 		} else {
 			mSPProvince.setEnabled(false);
+		}
+
+		if (true == mSPProvince.isEnabled() && posRegion != 0) {
+			mSPProvince.setSelection(posRegion);
 		}
 	}
 
@@ -501,6 +542,25 @@ public class AddressActivity extends EPFragmentActivity {
 			e.printStackTrace();
 		}
 		return addressObject;
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+
+		outState.putSerializable(KEY_GEOGRAPHIES, mGeographies);
+		outState.putSerializable(KEY_REGIONS, mRegions);
+		if (mObjAddress != null) {
+			outState.putSerializable(Constants.PageUrl.INTENT_ADRESS,
+					mObjAddress);
+
+		}
+		outState.putInt(KEY_POSITION_COUNTRIES,
+				mSPCountry.getSelectedItemPosition());
+		outState.putInt(KEY_POSITION_REGIONS,
+				mSPProvince.getSelectedItemPosition());
+		outState.putString(KEY_ADDRESS_POST, mAddressPostUrl);
+
 	}
 
 }

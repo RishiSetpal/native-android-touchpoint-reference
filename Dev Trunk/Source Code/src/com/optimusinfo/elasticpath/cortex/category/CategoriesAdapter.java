@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import com.optimusinfo.elasticpath.cortexAPI.R;
 import com.optimusinfo.elasticpath.cortex.category.CategoryModel.CategoryElement;
 import com.optimusinfo.elasticpath.cortex.common.EPImageView;
+import com.optimusinfo.elasticpath.cortex.common.imageutils.ImageLoader;
+
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -38,11 +40,13 @@ public class CategoriesAdapter extends BaseAdapter {
 
 	private Context mContext;
 	private ArrayList<CategoryElement> mListElements;
+	private ImageLoader mImageLoader;
 
 	public CategoriesAdapter(Context context,
 			ArrayList<CategoryElement> listElements) {
 		this.mContext = context;
 		mListElements = listElements;
+		this.mImageLoader = new ImageLoader(context);
 	}
 
 	@Override
@@ -78,7 +82,9 @@ public class CategoriesAdapter extends BaseAdapter {
 			String imageUrl = CategoryModel.getCategoryImage(mListElements
 					.get(position));
 			if (!TextUtils.isEmpty(imageUrl)) {
-				catImage.setImageUrl(imageUrl);
+				catImage.setTag(imageUrl);
+				mImageLoader.displayRoundedCornersImage(imageUrl, catImage,
+						true);
 			}
 		} else {
 			gridView = (View) convertView;

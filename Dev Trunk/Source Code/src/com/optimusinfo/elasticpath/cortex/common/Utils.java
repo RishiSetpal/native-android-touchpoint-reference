@@ -19,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -454,6 +455,33 @@ public class Utils {
 		params.height = (dynamicHeight) + (dynamicHeight / size);
 		gridView.setLayoutParams(params);
 		gridView.requestLayout();
+	}
+
+	/**
+	 * Copy an InputStream to an OutputStream
+	 * 
+	 * @param is
+	 *            input stream to be copied
+	 * @param os
+	 *            output stream
+	 * @throws IOException
+	 */
+	public static void CopyStream(InputStream is, OutputStream os)
+			throws IOException {
+		if (is == null || os == null) {
+			return;
+		}
+
+		final int buffer_size = 1024;
+
+		byte[] bytes = new byte[buffer_size];
+		for (;;) {
+			int count = 0;
+			count = is.read(bytes, 0, buffer_size);
+			if (count == -1)
+				break;
+			os.write(bytes, 0, count);
+		}
 	}
 
 }

@@ -18,7 +18,7 @@ package com.optimusinfo.elasticpath.cortex.product.listing;
 import com.optimusinfo.elasticpath.cortex.cart.CartFragment;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
 import com.optimusinfo.elasticpath.cortex.common.EPFragment;
-import com.optimusinfo.elasticpath.cortex.common.EPImageView;
+import com.optimusinfo.elasticpath.cortex.common.imageutils.ImageLoader;
 import com.optimusinfo.elasticpath.cortex.product.details.ProductDetailsFragment;
 import com.optimusinfo.elasticpath.cortex.product.listing.ProductListing.ProductAddToCartForm;
 import com.optimusinfo.elasticpath.cortex.product.listing.ProductListing.ProductAssets;
@@ -35,17 +35,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ProductListingAdapter extends BaseAdapter {
 
 	private EPFragment mCurrent;
 	protected ProductListing mProducts;
+	private ImageLoader mImageLoader;
 
 	public ProductListingAdapter(EPFragment mContext, ProductListing mProducts) {
 		super();
 		this.mCurrent = mContext;
 		this.mProducts = mProducts;
+		mImageLoader = new ImageLoader(mContext.getActivity());
 	}
 
 	@Override
@@ -111,8 +114,13 @@ public class ProductListingAdapter extends BaseAdapter {
 		}
 		// set product image
 		if (asset != null) {
-			((EPImageView) gridView.findViewById(R.id.ivProductListing))
-					.setImageUrl(asset[0].getProductImages()[0].getImageUrl());
+			ImageView ivProduct = ((ImageView) gridView
+					.findViewById(R.id.ivProductListing));
+			ivProduct.setTag(asset[0].getProductImages()[0].getImageUrl());
+			mImageLoader.displayRoundedCornersImage(
+					asset[0].getProductImages()[0].getImageUrl(), ivProduct,
+					true);
+			
 		}
 		TextView btAddToCart = ((TextView) gridView
 				.findViewById(R.id.btAddToCart));

@@ -15,6 +15,8 @@
  */
 package com.optimusinfo.elasticpath.cortex.profile.address;
 
+import java.io.Serializable;
+
 import android.content.Context;
 
 import com.google.gson.annotations.SerializedName;
@@ -57,12 +59,21 @@ public class GeographiesModel {
 		}
 	}
 
-	public class Geographies {
+	public class Geographies implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("_element")
 		public GeographyElement[] mElement;
 	}
 
-	public class GeographyElement {
+	public class GeographyElement implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		@SerializedName("links")
 		public GeographyLinks[] mLinks;
 
@@ -73,7 +84,11 @@ public class GeographiesModel {
 		public String mValue;
 	}
 
-	public class GeographyLinks {
+	public class GeographyLinks implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("rel")
 		public String mRelation;
 		@SerializedName("href")
@@ -97,20 +112,28 @@ public class GeographiesModel {
 		return 0;
 	}
 
-	public class Regions {
+	public class Regions implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		@SerializedName("_element")
 		public RegionElement[] mElement;
 	}
 
-	public class RegionElement {
+	public class RegionElement implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		@SerializedName("display-name")
 		public String mDisplayName;
 
 		@SerializedName("name")
 		public String mValue;
 	}
-	
-	
+
 	/**
 	 * This method returns the regions position
 	 * 
@@ -127,15 +150,16 @@ public class GeographiesModel {
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * Returns the region url
+	 * 
 	 * @param mCurrent
 	 * @return
 	 */
-	public static String getRegionsUrl(GeographyElement mCurrent){
-		for(GeographyLinks currLink : mCurrent.mLinks){
-			if(currLink.mRelation.equalsIgnoreCase("regions")){
+	public static String getRegionsUrl(GeographyElement mCurrent) {
+		for (GeographyLinks currLink : mCurrent.mLinks) {
+			if (currLink.mRelation.equalsIgnoreCase("regions")) {
 				return currLink.mHref;
 			}
 		}
