@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.optimusinfo.elasticpath.cortex.common.Constants;
 import com.optimusinfo.elasticpath.cortex.common.Utils;
+
 import android.content.Context;
 import android.os.AsyncTask;
 

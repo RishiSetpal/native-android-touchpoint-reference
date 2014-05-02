@@ -436,7 +436,7 @@ public class Utils {
 			params.height = (dynamicHeight / columncount) + 25;
 		} else {
 			params.height = (dynamicHeight / columncount)
-					+ (dynamicHeight / size) - 25;
+					+ (dynamicHeight / size) ;
 		}
 		gridView.setLayoutParams(params);
 		gridView.requestLayout();

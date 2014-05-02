@@ -45,7 +45,7 @@ public class CartFragment extends EPFragment {
 	 */
 	protected String mAddToCartUrl, mProductQuantity, mPurchaseUrl;
 	protected String mCheckOutLink;
-	protected boolean mIsOrderAdded, mIsCallInProgress;
+	protected boolean mIsOrderAdded, mIsCallInProgress, mIsUpdated;
 
 	/**
 	 * Constructor
@@ -59,6 +59,7 @@ public class CartFragment extends EPFragment {
 		this.mProductQuantity = mProductQuantity;
 		this.mIsOrderAdded = false;
 		this.mIsCallInProgress = false;
+		this.mIsUpdated = true;
 	}
 
 	// Request call listeners
@@ -215,7 +216,7 @@ public class CartFragment extends EPFragment {
 	 * This function gets the complete items cart
 	 */
 	public void getCompleteCart() {
-
+		
 		mCartItemsListener = new ListenerGetCompleteCartItems() {
 			@Override
 			public void onTaskSuccessful(CartModel response) {
@@ -232,6 +233,7 @@ public class CartFragment extends EPFragment {
 					public void run() {
 						showProgressDialog(false);
 						mIsCallInProgress = false;
+						mIsUpdated = true;
 						// populate the list view
 						setViewData();
 					}
@@ -324,6 +326,7 @@ public class CartFragment extends EPFragment {
 					public void run() {
 						showProgressDialog(false);
 						mBTUpdate.setEnabled(true);
+						mIsUpdated = false;
 					}
 				});
 			}
@@ -363,7 +366,12 @@ public class CartFragment extends EPFragment {
 	 */
 	private void setViewData() {
 		mLayout.setVisibility(View.VISIBLE);
-		mBTUpdate.setEnabled(false);
+		if(mIsUpdated==false){
+			mBTUpdate.setEnabled(true);
+		} else {
+			mBTUpdate.setEnabled(false);			
+		}
+		
 		mIsOrderAdded = true;
 
 		if (mObjCart.mTotalQuantity.equalsIgnoreCase("0")) {
@@ -440,7 +448,12 @@ public class CartFragment extends EPFragment {
 				getCompleteCart();
 			}
 		});
-		mBTUpdate.setEnabled(false);
+		if(mIsUpdated==false){
+			mBTUpdate.setEnabled(true);
+		} else {
+			mBTUpdate.setEnabled(false);
+		}
+		
 
 		View tvReturn = (View) mViewParent.findViewById(R.id.tvReturn);
 		tvReturn.setOnClickListener(new OnClickListener() {
@@ -463,6 +476,7 @@ public class CartFragment extends EPFragment {
 				getAddToCartForm();
 			}
 		}
+		mIsUpdated = true;
 	}
 
 	@Override

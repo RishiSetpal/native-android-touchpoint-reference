@@ -90,6 +90,7 @@ public class AddressActivity extends EPFragmentActivity {
 		super.initializeParams();
 		// Disable the title
 		mObjActionBar.setDisplayShowTitleEnabled(false);
+		mObjActionBar.setDisplayHomeAsUpEnabled(false);
 
 		mObjAddress = (AddressElement) getIntent().getSerializableExtra(
 				Constants.PageUrl.INTENT_ADRESS);
@@ -100,7 +101,7 @@ public class AddressActivity extends EPFragmentActivity {
 			mGeographies = (Geographies) savedInstanceState
 					.getSerializable(KEY_GEOGRAPHIES);
 			mRegions = (Regions) savedInstanceState
-					.getSerializable(KEY_REGIONS);			
+					.getSerializable(KEY_REGIONS);
 			posCountry = savedInstanceState.getInt(KEY_POSITION_COUNTRIES);
 			posRegion = savedInstanceState.getInt(KEY_POSITION_REGIONS);
 			mAddressPostUrl = savedInstanceState.getString(KEY_ADDRESS_POST);
@@ -142,6 +143,7 @@ public class AddressActivity extends EPFragmentActivity {
 		mETCity = (EditText) findViewById(R.id.etCity);
 		mSPCountry = (Spinner) findViewById(R.id.spCountry);
 		mSPProvince = (Spinner) findViewById(R.id.spProvince);
+		mSPProvince.setEnabled(true);
 		mETPostalCode = (EditText) findViewById(R.id.etPostalCode);
 
 		Button mBtCancel = (Button) findViewById(R.id.btCancel);
@@ -243,40 +245,44 @@ public class AddressActivity extends EPFragmentActivity {
 	 * @param listObj
 	 */
 	public void setUpCountries(Geographies listObj) {
-		mGeographies = listObj;
-		CountrySpinnerAdapter mAdapter = new CountrySpinnerAdapter(
-				getApplicationContext(), android.R.layout.simple_spinner_item,
-				mGeographies.mElement);
-		mSPCountry.setAdapter(mAdapter);
-		if (mObjAddress != null && posCountry == 0) {
-			String countryName = mObjAddress.mAddressDesc.mCountryName;
-			posCountry = GeographiesModel.getCountriesPosition(countryName,
-					mGeographies.mElement);
-		}
+		try {
+			mGeographies = listObj;
+			CountrySpinnerAdapter mAdapter = new CountrySpinnerAdapter(
+					getApplicationContext(),
+					android.R.layout.simple_spinner_item, mGeographies.mElement);
+			mSPCountry.setAdapter(mAdapter);
+			if (mObjAddress != null && posCountry == 0) {
+				String countryName = mObjAddress.mAddressDesc.mCountryName;
+				posCountry = GeographiesModel.getCountriesPosition(countryName,
+						mGeographies.mElement);
+			}
 
-		if (posCountry != 0) {
-			mSPCountry.setSelection(posCountry);
-		}
+			if (posCountry != 0) {
+				mSPCountry.setSelection(posCountry);
+			}
 
-		mSPCountry.setOnItemSelectedListener(new OnItemSelectedListener() {
+			mSPCountry.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-			@Override
-			public void onItemSelected(AdapterView<?> parentView,
-					View selectedItemView, int position, long id) {
-				String regionsUrl = GeographiesModel.getRegionsUrl(
-						((GeographyElement) mSPCountry
-								.getItemAtPosition(position))).concat(
-						Constants.ZoomUrl.URL_ZOOM_ELEMENT);
-				if (regionsUrl != null) {
-					getRegions(regionsUrl);
+				@Override
+				public void onItemSelected(AdapterView<?> parentView,
+						View selectedItemView, int position, long id) {
+					String regionsUrl = GeographiesModel.getRegionsUrl(
+							((GeographyElement) mSPCountry
+									.getItemAtPosition(position))).concat(
+							Constants.ZoomUrl.URL_ZOOM_ELEMENT);
+					if (regionsUrl != null) {
+						getRegions(regionsUrl);
+					}
 				}
-			}
 
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO
-			}
-		});
+				@Override
+				public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO
+				}
+			});
+		} catch (NullPointerException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	/**
@@ -285,28 +291,37 @@ public class AddressActivity extends EPFragmentActivity {
 	 * @param listObj
 	 */
 	public void setUpRegions(Regions listObj) {
-		mRegions = listObj;
-		RegionSpinnerAdapter mAdapter = new RegionSpinnerAdapter(
-				getApplicationContext(), android.R.layout.simple_spinner_item,
-				mRegions.mElement);
-		mSPProvince.setAdapter(mAdapter);
-		if (mRegions.mElement.length > 0) {
-			if (mObjAddress != null && posRegion == 0) {
-				String regionName = mObjAddress.mAddressDesc.mRegion;
-				if (regionName != null) {
-					posRegion = GeographiesModel
-							.getRegionsPosition(
+		try {
+			mRegions = listObj;
+			if (mRegions.mElement != null) {
+				mSPProvince.setEnabled(true);
+				mSPProvince.setVisibility(View.VISIBLE);
+				RegionSpinnerAdapter mAdapter = new RegionSpinnerAdapter(
+						getApplicationContext(),
+						android.R.layout.simple_spinner_item, mRegions.mElement);
+				mSPProvince.setAdapter(mAdapter);
+				if (mRegions.mElement.length > 0) {
+					if (mObjAddress != null && posRegion == 0) {
+						String regionName = mObjAddress.mAddressDesc.mRegion;
+						if (regionName != null) {
+							posRegion = GeographiesModel.getRegionsPosition(
 									mObjAddress.mAddressDesc.mRegion,
 									mRegions.mElement);
+						}
+					}
 				}
+			} else {
+				mSPProvince.setVisibility(View.INVISIBLE);
+				mSPProvince.setEnabled(false);
 			}
-		} else {
-			mSPProvince.setEnabled(false);
+
+			if (true == mSPProvince.isEnabled() && posRegion != 0) {
+				mSPProvince.setSelection(posRegion);
+			}
+		} catch (NullPointerException ex) {
+			ex.printStackTrace();
 		}
 
-		if (true == mSPProvince.isEnabled() && posRegion != 0) {
-			mSPProvince.setSelection(posRegion);
-		}
 	}
 
 	public void onEditSave() {
@@ -519,7 +534,7 @@ public class AddressActivity extends EPFragmentActivity {
 			descObject.put("extended-address", mETExtendedAddress.getText()
 					.toString());
 			descObject.put("locality", mETCity.getText().toString());
-			if (mSPProvince.getCount() > 0) {
+			if (mSPProvince.isEnabled() == true && mSPProvince.getCount() > 0) {
 				String regionName = ((RegionElement) mSPProvince
 						.getSelectedItem()).mValue;
 				descObject.put("region", regionName);

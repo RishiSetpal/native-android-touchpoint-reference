@@ -50,13 +50,13 @@
             android:name="com.optimusinfo.elasticpath.cortex.authentication.AuthenticationActivity"
             android:configChanges="orientation"
             android:label="@string/titlePageCart"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity
             android:name="com.optimusinfo.elasticpath.cortex.profile.address.AddressActivity"
             android:configChanges="orientation"
             android:label="@string/titlePageCart"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustResize" >
         </activity>
     </application>
 

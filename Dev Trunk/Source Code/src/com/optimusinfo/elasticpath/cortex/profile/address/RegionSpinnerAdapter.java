@@ -36,7 +36,12 @@ public class RegionSpinnerAdapter extends ArrayAdapter<RegionElement> {
 	}
 
 	public int getCount() {
-		return mRegions.length;
+		if(mRegions!=null){
+			return mRegions.length;
+		} else {
+			return 0;
+		}
+		
 	}
 
 	public RegionElement getItem(int position) {

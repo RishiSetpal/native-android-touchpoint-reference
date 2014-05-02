@@ -138,5 +138,7 @@ the checkout to complete your purchase.</string>
     <string name="ellipsis">…</string>
     <string name="lableNoPaymentMethod">You have no saved Payment methods.</string>
     <string name="messageLoading">Loading…</string>
+    <string name="messageEnterAllFields">Please enter all the fields.</string>
+    <string name="messagePasswordLength">Password must be at least 8 characters.</string>
 
 </resources>

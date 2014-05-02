@@ -55,6 +55,7 @@ public class AuthenticationActivity extends EPFragmentActivity {
 		mParentIntent = getIntent();
 		// Disable the title
 		mObjActionBar.setDisplayShowTitleEnabled(false);
+		mObjActionBar.setDisplayHomeAsUpEnabled(false);
 		// Initialize views
 		initializeViews();
 	}
@@ -106,11 +107,18 @@ public class AuthenticationActivity extends EPFragmentActivity {
 						&& !TextUtils.isEmpty(mEtLastname.getText().toString())
 						&& !TextUtils.isEmpty(mEtUsername.getText().toString())
 						&& !TextUtils.isEmpty(mEtPassword.getText().toString())) {
-					addNewAccount();
+					if (mEtPassword.getText().toString().length() >= 8) {
+						addNewAccount();
+					} else {
+						NotificationUtils.showNotificationToast(
+								getApplicationContext(),
+								getString(R.string.messagePasswordLength));
+					}
+
 				} else {
 					NotificationUtils.showNotificationToast(
 							getApplicationContext(),
-							"Please enter all the fields.");
+							getString(R.string.messageEnterAllFields));
 				}
 			}
 		});

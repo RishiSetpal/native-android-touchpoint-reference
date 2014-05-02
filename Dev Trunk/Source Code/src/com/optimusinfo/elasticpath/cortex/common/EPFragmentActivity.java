@@ -32,6 +32,7 @@ import android.view.MenuItem;
 
 import com.optimusinfo.elasticpath.cortex.authentication.AuthenticationActivity;
 import com.optimusinfo.elasticpath.cortex.cart.CartFragment;
+import com.optimusinfo.elasticpath.cortex.checkout.CheckoutFragment;
 import com.optimusinfo.elasticpath.cortex.configuration.EPConfiguration;
 import com.optimusinfo.elasticpath.cortex.configuration.EPCortex;
 import com.optimusinfo.elasticpath.cortex.profile.ProfileFragment;
@@ -131,6 +132,8 @@ public abstract class EPFragmentActivity extends FragmentActivity implements
 		case R.id.action_cart:
 			if (getCurrentFragment() instanceof CartFragment) {
 
+			} else if (getCurrentFragment() instanceof CheckoutFragment) {
+				onBackPressed();
 			} else {
 				getCurrentFragment().detachChildFragments();
 				// Start the product details activity

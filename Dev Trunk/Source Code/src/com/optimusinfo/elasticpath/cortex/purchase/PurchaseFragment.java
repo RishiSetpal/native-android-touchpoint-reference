@@ -27,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -110,7 +111,9 @@ public class PurchaseFragment extends EPFragment {
 						showProgressDialog(false);
 						mIsOrderConfirmed = true;
 						mOrderDetailsUrl = response;
-						getOrderDetails(mOrderDetailsUrl);
+						if (mOrderDetailsUrl != null) {
+							getOrderDetails(mOrderDetailsUrl);
+						}
 					}
 				});
 			}
@@ -143,7 +146,7 @@ public class PurchaseFragment extends EPFragment {
 		};
 		showProgressDialog(true);
 		mLayout.setVisibility(View.INVISIBLE);
-		if (!TextUtils.isEmpty(mPostUrl)) {
+		if (!TextUtils.isEmpty(mPostUrl) && URLUtil.isValidUrl(mPostUrl)) {
 			OrderModel.postPurchaseOrder(getActivity(), mPostUrl,
 					Constants.Config.CONTENT_TYPE_PURCHASE_ORDER,
 					getUserAuthenticationToken(), mPostPurchaseListner);
@@ -200,7 +203,7 @@ public class PurchaseFragment extends EPFragment {
 
 		showProgressDialog(true);
 		mLayout.setVisibility(View.INVISIBLE);
-		if (!TextUtils.isEmpty(urlOrder)) {
+		if (!TextUtils.isEmpty(urlOrder) && URLUtil.isValidUrl(urlOrder)) {
 			OrderModel.getOrderDetails(getActivity(), urlOrder,
 					getUserAuthenticationToken(), mOrderDetailsListener);
 		}
