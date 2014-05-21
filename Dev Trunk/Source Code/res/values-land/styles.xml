@@ -1,297 +1,0 @@
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
-<!--
- * Copyright © 2014 Elastic Path Software Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * 
- * You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
--->
-    <!--
-        Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    -->
-    <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
-    </style>
-
-    <!-- Application theme. -->
-    <style name="EPAppTheme" parent="AppBaseTheme">
-
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-        <item name="android:actionBarStyle">@style/EPActionBar</item>
-        <item name="android:windowActionBarOverlay">false</item>
-        <item name="android:windowBackground">@color/bg_application_window</item>
-        <item name="android:colorBackground">@color/bg_application_window</item>
-    </style>
-
-    <!-- ActionBar styles -->
-    <style name="EPActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/bg_top_header</item>
-        <item name="android:textColor">@color/tc_top_header</item>
-        <item name="android:icon">@drawable/ep_logo</item>
-    </style>
-
-    <style name="EPBreadcrumbs" parent="android:Widget">
-        <item name="android:padding">2dp</item>
-    </style>
-
-    <!-- Authentication Page Styles -->
-    <style name="LayoutAuthentication">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:gravity">center</item>
-        <item name="android:orientation">vertical</item>
-    </style>
-
-    <style name="EditTextUsername">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:inputType">textEmailAddress</item>
-        <item name="android:ems">10</item>
-        <item name="android:hint">@string/hintUsername</item>
-        <item name="android:layout_margin">10dp</item>
-    </style>
-
-    <style name="EditTextPassword">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:inputType">textPassword</item>
-        <item name="android:ems">10</item>
-        <item name="android:hint">@string/hintPassword</item>
-        <item name="android:layout_margin">10dp</item>
-    </style>
-
-    <style name="ButtonPassword">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:ems">10</item>
-        <item name="android:layout_margin">10dp</item>
-        <item name="android:text">@string/labelButtonLogin</item>
-        <item name="android:textColor">@color/tc_textview_product_available</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:background">@drawable/selector_button_login</item>
-    </style>
-
-    <!-- Product Listing Styles -->
-    <style name="ViewPagerProducListing">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
-
-    <style name="PagerTitleStripProducListing">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">top</item>
-        <item name="android:background">@color/bg_pager_titlestrip_productlisting</item>
-        <item name="android:textColor">@color/tc_pager_titlestrip_productlisting</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:paddingBottom">4dp</item>
-        <item name="android:paddingTop">4dp</item>
-    </style>
-
-    <style name="LayoutFragmentProducListing">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_margin">10dp</item>
-        <item name="android:orientation">vertical</item>
-    </style>
-
-    <style name="LayoutFragmentProducDetails">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_margin">10dp</item>
-        <item name="android:orientation">vertical</item>
-    </style>
-
-    <style name="ImageViewProductListing">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">200dp</item>
-        <item name="android:layout_margin">10dp</item>
-        <item name="android:contentDescription">@string/contentDesc</item>
-        <item name="android:scaleType">centerInside</item>
-        <item name="android:src">@drawable/img_placeholder</item>
-    </style>
-
-    <style name="TextViewProductListingName">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">0dp</item>
-        <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:layout_marginLeft">10dp</item>
-        <item name="android:layout_marginRight">10dp</item>
-        <item name="android:background">@drawable/layout_bg_border_black_bottom</item>
-        <item name="android:gravity">left</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:text">@string/labelNoProductTitle</item>
-        <item name="android:textColor">@color/tc_textview_product_name</item>
-    </style>
-
-    <style name="TextViewProductListingPrice">
-        <item name="android:layout_width">0dip</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_marginTop">0dp</item>
-        <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:layout_marginLeft">10dp</item>
-        <item name="android:layout_marginRight">0dp</item>
-        <item name="android:padding">5dp</item>
-        <item name="android:background">@drawable/layout_bg_border_black_bottom</item>
-        <item name="android:gravity">left</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:text">@string/labelProductNoPrice</item>
-        <item name="android:textColor">@color/tc_textview_product_price</item>
-    </style>
-
-    <style name="TextViewProductListingAvailable">
-        <item name="android:layout_width">0dip</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_marginTop">0dp</item>
-        <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:layout_marginLeft">0dp</item>
-        <item name="android:layout_marginRight">10dp</item>
-        <item name="android:padding">5dp</item>
-        <item name="android:background">@drawable/layout_bg_textview_product_available</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:text">@string/labelProductAvailablle</item>
-        <item name="android:textColor">@color/tc_textview_product_available</item>
-    </style>
-
-    <style name="ButtonProductListingAvailable">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">0dp</item>
-        <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:layout_marginLeft">10dp</item>
-        <item name="android:layout_marginRight">10dp</item>
-        <item name="android:padding">10dp</item>
-        <item name="android:background">@drawable/selector_button_addtocart</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:text">@string/labelButtonAddtocart</item>
-        <item name="android:textColor">@color/tc_textview_product_available</item>
-    </style>
-
-    <style name="LayoutActivityProducyDetails">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">fill_parent</item>
-        <item name="android:gravity">left</item>
-        <item name="android:layout_margin">10dp</item>
-        <item name="android:orientation">vertical</item>
-    </style>
-
-    <style name="LayoutContainerProducDesc">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:gravity">left</item>
-        <item name="android:layout_margin">10dp</item>
-        <item name="android:orientation">vertical</item>
-    </style>
-
-    <style name="ImageViewProductDetails">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">200dp</item>
-        <item name="android:layout_marginTop">5dp</item>
-        <item name="android:layout_marginBottom">0dp</item>
-        <item name="android:layout_marginLeft">5dp</item>
-        <item name="android:layout_marginRight">5dp</item>
-        <item name="android:contentDescription">@string/contentDesc</item>
-        <item name="android:scaleType">centerInside</item>
-        <item name="android:src">@drawable/img_placeholder</item>
-    </style>
-
-    <style name="TextViewProductDetailsTitle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">0dp</item>
-        <item name="android:layout_marginBottom">5dp</item>
-        <item name="android:layout_marginLeft">5dp</item>
-        <item name="android:layout_marginRight">5dp</item>
-        <item name="android:gravity">left</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:text">@string/labelNoProductTitle</item>
-        <item name="android:textColor">@color/tc_textview_product_details_title</item>
-    </style>
-
-    <style name="TextViewProductDetailsAvailable">
-        <item name="android:layout_width">0dip</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_marginTop">0dp</item>
-        <item name="android:layout_marginBottom">5dp</item>
-        <item name="android:layout_marginLeft">5dp</item>
-        <item name="android:layout_marginRight">55dp</item>
-        <item name="android:padding">5dp</item>
-        <item name="android:background">@drawable/layout_bg_textview_product_available</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:text">@string/labelProductAvailablle</item>
-        <item name="android:textColor">@color/tc_textview_product_available</item>
-    </style>
-
-    <style name="TextViewProductDetailsPrice">
-        <item name="android:layout_width">0dip</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_marginTop">0dp</item>
-        <item name="android:layout_marginBottom">5dp</item>
-        <item name="android:layout_marginLeft">5dp</item>
-        <item name="android:layout_marginRight">5dp</item>
-        <item name="android:padding">5dp</item>
-        <item name="android:background">@drawable/layout_bg_border_black_bottom</item>
-        <item name="android:gravity">left</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:text">@string/labelProductNoPrice</item>
-        <item name="android:textColor">@color/tc_textview_product_price</item>
-    </style>
-
-    <style name="ButtonProductDetailsAvailable">
-        <item name="android:layout_width">0dip</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_margin">5dp</item>
-        <item name="android:background">@drawable/selector_button_addtocart</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:text">@string/labelButtonAddtocart</item>
-        <item name="android:textColor">@color/tc_textview_product_available</item>
-    </style>
-
-    <style name="TextViewSpinnerCountry">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">2dp</item>
-        <item name="android:layout_marginBottom">5dp</item>
-        <item name="android:layout_marginLeft">5dp</item>
-        <item name="android:layout_marginRight">5dp</item>
-        <item name="android:gravity">left</item>
-        <item name="android:textColor">@color/tc_textView_cart_header_black</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
-    </style>
-
-</resources>
