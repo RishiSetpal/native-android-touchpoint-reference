@@ -1,4 +1,4 @@
-baseurl: /phonegap-touchpoint-reference
+baseurl: /native-android-touchpoint-reference
 relative_permalinks: false
 markdown: kramdown
 repository: https://github.com/elasticpath/native-android-touchpoint-reference
