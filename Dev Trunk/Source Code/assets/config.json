@@ -7,7 +7,7 @@
   "cortexApi":{
     "path":"integrator",
     "scope":"campus",
-    "endpoint":  "http://54.200.118.70:8080/cortex/",
+    "endpoint":  "http://preview.demo.elasticpath.com/cortex/",
      "role": "PUBLIC"
   }  
 }
