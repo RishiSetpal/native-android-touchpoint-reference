@@ -126,7 +126,7 @@ the checkout to complete your purchase.</string>
     <string name="labelButtonCancel">CANCEL</string>
     <string name="labelButtonLogout">LOG OUT</string>
     <string name="labelButtonSave">SAVE</string>
-    <string name="labelTextViewUserName">USERNAME</string>
+    <string name="labelTextViewUserName">EMAIL/USERNAME</string>
     <string name="labelTextViewPassword">PASSWORD</string>
     <string name="labelTextViewLoginHeader">Account Login</string>
     <string name="messageTextViewLoginHeader">Please login with your username and password below.</string>
